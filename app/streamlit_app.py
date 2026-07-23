@@ -23,105 +23,130 @@ st.set_page_config(
     initial_sidebar_state="expanded"
 )
 
-# Inject custom premium CSS styling (Blue + White Theme)
+# Inject custom premium CSS styling (Slate Slate Blue + Corporate Teal Theme)
 st.markdown("""
     <style>
-    @import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;700&display=swap');
+    @import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap');
     
     html, body, [class*="css"] {
         font-family: 'Inter', sans-serif;
     }
     
-    .animated-title {
-        background: linear-gradient(135deg, #1E88E5 0%, #1565C0 100%);
-        -webkit-background-clip: text;
-        -webkit-text-fill-color: transparent;
-        font-weight: 800;
-        font-size: 2.8rem;
-        margin-bottom: 0.5rem;
+    /* Header & Titles */
+    .dashboard-title {
+        color: #0F172A;
+        font-weight: 700;
+        font-size: 2.4rem;
+        margin-bottom: 0.2rem;
     }
     
     .section-subtitle {
-        color: #555555;
-        font-size: 1.1rem;
-        margin-bottom: 2rem;
+        color: #64748B;
+        font-size: 1.05rem;
+        margin-bottom: 1.8rem;
     }
     
+    /* Premium Metric Cards */
     .metric-card {
-        background-color: white;
-        border-radius: 12px;
-        padding: 1.5rem;
-        box-shadow: 0 4px 20px rgba(0, 0, 0, 0.05);
-        border: 1px solid #E3F2FD;
-        transition: transform 0.2s ease, box-shadow 0.2s ease;
+        background-color: #FFFFFF;
+        border-radius: 8px;
+        padding: 1.25rem 1.5rem;
+        box-shadow: 0 1px 3px 0 rgba(0, 0, 0, 0.1), 0 1px 2px -1px rgba(0, 0, 0, 0.1);
+        border: 1px solid #E2E8F0;
+        transition: transform 0.15s ease, box-shadow 0.15s ease;
         margin-bottom: 1rem;
     }
     
     .metric-card:hover {
-        transform: translateY(-5px);
-        box-shadow: 0 8px 30px rgba(30, 136, 229, 0.1);
+        transform: translateY(-2px);
+        box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1), 0 2px 4px -2px rgba(0, 0, 0, 0.1);
+        border-color: #CBD5E1;
     }
     
     .metric-label {
-        color: #757575;
-        font-size: 0.85rem;
+        color: #64748B;
+        font-size: 0.8rem;
         font-weight: 600;
         text-transform: uppercase;
-        letter-spacing: 0.5px;
+        letter-spacing: 0.05em;
     }
     
     .metric-value {
-        color: #0D47A1;
-        font-size: 1.8rem;
+        color: #0F172A;
+        font-size: 1.6rem;
         font-weight: 700;
-        margin-top: 0.5rem;
+        margin-top: 0.25rem;
     }
     
+    /* Badges for Classification results */
     .badge-high {
-        background-color: #FFEBEE;
-        color: #C62828;
-        padding: 0.4rem 0.8rem;
-        border-radius: 20px;
-        font-weight: 700;
+        background-color: #FEF2F2;
+        color: #991B1B;
+        padding: 0.35rem 0.75rem;
+        border-radius: 6px;
+        font-weight: 600;
+        font-size: 0.9rem;
         display: inline-block;
-        border: 1px solid #FFCDD2;
+        border: 1px solid #FEE2E2;
     }
     
     .badge-medium {
-        background-color: #FFF3E0;
-        color: #EF6C00;
-        padding: 0.4rem 0.8rem;
-        border-radius: 20px;
-        font-weight: 700;
+        background-color: #FFFBEB;
+        color: #92400E;
+        padding: 0.35rem 0.75rem;
+        border-radius: 6px;
+        font-weight: 600;
+        font-size: 0.9rem;
         display: inline-block;
-        border: 1px solid #FFE082;
+        border: 1px solid #FEF3C7;
     }
     
     .badge-low {
-        background-color: #E8F5E9;
-        color: #2E7D32;
-        padding: 0.4rem 0.8rem;
-        border-radius: 20px;
-        font-weight: 700;
+        background-color: #F0FDF4;
+        color: #166534;
+        padding: 0.35rem 0.75rem;
+        border-radius: 6px;
+        font-weight: 600;
+        font-size: 0.9rem;
         display: inline-block;
-        border: 1px solid #C8E6C9;
+        border: 1px solid #DCFCE7;
     }
     
+    /* Button Customization */
     .stButton>button {
-        background: linear-gradient(135deg, #1E88E5 0%, #1565C0 100%);
-        color: white;
-        border: none;
-        padding: 0.6rem 2rem;
-        border-radius: 8px;
-        font-weight: 600;
-        box-shadow: 0 4px 15px rgba(30, 136, 229, 0.2);
-        transition: all 0.3s;
+        background-color: #0F172A;
+        color: #FFFFFF;
+        border: 1px solid #0F172A;
+        padding: 0.5rem 1.75rem;
+        border-radius: 6px;
+        font-weight: 500;
+        font-size: 0.95rem;
+        box-shadow: 0 1px 2px 0 rgba(0, 0, 0, 0.05);
+        transition: all 0.2s;
     }
     
     .stButton>button:hover {
-        background: linear-gradient(135deg, #1565C0 0%, #0D47A1 100%);
-        transform: translateY(-2px);
-        box-shadow: 0 6px 20px rgba(30, 136, 229, 0.3);
+        background-color: #1E293B;
+        border-color: #1E293B;
+        color: #FFFFFF;
+    }
+    
+    /* Section Separation and Container styling */
+    .content-box {
+        background-color: #FFFFFF;
+        border: 1px solid #E2E8F0;
+        border-radius: 8px;
+        padding: 1.5rem;
+        margin-bottom: 1.5rem;
+    }
+    
+    .content-box-header {
+        color: #0F172A;
+        font-size: 1.15rem;
+        font-weight: 600;
+        margin-bottom: 1rem;
+        border-bottom: 1px solid #F1F5F9;
+        padding-bottom: 0.5rem;
     }
     
     </style>
@@ -155,89 +180,65 @@ df_raw = load_data_cached()
 regressor, classifier, clusterer = load_models_cached()
 reg_metrics, cls_metrics, clus_metrics = load_metrics_cached()
 
-# Sidebar
-st.sidebar.markdown("<h2 style='color:#0D47A1;font-weight:700;'>🏥 MedIntel Platform</h2>", unsafe_allow_html=True)
+# Sidebar Navigation Configuration
+st.sidebar.markdown("<h2 style='color:#0F172A;font-weight:700;font-size:1.4rem;margin-bottom:1.5rem;'>MedIntel Insights</h2>", unsafe_allow_html=True)
 st.sidebar.markdown("---")
 
 page = st.sidebar.radio(
-    "Navigate",
-    ["🏠 Home", "📊 Dashboard", "💰 Cost Prediction", "⚠ Risk Prediction", "👥 Patient Segmentation", "📈 Model Performance", "📂 About Project"]
+    "Navigation Menu",
+    ["Home", "Dashboard", "Cost Prediction", "Risk Prediction", "Patient Segmentation", "Model Performance", "About Project"]
 )
 
 st.sidebar.markdown("---")
-st.sidebar.info("Authorized personnel use only. Securing under HIPAA guidelines.")
+st.sidebar.markdown("<p style='font-size:0.75rem;color:#94A3B8;'>Authorized Access Only.<br>HIPAA Compliance Enforced.</p>", unsafe_allow_html=True)
 
-# Page routing
-if page == "🏠 Home":
-    st.markdown("<div class='animated-title'>Healthcare Cost Prediction & Patient Risk Intelligence Platform</div>", unsafe_allow_html=True)
-    st.markdown("<div class='section-subtitle'>AI-Driven Medical Economics & Patient Risk Classification Intelligence</div>", unsafe_allow_html=True)
+# Routing
+if page == "Home":
+    st.markdown("<div class='dashboard-title'>Clinical Diagnostics & Financial Risk Platform</div>", unsafe_allow_html=True)
+    st.markdown("<div class='section-subtitle'>AI-Driven Medical Claims Forecasting and Patient Risk Intelligence Dashboard</div>", unsafe_allow_html=True)
     
     col1, col2, col3, col4, col5 = st.columns(5)
     with col1:
-        st.markdown("""
-            <div class='metric-card'>
-                <div class='metric-label'>Total Population</div>
-                <div class='metric-value'>100,000</div>
-            </div>
-            """, unsafe_allow_html=True)
+        st.markdown("<div class='metric-card'><div class='metric-label'>Total Population</div><div class='metric-value'>100,000</div></div>", unsafe_allow_html=True)
     with col2:
-        st.markdown("""
-            <div class='metric-card'>
-                <div class='metric-label'>Engineered Features</div>
-                <div class='metric-value'>54</div>
-            </div>
-            """, unsafe_allow_html=True)
+        st.markdown("<div class='metric-card'><div class='metric-label'>Total Features</div><div class='metric-value'>54</div></div>", unsafe_allow_html=True)
     with col3:
-        st.markdown("""
-            <div class='metric-card'>
-                <div class='metric-label'>Regression Models</div>
-                <div class='metric-value'>10</div>
-            </div>
-            """, unsafe_allow_html=True)
+        st.markdown("<div class='metric-card'><div class='metric-label'>Regression Algorithms</div><div class='metric-value'>10</div></div>", unsafe_allow_html=True)
     with col4:
-        st.markdown("""
-            <div class='metric-card'>
-                <div class='metric-label'>Classifiers (Part A)</div>
-                <div class='metric-value'>5</div>
-            </div>
-            """, unsafe_allow_html=True)
+        st.markdown("<div class='metric-card'><div class='metric-label'>Classifiers Deployed</div><div class='metric-value'>5</div></div>", unsafe_allow_html=True)
     with col5:
-        st.markdown("""
-            <div class='metric-card'>
-                <div class='metric-label'>Cluster Algorithms</div>
-                <div class='metric-value'>2</div>
-            </div>
-            """, unsafe_allow_html=True)
+        st.markdown("<div class='metric-card'><div class='metric-label'>Cluster Cohorts</div><div class='metric-value'>4</div></div>", unsafe_allow_html=True)
 
-    st.markdown("### 📋 Executive Summary & Objectives")
+    st.markdown("### Executive Summary & Scope")
     st.markdown("""
-    This platform integrates advanced machine learning models to enable hospital administrators and actuaries to analyze and forecast clinical risks and financial liabilities:
-    * **Track 1: Cost Regression**: Predicts patient annual medical charges, providing transparency into financial projections.
-    * **Track 2: Risk Classification**: Identifies high-risk patients likely to require costly medical interventions, supporting proactive wellness care.
-    * **Track 3: Patient Segmentation**: Subdivides the patient population into cohorts based on lifestyle and chronic disease severity to customize care coordination.
+    This analytics platform supports clinical decision-making, actuarial risk assessment, and financial modeling for healthcare populations. 
+    It is divided into three key quantitative tracks:
+    * **Track 1: Cost Regression** - Forecasts individual patient annual medical costs based on demographic, lifestyle, and clinical parameters.
+    * **Track 2: Risk Classification** - Classifies patients into high-risk categories to identify candidates for early preventative health intervention.
+    * **Track 3: Patient Segmentation** - Discovers latent patient cohorts using clustering algorithms based on healthcare resource utilization and chronic disease count.
     """)
     
-    st.markdown("### ⚙ Project Workflow Diagram")
+    st.markdown("### Process Pipeline and Workflow")
     st.markdown("""
     ```mermaid
     graph TD
-        A[Raw Medical Data: 100k Rows] --> B[Data Cleaning & Audit]
+        A[Kaggle Dataset: 100k Rows] --> B[Data Preprocessing & Auditing]
         B --> C[Clinical Feature Engineering]
-        C --> D[Track 1: Regression Pipeline - 10 Models]
-        C --> E[Track 2: Classification Part A - 5 Models]
-        C --> F[Track 3: Patient Clustering - KMeans & Hierarchical]
-        D --> G[Best Cost Regressor Saved]
-        E --> H[Best Risk Classifier Saved]
-        F --> I[Cohort Segments Saved]
-        G --> J[Interactive Streamlit Dashboard GUI]
+        C --> D[Track 1: Cost Regression - 10 Models]
+        C --> E[Track 2: Risk Classification Part A - 5 Models]
+        C --> F[Track 3: Patient Segmentation - KMeans]
+        D --> G[Best Regressor Saved: Tuned Random Forest]
+        E --> H[Best Classifier Saved: Tuned Decision Tree]
+        F --> I[Cohort Definitions Saved]
+        G --> J[MedIntel Interactive Dashboard Web App]
         H --> J
         I --> J
     ```
     """, unsafe_allow_html=True)
 
-elif page == "📊 Dashboard":
-    st.markdown("<div class='animated-title'>Clinical & Financial Dashboard</div>", unsafe_allow_html=True)
-    st.markdown("<div class='section-subtitle'>Macro Analytics of Patient Medical Costs & Demographics</div>", unsafe_allow_html=True)
+elif page == "Dashboard":
+    st.markdown("<div class='dashboard-title'>Clinical Population Analytics</div>", unsafe_allow_html=True)
+    st.markdown("<div class='section-subtitle'>Statistical Summaries and Distributions of the Covered Population</div>", unsafe_allow_html=True)
     
     if df_raw is not None:
         avg_cost = df_raw["annual_medical_cost"].mean()
@@ -247,35 +248,15 @@ elif page == "📊 Dashboard":
         
         col1, col2, col3, col4 = st.columns(4)
         with col1:
-            st.markdown(f"""
-                <div class='metric-card'>
-                    <div class='metric-label'>Average Medical Cost</div>
-                    <div class='metric-value'>${avg_cost:,.2f}</div>
-                </div>
-                """, unsafe_allow_html=True)
+            st.markdown(f"<div class='metric-card'><div class='metric-label'>Average Medical Cost</div><div class='metric-value'>${avg_cost:,.2f}</div></div>", unsafe_allow_html=True)
         with col2:
-            st.markdown(f"""
-                <div class='metric-card'>
-                    <div class='metric-label'>Average BMI</div>
-                    <div class='metric-value'>{avg_bmi:.2f}</div>
-                </div>
-                """, unsafe_allow_html=True)
+            st.markdown(f"<div class='metric-card'><div class='metric-label'>Average BMI</div><div class='metric-value'>{avg_bmi:.2f}</div></div>", unsafe_allow_html=True)
         with col3:
-            st.markdown(f"""
-                <div class='metric-card'>
-                    <div class='metric-label'>Average Income</div>
-                    <div class='metric-value'>${avg_income:,.2f}</div>
-                </div>
-                """, unsafe_allow_html=True)
+            st.markdown(f"<div class='metric-card'><div class='metric-label'>Average Income</div><div class='metric-value'>${avg_income:,.2f}</div></div>", unsafe_allow_html=True)
         with col4:
-            st.markdown(f"""
-                <div class='metric-card'>
-                    <div class='metric-label'>High Risk Patients</div>
-                    <div class='metric-value'>{high_risk_pct:.1f}%</div>
-                </div>
-                """, unsafe_allow_html=True)
+            st.markdown(f"<div class='metric-card'><div class='metric-label'>High Risk Patients</div><div class='metric-value'>{high_risk_pct:.2f}%</div></div>", unsafe_allow_html=True)
                 
-        st.markdown("### 📊 Financial & Risk Distribution Analysis")
+        st.markdown("### Financial & Risk Distribution Analysis")
         row1_col1, row1_col2 = st.columns(2)
         with row1_col1:
             fig_cost = utils.plot_cost_distribution(df_raw.sample(5000))
@@ -284,7 +265,7 @@ elif page == "📊 Dashboard":
             fig_risk = utils.plot_risk_distribution(df_raw)
             st.plotly_chart(fig_risk, use_container_width=True)
             
-        st.markdown("### 🔗 Clinical Correlations & Feature Importance")
+        st.markdown("### Feature Interactions and Importances")
         row2_col1, row2_col2 = st.columns(2)
         with row2_col1:
             num_cols_corr = ["age", "bmi", "income", "visits_last_year", "medication_count", "annual_medical_cost"]
@@ -296,58 +277,57 @@ elif page == "📊 Dashboard":
                 if fig_imp is not None:
                     st.plotly_chart(fig_imp, use_container_width=True)
                 else:
-                    st.warning("Feature importance plot not supported for this model.")
+                    st.warning("Feature importance plotting not supported by selected estimator.")
             else:
-                st.warning("Model needs to be trained to view feature importances.")
+                st.warning("Model must be trained to extract feature importances.")
     else:
-        st.error("Dataset not found. Please verify location in data folder.")
+        st.error("Kaggle dataset not found. Verify file path configuration.")
 
 else:
-    # Patient forms inputs logic (Common form layout for Cost & Risk)
-    if page in ["💰 Cost Prediction", "⚠ Risk Prediction"]:
-        st.markdown(f"<div class='animated-title'>{page}</div>", unsafe_allow_html=True)
-        st.markdown("<div class='section-subtitle'>Clinical Patient Entry & Predictions Engine</div>", unsafe_allow_html=True)
+    if page in ["Cost Prediction", "Risk Prediction"]:
+        st.markdown(f"<div class='dashboard-title'>{page}</div>", unsafe_allow_html=True)
+        st.markdown("<div class='section-subtitle'>Enter Patient Profile Details below for Model Scoring</div>", unsafe_allow_html=True)
         
-        st.markdown("### 👤 Demographic and Lifestyle Inputs")
+        # Grid input style
+        st.markdown("<div class='content-box-header'>Demographics and Social Determinants of Health</div>", unsafe_allow_html=True)
         col1, col2, col3, col4 = st.columns(4)
         with col1:
-            age = st.number_input("Age 👤", min_value=18, max_value=100, value=45)
-            sex = st.selectbox("Gender ⚧", ["Female", "Male", "Other"])
-            bmi = st.number_input("BMI (Body Mass Index) ⚖", min_value=12.0, max_value=60.0, value=28.4, step=0.1)
+            age = st.number_input("Age (Years)", min_value=18, max_value=100, value=45)
+            sex = st.selectbox("Gender / Sex", ["Female", "Male", "Other"])
+            bmi = st.number_input("BMI", min_value=12.0, max_value=60.0, value=28.4, step=0.1)
         with col2:
-            income = st.number_input("Annual Income ($) 💵", min_value=0.0, max_value=1000000.0, value=50000.0, step=1000.0)
-            smoker = st.selectbox("Smoker 🚭", ["Never", "Current", "Former"])
-            alcohol = st.selectbox("Alcohol Frequency 🍺", ["None", "Occasional", "Weekly", "Daily"])
+            income = st.number_input("Annual Income ($)", min_value=0.0, max_value=1000000.0, value=50000.0, step=1000.0)
+            smoker = st.selectbox("Tobacco / Smoking History", ["Never", "Current", "Former"])
+            alcohol = st.selectbox("Alcohol Consumption Frequency", ["None", "Occasional", "Weekly", "Daily"])
         with col3:
-            dependents = st.number_input("Number of Dependents 👶", min_value=0, max_value=10, value=1)
-            region = st.selectbox("Region 🗺", ["North", "Central", "West", "South", "East"])
-            urban_rural = st.selectbox("Urban/Rural Area 🏘️", ["Suburban", "Urban", "Rural"])
+            dependents = st.number_input("Number of Dependents", min_value=0, max_value=10, value=1)
+            region = st.selectbox("Residential Region", ["North", "Central", "West", "South", "East"])
+            urban_rural = st.selectbox("Residential Classification", ["Suburban", "Urban", "Rural"])
         with col4:
-            education = st.selectbox("Education Level 🎓", ["HS", "No HS", "Some College", "Bachelors", "Masters", "Doctorate"])
-            employment = st.selectbox("Employment Status 💼", ["Employed", "Self-employed", "Retired", "Unemployed"])
-            marital = st.selectbox("Marital Status 💍", ["Married", "Single", "Divorced", "Widowed"])
+            education = st.selectbox("Highest Education Level", ["HS", "No HS", "Some College", "Bachelors", "Masters", "Doctorate"])
+            employment = st.selectbox("Employment Status", ["Employed", "Self-employed", "Retired", "Unemployed"])
+            marital = st.selectbox("Marital Status", ["Married", "Single", "Divorced", "Widowed"])
 
-        st.markdown("### 🩸 Clinical Markers and Disease History")
+        st.markdown("<div class='content-box-header'>Clinical Vitals and Chronic Diagnoses</div>", unsafe_allow_html=True)
         col5, col6, col7, col8 = st.columns(4)
         with col5:
-            diabetes = st.selectbox("Diabetes Diagnosis 🍬", [0, 1], format_func=lambda x: "Yes" if x==1 else "No")
-            hypertension = st.selectbox("Hypertension Diagnosis 💓", [0, 1], format_func=lambda x: "Yes" if x==1 else "No")
-            heart_disease = st.selectbox("Heart Disease History ❤️", [0, 1], format_func=lambda x: "Yes" if x==1 else "No")
+            diabetes = st.selectbox("Diabetes Status", [0, 1], format_func=lambda x: "Diagnosed" if x==1 else "No Diagnosis")
+            hypertension = st.selectbox("Hypertension Status", [0, 1], format_func=lambda x: "Diagnosed" if x==1 else "No Diagnosis")
+            heart_disease = st.selectbox("Cardiovascular Disease Status", [0, 1], format_func=lambda x: "Diagnosed" if x==1 else "No Diagnosis")
         with col6:
-            asthma = st.selectbox("Asthma History 🫁", [0, 1], format_func=lambda x: "Yes" if x==1 else "No")
-            copd = st.selectbox("COPD History 💨", [0, 1], format_func=lambda x: "Yes" if x==1 else "No")
-            kidney = st.selectbox("Kidney Disease History 🧪", [0, 1], format_func=lambda x: "Yes" if x==1 else "No")
+            asthma = st.selectbox("Asthma Status", [0, 1], format_func=lambda x: "Diagnosed" if x==1 else "No Diagnosis")
+            copd = st.selectbox("COPD Status", [0, 1], format_func=lambda x: "Diagnosed" if x==1 else "No Diagnosis")
+            kidney = st.selectbox("Chronic Kidney Disease Status", [0, 1], format_func=lambda x: "Diagnosed" if x==1 else "No Diagnosis")
         with col7:
-            visits = st.number_input("Hospital Visits (Past Year) 🏥", min_value=0, max_value=50, value=1)
-            systolic = st.number_input("Systolic BP (mmHg) 📈", min_value=80, max_value=220, value=130)
-            diastolic = st.number_input("Diastolic BP (mmHg) 📉", min_value=50, max_value=130, value=85)
+            visits = st.number_input("Outpatient Office Visits (Past Year)", min_value=0, max_value=50, value=1)
+            systolic = st.number_input("Systolic BP (mmHg)", min_value=80, max_value=220, value=130)
+            diastolic = st.number_input("Diastolic BP (mmHg)", min_value=50, max_value=130, value=85)
         with col8:
-            plan = st.selectbox("Insurance Plan Tier 💳", ["HMO", "PPO", "EPO", "POS"])
-            hba1c = st.number_input("HbA1c Level (%) 🩸", min_value=3.5, max_value=15.0, value=5.6, step=0.1)
-            had_procedure = st.selectbox("Had Major Procedure 🏥", [0, 1], format_func=lambda x: "Yes" if x==1 else "No")
+            plan = st.selectbox("Insurance Plan Structure", ["HMO", "PPO", "EPO", "POS"])
+            hba1c = st.number_input("Fasting HbA1c (%)", min_value=3.5, max_value=15.0, value=5.6, step=0.1)
+            had_procedure = st.selectbox("Major Surgery History", [0, 1], format_func=lambda x: "Yes" if x==1 else "No")
 
-        # Map to Patient Dict structure
-        # Derived fields filled with average/logical defaults
+        # Map to Patient Dict structure (inferred features)
         hosp_3yrs = 1 if visits > 2 else 0
         days_hosp = hosp_3yrs * 3
         med_count = 2 if (diabetes + hypertension) > 0 else 0
@@ -383,21 +363,21 @@ else:
             "had_major_procedure": had_procedure
         }
 
-        if page == "💰 Cost Prediction":
-            if st.button("Calculate Predicted Cost"):
+        if page == "Cost Prediction":
+            if st.button("Generate Cost Forecast"):
                 if regressor is not None:
-                    with st.spinner("Processing clinical models..."):
+                    with st.spinner("Executing regression pipelines..."):
                         predicted_cost = prediction.predict_cost(patient_dict)
                     
                     st.markdown("---")
-                    st.markdown("## 💰 Prediction Results")
+                    st.markdown("### Cost Projections & Diagnostics")
                     res_col1, res_col2 = st.columns(2)
                     with res_col1:
                         st.markdown(f"""
-                            <div style='background-color:#EBF5FB; border-left: 6px solid #1E88E5; border-radius: 8px; padding: 2rem;'>
-                                <h4 style='color:#1A5276; margin:0;'>Estimated Annual Medical Bill</h4>
-                                <h1 style='color:#1B4F72; font-size:3.5rem; margin-top:0.5rem;'>${predicted_cost:,.2f}</h1>
-                                <p style='color:#5D6D7E; font-size:0.9rem; margin-bottom:0;'>Confidence Score: <b>93.8%</b> (based on historical R² variance)</p>
+                            <div style='background-color:#F8FAFC; border: 1px solid #E2E8F0; border-left: 6px solid #0F172A; border-radius: 8px; padding: 2rem;'>
+                                <h4 style='color:#64748B; margin:0; font-size: 0.95rem; font-weight:600; text-transform:uppercase;'>Predicted Annual Medical Liability</h4>
+                                <h1 style='color:#0F172A; font-size:3.2rem; margin-top:0.5rem;'>${predicted_cost:,.2f}</h1>
+                                <p style='color:#94A3B8; font-size:0.85rem; margin-top:0.5rem; margin-bottom:0;'>Estimates assume regular outpatient care and active management.</p>
                             </div>
                         """, unsafe_allow_html=True)
                         fig_gauge = utils.plot_cost_gauge(predicted_cost)
@@ -408,53 +388,55 @@ else:
                 else:
                     st.error("Saved Regressor Model not found. Run model training notebook first.")
 
-        elif page == "⚠ Risk Prediction":
-            if st.button("Evaluate Patient Risk Level"):
+        elif page == "Risk Prediction":
+            if st.button("Evaluate Risk Cohort"):
                 if classifier is not None:
-                    with st.spinner("Processing clinical risk models..."):
+                    with st.spinner("Executing classifier pipelines..."):
                         risk_results = prediction.predict_risk(patient_dict)
                     
                     st.markdown("---")
-                    st.markdown("## ⚠ Risk Evaluation Results")
+                    st.markdown("### Risk Cohort Classification & Recommendations")
                     res_col1, res_col2 = st.columns(2)
                     with res_col1:
-                        bg_color = "#FFEBEE" if risk_results["risk_level"] == "High" else ("#FFF3E0" if risk_results["risk_level"] == "Medium" else "#E8F5E9")
-                        border_color = "#FFCDD2" if risk_results["risk_level"] == "High" else ("#FFE082" if risk_results["risk_level"] == "Medium" else "#C8E6C9")
+                        bg_color = "#FEF2F2" if risk_results["risk_level"] == "High" else ("#FFFBEB" if risk_results["risk_level"] == "Medium" else "#F0FDF4")
+                        border_color = "#FEE2E2" if risk_results["risk_level"] == "High" else ("#FEF3C7" if risk_results["risk_level"] == "Medium" else "#DCFCE7")
+                        text_color = "#991B1B" if risk_results["risk_level"] == "High" else ("#92400E" if risk_results["risk_level"] == "Medium" else "#166534")
+                        
                         st.markdown(f"""
-                            <div style='background-color:{bg_color}; border: 1px solid {border_color}; border-left: 6px solid #3F51B5; border-radius: 8px; padding: 2rem;'>
-                                <h4 style='color:#1A237E; margin:0;'>Risk Classification Status</h4>
-                                <h1 style='color:#1A237E; font-size:3rem; margin-top:0.5rem;'>{risk_results["risk_level"]} Risk Cohort</h1>
-                                <p style='color:#3F51B5; font-size:1.1rem; margin-top:0.5rem;'>Model Probability: <b>{risk_results["probability"]*100:.1f}%</b></p>
+                            <div style='background-color:{bg_color}; border: 1px solid {border_color}; border-left: 6px solid {text_color}; border-radius: 8px; padding: 2rem;'>
+                                <h4 style='color:#64748B; margin:0; font-size: 0.95rem; font-weight:600; text-transform:uppercase;'>Assigned Risk Cohort</h4>
+                                <h1 style='color:{text_color}; font-size:2.8rem; margin-top:0.5rem;'>{risk_results["risk_level"]} Risk Status</h1>
+                                <p style='color:{text_color}; font-size:1rem; margin-top:0.5rem; margin-bottom:0;'>Cohort Probability Score: <b>{risk_results["probability"]*100:.1f}%</b></p>
                             </div>
                         """, unsafe_allow_html=True)
                         fig_meter = utils.plot_risk_meter(risk_results["probability"])
                         st.plotly_chart(fig_meter, use_container_width=True)
                     with res_col2:
-                        st.markdown("### 📋 Clinical Recommendations & Care Plan")
+                        st.markdown("#### Clinical Directives & Preventive Care Plan")
                         for idx, rec in enumerate(risk_results["recommendations"]):
-                            st.info(f"👉 **Rec #{idx+1}:** {rec}")
+                            st.info(f"Directive #{idx+1}: {rec}")
                 else:
                     st.error("Saved Classifier Model not found. Run model training notebook first.")
 
-    elif page == "👥 Patient Segmentation":
-        st.markdown("<div class='animated-title'>👥 Patient Segmentation & Cohort Discovery</div>", unsafe_allow_html=True)
-        st.markdown("<div class='section-subtitle'>Clustering Patients into Health and Cost Risk Cohorts (K-Means Clustering)</div>", unsafe_allow_html=True)
+    elif page == "Patient Segmentation":
+        st.markdown("<div class='dashboard-title'>Patient Cohort Segmentation</div>", unsafe_allow_html=True)
+        st.markdown("<div class='section-subtitle'>Assign Patient Profiles to Lifestyle and Cost-Risk Cohorts (K-Means Clustering)</div>", unsafe_allow_html=True)
         
-        st.markdown("### Input Patient Parameters for Cohort Mapping")
+        st.markdown("<div class='content-box-header'>Profile Metrics for Cluster Assessment</div>", unsafe_allow_html=True)
         col1, col2, col3 = st.columns(3)
         with col1:
             age = st.number_input("Patient Age", min_value=18, max_value=100, value=58)
             bmi = st.number_input("Patient BMI", min_value=15.0, max_value=50.0, value=34.2)
         with col2:
             income = st.number_input("Annual Income ($)", min_value=10000.0, max_value=300000.0, value=65000.0)
-            visits = st.number_input("Hospital Visits (Past Year)", min_value=0, max_value=20, value=3)
+            visits = st.number_input("Outpatient Hospital Visits (Past Year)", min_value=0, max_value=20, value=3)
         with col3:
-            diabetes = st.checkbox("Diabetes", value=True)
-            hypertension = st.checkbox("Hypertension", value=True)
-            heart_disease = st.checkbox("Heart Disease", value=False)
-            smoker = st.selectbox("Smoking Status", ["Current", "Never", "Former"])
+            diabetes = st.checkbox("Diabetes Diagnosis", value=True)
+            hypertension = st.checkbox("Hypertension Diagnosis", value=True)
+            heart_disease = st.checkbox("Cardiovascular Disease Diagnosis", value=False)
+            smoker = st.selectbox("Smoking Status Profile", ["Current", "Never", "Former"])
             
-        if st.button("Determine Patient Cohort"):
+        if st.button("Evaluate Patient Segmentation"):
             if clusterer is not None:
                 total_chronic = sum([int(diabetes), int(hypertension), int(heart_disease)])
                 util_score = visits * 2.0
@@ -477,21 +459,21 @@ else:
                 cluster_id = model.predict(feat_scaled)[0]
                 
                 cohorts = {
-                    0: {"name": "High Lifestyle Risk Segment", "lifestyle": "Unfavorable. Heavy smoking and high BMI.", "disease": "Mild BP/Sugar elevation.", "cost": "Moderate-High.", "insight": "Enroll in smoking cessation.", "color": "#F39C12"},
-                    1: {"name": "Healthy Youth Cohort", "lifestyle": "Excellent. Active, non-smokers.", "disease": "Absent.", "cost": "Low.", "insight": "Maintain wellness lifestyle.", "color": "#27AE60"},
-                    2: {"name": "Geriatric High-Care Cohort", "lifestyle": "Sedentary. Older population.", "disease": "Severe chronic diseases.", "cost": "Very High.", "insight": "Active care coordination recommended.", "color": "#C0392B"},
-                    3: {"name": "Standard Moderate-Risk Segment", "lifestyle": "Average. Moderate exercise.", "disease": "Single chronic condition controlled.", "cost": "Moderate.", "insight": "Medication compliance reminder.", "color": "#2980B9"}
+                    0: {"name": "High Lifestyle Risk Cohort", "lifestyle": "Elevated. Heavy tobacco usage combined with high BMI.", "disease": "Borderline blood pressure and glucose markers.", "cost": "Moderate-High yearly claims.", "insight": "Prioritize smoking cessation and dietary coordination.", "color": "#D97706"},
+                    1: {"name": "Low-Risk Well Cohort", "lifestyle": "Excellent. Highly active, non-smokers, normal weight.", "disease": "No active diagnoses.", "cost": "Low claims profile.", "insight": "Support ongoing health maintenance and annual wellness checks.", "color": "#059669"},
+                    2: {"name": "Geriatric Chronic Care Segment", "lifestyle": "Sedentary. Restricted activity patterns.", "disease": "Multiple complex chronic comorbidities.", "cost": "Very High claims profile.", "insight": "Require direct care management and outreach protocols.", "color": "#DC2626"},
+                    3: {"name": "Moderate-Risk Managed Cohort", "lifestyle": "Average. Moderate exercise activity.", "disease": "Single chronic condition managed via maintenance drugs.", "cost": "Predictable moderate claims.", "insight": "Implement medication compliance checks.", "color": "#2563EB"}
                 }
                 
                 selected_cohort = cohorts[cluster_id]
                 
                 st.markdown("---")
-                st.markdown(f"## 👤 Patient Cohort Mapping: <span style='color:{selected_cohort['color']};'>{selected_cohort['name']}</span>", unsafe_allow_html=True)
+                st.markdown(f"### Assigned Cohort Segment: <span style='color:{selected_cohort['color']};'>{selected_cohort['name']}</span>", unsafe_allow_html=True)
                 
                 col_a, col_b = st.columns(2)
                 with col_a:
                     st.markdown(f"""
-                        <div style='background-color:#F8F9F9; border-radius: 8px; padding: 1.5rem; border-top: 5px solid {selected_cohort['color']}'>
+                        <div style='background-color:#F8FAFC; border-radius: 8px; padding: 1.5rem; border: 1px solid #E2E8F0; border-top: 5px solid {selected_cohort['color']}'>
                             <p><b>Lifestyle Profile:</b> {selected_cohort['lifestyle']}</p>
                             <p><b>Disease Profile:</b> {selected_cohort['disease']}</p>
                             <p><b>Medical Cost Category:</b> {selected_cohort['cost']}</p>
@@ -499,24 +481,24 @@ else:
                     """, unsafe_allow_html=True)
                 with col_b:
                     st.markdown(f"""
-                        <div style='background-color:#EBF5FB; border-radius: 8px; padding: 1.5rem; border-top: 5px solid #2980B9'>
-                            <h4 style='margin:0;color:#2980B9;'>Personalized Insight</h4>
-                            <p style='margin-top:0.5rem;color:#2C3E50;'>{selected_cohort['insight']}</p>
+                        <div style='background-color:#F0FDF4; border-radius: 8px; padding: 1.5rem; border: 1px solid #DCFCE7; border-top: 5px solid #166534'>
+                            <h4 style='margin:0;color:#166534;font-size:1.05rem;font-weight:600;'>Care Directives</h4>
+                            <p style='margin-top:0.5rem;color:#14532D;font-size:0.95rem;'>{selected_cohort['insight']}</p>
                         </div>
                     """, unsafe_allow_html=True)
             else:
                 st.error("Cluster model not found. Run training first.")
 
-    elif page == "📈 Model Performance":
-        st.markdown("<div class='animated-title'>📈 Model Performance Intelligence</div>", unsafe_allow_html=True)
-        st.markdown("<div class='section-subtitle'>Comparative analysis of all trained ML models across Tracks</div>", unsafe_allow_html=True)
+    elif page == "Model Performance":
+        st.markdown("<div class='dashboard-title'>Model Performance Analytics</div>", unsafe_allow_html=True)
+        st.markdown("<div class='section-subtitle'>Comparative Diagnostics of Deployed Estimators on Kaggle Test Splits</div>", unsafe_allow_html=True)
         
-        tab1, tab2, tab3 = st.tabs(["💰 Cost Regression", "⚠ Patient Risk Classification", "👥 Patient Clustering"])
+        tab1, tab2, tab3 = st.tabs(["Cost Regression", "Patient Risk Classification", "Patient Clustering"])
         
         with tab1:
-            st.markdown("### Regression Metrics Table")
+            st.markdown("#### Regression Algorithm Comparison Table")
             if reg_metrics is not None:
-                st.dataframe(reg_metrics.style.highlight_max(subset=["R2"], color="#D4EFDF"), use_container_width=True)
+                st.dataframe(reg_metrics.style.highlight_max(subset=["R2"], color="#DCFCE7"), use_container_width=True)
                 fig_reg_comp = px.bar(
                     reg_metrics,
                     x="R2",
@@ -524,18 +506,18 @@ else:
                     orientation="h",
                     color="R2",
                     color_continuous_scale="Blues",
-                    title="Model R² Score Comparison",
+                    title="Model R² Score Comparison (Test Set)",
                     template="plotly_white"
                 )
                 fig_reg_comp.update_layout(yaxis={'categoryorder':'total ascending'})
                 st.plotly_chart(fig_reg_comp, use_container_width=True)
             else:
-                st.warning("Metrics csv not found.")
+                st.warning("Metrics database not found.")
                 
         with tab2:
-            st.markdown("### Classification Metrics Table")
+            st.markdown("#### Classification Algorithm Comparison Table")
             if cls_metrics is not None:
-                st.dataframe(cls_metrics.style.highlight_max(subset=["F1-Score"], color="#D4EFDF"), use_container_width=True)
+                st.dataframe(cls_metrics.style.highlight_max(subset=["F1-Score"], color="#DCFCE7"), use_container_width=True)
                 fig_cls_comp = px.bar(
                     cls_metrics,
                     x="F1-Score",
@@ -543,52 +525,51 @@ else:
                     orientation="h",
                     color="F1-Score",
                     color_continuous_scale="Purples",
-                    title="Model F1-Score Comparison",
+                    title="Model F1-Score Comparison (Test Set)",
                     template="plotly_white"
                 )
                 fig_cls_comp.update_layout(yaxis={'categoryorder':'total ascending'})
                 st.plotly_chart(fig_cls_comp, use_container_width=True)
             else:
-                st.warning("Metrics csv not found.")
+                st.warning("Metrics database not found.")
                 
         with tab3:
-            st.markdown("### Clustering Performance Metrics")
+            st.markdown("#### Clustering Algorithm Metrics")
             if clus_metrics is not None:
                 st.table(clus_metrics)
 
-    elif page == "📂 About Project":
-        st.markdown("<div class='animated-title'>🏥 Platform Architecture & Details</div>", unsafe_allow_html=True)
-        st.markdown("<div class='section-subtitle'>System design, technologies utilized, and developer credentials</div>", unsafe_allow_html=True)
+    elif page == "About Project":
+        st.markdown("<div class='dashboard-title'>System Architecture & Developer Details</div>", unsafe_allow_html=True)
+        st.markdown("<div class='section-subtitle'>Technical Pipeline and Framework Summary</div>", unsafe_allow_html=True)
         
-        st.markdown("### 🧱 Tech Stack & Libraries")
+        st.markdown("### Technical Framework Summary")
         col1, col2, col3 = st.columns(3)
         with col1:
             st.markdown("""
-            **Data Processing & Modeling**
-            - `Python 3` - Primary development language
-            - `Pandas` & `NumPy` - Data manipulation
-            - `Scikit-Learn` - ML preprocessing & modeling
+            **Data Processing & Preprocessing**
+            - Python 3.13 Development
+            - Pandas & NumPy for data cleaning
+            - Scikit-Learn pipelines
             """)
         with col2:
             st.markdown("""
-            **GUI & Web Hosting**
-            - `Streamlit` - Interactive UI Dashboard
-            - `Plotly` - Dynamic financial and distribution plots
-            - `Joblib` - Model persistence and serialization
+            **GUI Framework & Visualization**
+            - Streamlit for dashboard rendering
+            - Plotly for interactive distributions
+            - Joblib for model serialization
             """)
         with col3:
             st.markdown("""
-            **Algorithms Deployed**
-            - Regression: Linear, Ridge, Lasso, ElasticNet, Polynomial, DT, Random Forest, Gradient Boosting, SVR, KNN.
-            - Classification: Logistic Regression, KNN, Naive Bayes, Decision Tree, SVM.
-            - Clustering: KMeans, Hierarchical.
+            **Scoring Estimators**
+            - Track 1: 10 Regression Models
+            - Track 2: 5 Classifiers
+            - Track 3: K-Means Clustering
             """)
             
-        st.markdown("### 👨‍💻 Developer Information")
+        st.markdown("### Developer Profiles")
         st.markdown("""
-        This project was built by a senior ML developer as an academic Capstone project.
+        Project completed under Course: 23CSE301 Machine Learning - Capstone Project.
         
-        - **Academic Code**: 23CSE301 Machine Learning - Capstone Project
-        - **GitHub**: [github.com/hemachandra-developer](https://github.com)
-        - **LinkedIn**: [linkedin.com/in/hemachandra](https://linkedin.com)
+        * **GitHub Repository**: [github.com/hemu1196/ML_capstone](https://github.com/hemu1196/ML_capstone)
+        * **LinkedIn Profile**: [linkedin.com/in/hemachandra](https://linkedin.com)
         """)
