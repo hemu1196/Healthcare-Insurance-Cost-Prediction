@@ -1,0 +1,246 @@
+/* Poppins & Inter Google Font Imports */
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=Poppins:wght@300;400;500;600;700;800&display=swap');
+
+/* General Document Styles */
+html, body, [class*="css"] {
+    font-family: 'Inter', 'Poppins', sans-serif;
+    background-color: #F5F9FC;
+    color: #1E293B;
+}
+
+/* Custom Containers */
+.block-container {
+    padding-top: 1.5rem !important;
+    padding-bottom: 2rem !important;
+}
+
+/* Premium Gradient Hero Section */
+.hero-container {
+    background: linear-gradient(135deg, #0F4C81 0%, #0D3B66 50%, #00A8E8 100%);
+    border-radius: 16px;
+    padding: 3rem 4rem;
+    color: #FFFFFF;
+    box-shadow: 0 10px 30px rgba(15, 76, 129, 0.15);
+    margin-bottom: 2.5rem;
+    position: relative;
+    overflow: hidden;
+}
+
+.hero-container::after {
+    content: "";
+    position: absolute;
+    top: -50%;
+    right: -10%;
+    width: 300px;
+    height: 300px;
+    background: rgba(0, 168, 232, 0.15);
+    border-radius: 50%;
+    filter: blur(50px);
+}
+
+.hero-title {
+    font-family: 'Poppins', sans-serif;
+    font-weight: 800;
+    font-size: 2.8rem;
+    margin-bottom: 0.5rem;
+    letter-spacing: -0.02em;
+    line-height: 1.2;
+}
+
+.hero-subtitle {
+    font-size: 1.15rem;
+    font-weight: 300;
+    color: #E2E8F0;
+    margin-bottom: 1.5rem;
+    letter-spacing: 0.02em;
+}
+
+.hero-badge {
+    background: rgba(255, 255, 255, 0.1);
+    border: 1px solid rgba(255, 255, 255, 0.2);
+    padding: 0.4rem 1rem;
+    border-radius: 50px;
+    font-size: 0.85rem;
+    text-transform: uppercase;
+    letter-spacing: 0.05em;
+    display: inline-block;
+    font-weight: 500;
+}
+
+/* Grid & Cards (Power BI / Tableau Style) */
+.analytics-card {
+    background-color: #FFFFFF;
+    border-radius: 12px;
+    padding: 1.5rem;
+    border: 1px solid #E2E8F0;
+    box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.02), 0 2px 4px -1px rgba(0, 0, 0, 0.02);
+    transition: transform 0.2s cubic-bezier(0.4, 0, 0.2, 1), box-shadow 0.2s cubic-bezier(0.4, 0, 0.2, 1);
+    margin-bottom: 1rem;
+}
+
+.analytics-card:hover {
+    transform: translateY(-4px);
+    box-shadow: 0 10px 15px -3px rgba(15, 76, 129, 0.08), 0 4px 6px -4px rgba(15, 76, 129, 0.08);
+    border-color: #CBD5E1;
+}
+
+.card-title {
+    font-family: 'Poppins', sans-serif;
+    color: #64748B;
+    font-size: 0.78rem;
+    font-weight: 600;
+    text-transform: uppercase;
+    letter-spacing: 0.05em;
+    margin-bottom: 0.5rem;
+}
+
+.card-value {
+    color: #0F4C81;
+    font-size: 1.8rem;
+    font-weight: 700;
+    letter-spacing: -0.01em;
+}
+
+.card-trend {
+    font-size: 0.8rem;
+    margin-top: 0.5rem;
+    font-weight: 500;
+    display: flex;
+    align-items: center;
+}
+
+.trend-up {
+    color: #2ECC71;
+}
+
+.trend-down {
+    color: #E74C3C;
+}
+
+/* Section Header Panels */
+.section-panel-header {
+    font-family: 'Poppins', sans-serif;
+    color: #0F4C81;
+    font-size: 1.25rem;
+    font-weight: 700;
+    margin-top: 2rem;
+    margin-bottom: 1rem;
+    border-bottom: 2px solid #E2E8F0;
+    padding-bottom: 0.5rem;
+    letter-spacing: -0.01em;
+}
+
+/* Input Form Containers */
+.form-container {
+    background-color: #FFFFFF;
+    border: 1px solid #E2E8F0;
+    border-radius: 12px;
+    padding: 2rem;
+    box-shadow: 0 1px 3px rgba(0, 0, 0, 0.05);
+    margin-bottom: 2rem;
+}
+
+/* Badges */
+.badge-standard {
+    padding: 0.35rem 0.7rem;
+    border-radius: 6px;
+    font-size: 0.85rem;
+    font-weight: 600;
+    display: inline-block;
+}
+
+.badge-danger-fill {
+    background-color: #FDEDED;
+    color: #E74C3C;
+    border: 1px solid #FADBD8;
+}
+
+.badge-success-fill {
+    background-color: #EAF9EE;
+    color: #2ECC71;
+    border: 1px solid #D4EFDF;
+}
+
+.badge-warning-fill {
+    background-color: #FEF5E7;
+    color: #F39C12;
+    border: 1px solid #FDEBD0;
+}
+
+/* Custom Interactive Timeline for Workflow */
+.timeline-container {
+    padding: 1rem 0;
+}
+
+.timeline-step {
+    border-left: 3px solid #0F4C81;
+    padding-left: 1.5rem;
+    position: relative;
+    padding-bottom: 1.5rem;
+}
+
+.timeline-step::before {
+    content: "";
+    position: absolute;
+    left: -8px;
+    top: 0;
+    width: 13px;
+    height: 13px;
+    border-radius: 50%;
+    background-color: #00A8E8;
+    border: 3px solid #FFFFFF;
+    box-shadow: 0 0 0 3px #0F4C81;
+}
+
+.timeline-step-title {
+    font-family: 'Poppins', sans-serif;
+    font-weight: 600;
+    font-size: 1.05rem;
+    color: #0F4C81;
+}
+
+.timeline-step-desc {
+    color: #64748B;
+    font-size: 0.9rem;
+    margin-top: 0.25rem;
+}
+
+/* Collapsible Section Frames */
+.collapsible-frame {
+    background-color: #FFFFFF;
+    border: 1px solid #E2E8F0;
+    border-radius: 8px;
+    margin-bottom: 1rem;
+}
+
+/* Table Enhancements */
+.dataframe {
+    border-collapse: collapse;
+    width: 100%;
+    font-size: 0.9rem;
+}
+
+.dataframe th {
+    background-color: #F8FAFC !important;
+    color: #64748B !important;
+    font-weight: 600;
+    text-transform: uppercase;
+    font-size: 0.75rem;
+    padding: 0.75rem 1rem !important;
+    border-bottom: 2px solid #E2E8F0 !important;
+}
+
+.dataframe td {
+    padding: 0.75rem 1rem !important;
+    border-bottom: 1px solid #E2E8F0 !important;
+}
+
+/* Footers */
+.app-footer {
+    border-top: 1px solid #E2E8F0;
+    padding-top: 1.5rem;
+    margin-top: 3rem;
+    color: #94A3B8;
+    font-size: 0.8rem;
+    text-align: center;
+}
