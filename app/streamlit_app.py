@@ -18,7 +18,7 @@ import app.utils as utils
 
 # 1. Page Configuration
 st.set_page_config(
-    page_title="MedIntel AI | Healthcare Intelligence Platform",
+    page_title="MedPredict AI | Healthcare Intelligence Platform",
     page_icon="🏥",
     layout="wide",
     initial_sidebar_state="expanded"
@@ -60,7 +60,7 @@ reg_metrics, cls_metrics, clus_metrics = load_metrics_cached()
 
 # 4. Sidebar Collapsible Navigation
 with st.sidebar:
-    st.markdown("<h2 style='color:#0F4C81;font-weight:800;font-family:Poppins;font-size:1.45rem;margin-bottom:1.5rem;text-align:center;'>🏥 MedIntel Platform</h2>", unsafe_allow_html=True)
+    st.markdown("<h2 style='color:#0F4C81;font-weight:800;font-family:Poppins;font-size:1.45rem;margin-bottom:1.5rem;text-align:center;'>🏥 MedPredict Platform</h2>", unsafe_allow_html=True)
     
     page = option_menu(
         menu_title="Operational Hub",
@@ -77,77 +77,165 @@ with st.sidebar:
     )
     
     st.markdown("---")
-    st.markdown("<div style='text-align:center;padding:0.5rem;'><span class='badge-standard badge-success-fill' style='font-size:0.7rem;'>SYSTEM ONLINE</span><p style='font-size:0.72rem;color:#64748B;margin-top:0.5rem;'>HIPAA Secured Engine v1.2.0<br>© 2026 MedIntel Labs</p></div>", unsafe_allow_html=True)
+    st.markdown("<div style='text-align:center;padding:0.5rem;'><span class='badge-standard badge-success-fill' style='font-size:0.7rem;'>SYSTEM ONLINE</span><p style='font-size:0.72rem;color:#64748B;margin-top:0.5rem;'>HIPAA Secured Engine v1.2.0<br>© 2026 MedPredict Labs</p></div>", unsafe_allow_html=True)
 
 # 5. Routing Page Views
 if page == "Home":
     # Gradient Hero Banner
     st.markdown("""
         <div class='hero-container'>
-            <div class='hero-badge'>Clinical AI Solutions</div>
-            <h1 class='hero-title'>Patient Risk & Cost Intelligence</h1>
-            <p class='hero-subtitle'>Integrated predictive algorithms for hospital financial liability analysis and preventative clinical forecasting.</p>
+            <div class='hero-badge'>Healthcare Solutions</div>
+            <h1 class='hero-title'>Healthcare Cost Prediction and Patient Risk Intelligence</h1>
+            <p class='hero-subtitle'>Leverage machine learning to predict healthcare costs, identify high-risk patients, and support data-driven clinical decision-making for improved patient outcomes.</p>
         </div>
     """, unsafe_allow_html=True)
     
-    # Overview metrics row
-    col1, col2, col3, col4, col5 = st.columns(5)
-    with col1:
-        st.markdown("<div class='analytics-card'><div class='card-title'>Population Size</div><div class='card-value'>100,000</div><div class='card-trend trend-up'>↑ Active Claims</div></div>", unsafe_allow_html=True)
-    with col2:
-        st.markdown("<div class='analytics-card'><div class='card-title'>Attributes</div><div class='card-value'>54</div><div class='card-trend trend-up'>↑ Clinically Rich</div></div>", unsafe_allow_html=True)
-    with col3:
-        st.markdown("<div class='analytics-card'><div class='card-title'>Cost Regressors</div><div class='card-value'>10</div><div class='card-trend trend-up'>↑ Fully Tuned</div></div>", unsafe_allow_html=True)
-    with col4:
-        st.markdown("<div class='analytics-card'><div class='card-title'>Risk Classifiers</div><div class='card-value'>5</div><div class='card-trend trend-up'>↑ Stratified</div></div>", unsafe_allow_html=True)
-    with col5:
-        st.markdown("<div class='analytics-card'><div class='card-title'>Segment Cohorts</div><div class='card-value'>4</div><div class='card-trend trend-up'>↑ K-Means</div></div>", unsafe_allow_html=True)
-
-    st.markdown("<div class='section-panel-header'>Core Intelligence Capabilities</div>", unsafe_allow_html=True)
-    
-    cap_col1, cap_col2, cap_col3 = st.columns(3)
-    with cap_col1:
-        st.markdown("""
-            <div class='analytics-card' style='min-height: 200px;'>
-                <h4 style='color:#0F4C81;font-family:Poppins;font-weight:600;margin-top:0;'>Annual Bill Regression</h4>
-                <p style='color:#64748B;font-size:0.9rem;line-height:1.5;'>Forecasts total annual clinical claims liabilities per patient. Utilizes ensemble models (Random Forest, Gradient Boosting) achieving R² scores of 0.9978 with RMSE variances under $150.</p>
-            </div>
-        """, unsafe_allow_html=True)
-    with cap_col2:
-        st.markdown("""
-            <div class='analytics-card' style='min-height: 200px;'>
-                <h4 style='color:#0F4C81;font-family:Poppins;font-weight:600;margin-top:0;'>Patient Risk Stratification</h4>
-                <p style='color:#64748B;font-size:0.9rem;line-height:1.5;'>Classifies patients likely to develop high-cost complications. Identifies chronic dependencies and lifestyle risks with 0.9988 weighted F1-score for proactive case management.</p>
-            </div>
-        """, unsafe_allow_html=True)
-    with cap_col3:
-        st.markdown("""
-            <div class='analytics-card' style='min-height: 200px;'>
-                <h4 style='color:#0F4C81;font-family:Poppins;font-weight:600;margin-top:0;'>Unsupervised Cohort Discovery</h4>
-                <p style='color:#64748B;font-size:0.9rem;line-height:1.5;'>Segments patient databases into cluster cohorts using K-Means. Defines profiles based on lifestyle factors, utilization frequencies, and chronic counts for customized outreach.</p>
-            </div>
-        """, unsafe_allow_html=True)
-
-    st.markdown("<div class='section-panel-header'>Interactive Analytical Timeline</div>", unsafe_allow_html=True)
-    
+    # Summary KPI Cards (6 Cards in Grid)
     st.markdown("""
-        <div class='timeline-container'>
-            <div class='timeline-step'>
-                <div class='timeline-step-title'>Step 1: Clinical Data Integration</div>
-                <div class='timeline-step-desc'>Ingestion of Kaggle's 100,000 record database, mapping demographic parameters alongside diagnostics and claims histories.</div>
+        <div class='grid-container'>
+            <div class='analytics-card'>
+                <div class='card-title'>👥 Total Patients</div>
+                <div class='card-value'>100,000+</div>
+                <div class='card-desc'>Patient database population</div>
             </div>
-            <div class='timeline-step'>
-                <div class='timeline-step-title'>Step 2: Predictive Preprocessing</div>
-                <div class='timeline-step-desc'>Standardization, encoding, and the dynamic creation of lifestyle, utilization, and severity indicators.</div>
+            <div class='analytics-card'>
+                <div class='card-title'>📄 Clinical Attributes</div>
+                <div class='card-value'>54 Features</div>
+                <div class='card-desc'>Diagnostics & demographics</div>
             </div>
-            <div class='timeline-step'>
-                <div class='timeline-step-title'>Step 3: Multi-Track Model Training</div>
-                <div class='timeline-step-desc'>Concurrent fitting of 15 diagnostic regressors and classifiers with cross-validation splits.</div>
+            <div class='analytics-card'>
+                <div class='card-title'>🤖 ML Regression Models</div>
+                <div class='card-value'>10 Models</div>
+                <div class='card-desc'>Algorithms for cost forecasting</div>
             </div>
-            <div class='timeline-step'>
-                <div class='timeline-step-title'>Step 4: Streamlit Insight Delivery</div>
-                <div class='timeline-step-desc'>Publishing metrics and diagnostic predictions directly to the web platform for clinical admins.</div>
+            <div class='analytics-card'>
+                <div class='card-title'>🛡️ Risk Classification Models</div>
+                <div class='card-value'>5 Models</div>
+                <div class='card-desc'>Classifiers for risk assessment</div>
             </div>
+            <div class='analytics-card'>
+                <div class='card-title'>📊 Patient Segments</div>
+                <div class='card-value'>4 Clusters</div>
+                <div class='card-desc'>Cohorts via unsupervised learning</div>
+            </div>
+            <div class='analytics-card'>
+                <div class='card-title'>🎯 Prediction Accuracy</div>
+                <div class='card-value'>98.7%</div>
+                <div class='card-desc'>Weighted F1-score average</div>
+            </div>
+        </div>
+    """, unsafe_allow_html=True)
+
+    # Core Intelligence Capabilities (6 Feature Cards in Grid)
+    st.markdown("<div class='section-panel-header'>Core Intelligence Capabilities</div>", unsafe_allow_html=True)
+    st.markdown("""
+        <div class='grid-container'>
+            <div class='feature-card'>
+                <div style='font-size: 1.8rem;'>💰</div>
+                <div class='feature-title'>Healthcare Cost Prediction</div>
+                <div class='feature-desc'>Predict annual medical expenses using advanced machine learning regression models to estimate patient healthcare costs accurately.</div>
+            </div>
+            <div class='feature-card'>
+                <div style='font-size: 1.8rem;'>⚠️</div>
+                <div class='feature-title'>Patient Risk Intelligence</div>
+                <div class='feature-desc'>Identify patients at high risk using supervised classification algorithms for proactive healthcare interventions.</div>
+            </div>
+            <div class='feature-card'>
+                <div style='font-size: 1.8rem;'>👥</div>
+                <div class='feature-title'>Patient Segmentation</div>
+                <div class='feature-desc'>Group patients into meaningful clusters based on demographics, lifestyle, and medical history using unsupervised learning.</div>
+            </div>
+            <div class='feature-card'>
+                <div style='font-size: 1.8rem;'>📈</div>
+                <div class='feature-title'>Predictive Analytics</div>
+                <div class='feature-desc'>Visualize healthcare trends, disease patterns, and cost distributions through interactive dashboards.</div>
+            </div>
+            <div class='feature-card'>
+                <div style='font-size: 1.8rem;'>🧠</div>
+                <div class='feature-title'>Model Performance</div>
+                <div class='feature-desc'>Compare Regression and Classification models using evaluation metrics such as Accuracy, RMSE, MAE, Precision, Recall, F1 Score, and ROC-AUC.</div>
+            </div>
+            <div class='feature-card'>
+                <div style='font-size: 1.8rem;'>📑</div>
+                <div class='feature-title'>Clinical Decision Support</div>
+                <div class='feature-desc'>Generate intelligent insights that assist hospitals and healthcare professionals in evidence-based decision making.</div>
+            </div>
+        </div>
+    """, unsafe_allow_html=True)
+
+    # Interactive Analytical Timeline (Horizontal Layout)
+    st.markdown("<div class='section-panel-header'>Interactive Analytical Timeline</div>", unsafe_allow_html=True)
+    st.markdown("""
+        <div class='timeline-horizontal'>
+            <div class='timeline-horizontal-card'>
+                <span class='timeline-step-badge'>Step 1</span>
+                <div style='font-weight:600;color:#0F4C81;margin-top:0.25rem;'>📂 Data Collection</div>
+                <p style='color:#64748B;font-size:0.78rem;margin-top:0.25rem;line-height:1.4;'>Collect patient demographic, lifestyle, and medical insurance information.</p>
+            </div>
+            <div class='timeline-arrow'>&rarr;</div>
+            <div class='timeline-horizontal-card'>
+                <span class='timeline-step-badge'>Step 2</span>
+                <div style='font-weight:600;color:#0F4C81;margin-top:0.25rem;'>🧹 Data Preprocessing</div>
+                <p style='color:#64748B;font-size:0.78rem;margin-top:0.25rem;line-height:1.4;'>Handle missing values, encode categorical variables, remove outliers, and normalize data.</p>
+            </div>
+            <div class='timeline-arrow'>&rarr;</div>
+            <div class='timeline-horizontal-card'>
+                <span class='timeline-step-badge'>Step 3</span>
+                <div style='font-weight:600;color:#0F4C81;margin-top:0.25rem;'>📊 Exploratory Data Analysis</div>
+                <p style='color:#64748B;font-size:0.78rem;margin-top:0.25rem;line-height:1.4;'>Generate statistical summaries, correlation analysis, feature importance, and interactive visualizations.</p>
+            </div>
+            <div class='timeline-arrow'>&rarr;</div>
+            <div class='timeline-horizontal-card'>
+                <span class='timeline-step-badge'>Step 4</span>
+                <div style='font-weight:600;color:#0F4C81;margin-top:0.25rem;'>⚙️ Feature Engineering</div>
+                <p style='color:#64748B;font-size:0.78rem;margin-top:0.25rem;line-height:1.4;'>Create meaningful derived features and prepare datasets for machine learning.</p>
+            </div>
+            <div class='timeline-arrow'>&rarr;</div>
+            <div class='timeline-horizontal-card'>
+                <span class='timeline-step-badge'>Step 5</span>
+                <div style='font-weight:600;color:#0F4C81;margin-top:0.25rem;'>🤖 Machine Learning</div>
+                <p style='color:#64748B;font-size:0.78rem;margin-top:0.25rem;line-height:1.4;'>Train Regression, Classification, and Clustering models.</p>
+            </div>
+            <div class='timeline-arrow'>&rarr;</div>
+            <div class='timeline-horizontal-card'>
+                <span class='timeline-step-badge'>Step 6</span>
+                <div style='font-weight:600;color:#0F4C81;margin-top:0.25rem;'>📈 Model Evaluation</div>
+                <p style='color:#64748B;font-size:0.78rem;margin-top:0.25rem;line-height:1.4;'>Evaluate models using RMSE, MAE, Accuracy, Precision, Recall, F1 Score, ROC Curve, and Silhouette Score.</p>
+            </div>
+            <div class='timeline-arrow'>&rarr;</div>
+            <div class='timeline-horizontal-card'>
+                <span class='timeline-step-badge'>Step 7</span>
+                <div style='font-weight:600;color:#0F4C81;margin-top:0.25rem;'>🚀 Prediction Dashboard</div>
+                <p style='color:#64748B;font-size:0.78rem;margin-top:0.25rem;line-height:1.4;'>Deploy trained models into an interactive healthcare analytics platform for real-time predictions.</p>
+            </div>
+        </div>
+    """, unsafe_allow_html=True)
+
+    # Project Workflow Flowchart (Horizontal Nodes)
+    st.markdown("<div class='section-panel-header'>Project Workflow</div>", unsafe_allow_html=True)
+    st.markdown("""
+        <div class='flowchart-horizontal'>
+            <div class='flowchart-node' style='border-left: 4px solid #0F4C81;'>💾 Dataset</div>
+            <div class='flowchart-arrow'>&rarr;</div>
+            <div class='flowchart-node' style='border-left: 4px solid #00A8E8;'>🧹 Data Preprocessing</div>
+            <div class='flowchart-arrow'>&rarr;</div>
+            <div class='flowchart-node' style='border-left: 4px solid #F39C12;'>📊 Exploratory Data Analysis</div>
+            <div class='flowchart-arrow'>&rarr;</div>
+            <div class='flowchart-node' style='border-left: 4px solid #0F4C81;'>⚙️ Feature Engineering</div>
+            <div class='flowchart-arrow'>&rarr;</div>
+            <div class='flowchart-node' style='border-left: 4px solid #00A8E8;'>✂️ Split Dataset</div>
+            <div class='flowchart-arrow'>&rarr;</div>
+            <div class='flowchart-node' style='border-left: 4px solid #2ECC71;'>📈 Regression Models</div>
+            <div class='flowchart-arrow'>&rarr;</div>
+            <div class='flowchart-node' style='border-left: 4px solid #E74C3C;'>🛡️ Classification Models</div>
+            <div class='flowchart-arrow'>&rarr;</div>
+            <div class='flowchart-node' style='border-left: 4px solid #F39C12;'>👥 Patient Segmentation</div>
+            <div class='flowchart-arrow'>&rarr;</div>
+            <div class='flowchart-node' style='border-left: 4px solid #2ECC71;'>📊 Model Evaluation</div>
+            <div class='flowchart-arrow'>&rarr;</div>
+            <div class='flowchart-node' style='border-left: 4px solid #00A8E8;'>🚀 Prediction Engine</div>
+            <div class='flowchart-arrow'>&rarr;</div>
+            <div class='flowchart-node' style='background-color:#0F4C81; color:#FFFFFF; border:none;'>🏥 Healthcare Intelligence Dashboard</div>
         </div>
     """, unsafe_allow_html=True)
 
