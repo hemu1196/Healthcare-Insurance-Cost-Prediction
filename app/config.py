@@ -68,7 +68,7 @@ REG_TUNING_GRIDS = {
 CLS_TUNING_GRIDS = {
     "Logistic Regression": {
         "classifier__C": [0.1, 1.0, 10.0],
-        "classifier__penalty": ["l2"]
+        "classifier__max_iter": [1000, 2000]
     },
     "Decision Tree": {
         "classifier__max_depth": [5, 10, 15, None],

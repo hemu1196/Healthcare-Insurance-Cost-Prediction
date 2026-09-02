@@ -11,6 +11,7 @@ from sklearn.svm import SVR, SVC
 from sklearn.neighbors import KNeighborsRegressor, KNeighborsClassifier
 from sklearn.naive_bayes import GaussianNB
 from sklearn.linear_model import LogisticRegression
+from sklearn.calibration import CalibratedClassifierCV
 from sklearn.model_selection import RandomizedSearchCV, cross_val_score
 from sklearn.metrics import r2_score, mean_squared_error, mean_absolute_error
 from sklearn.metrics import accuracy_score, precision_score, recall_score, f1_score, roc_auc_score
@@ -248,7 +249,7 @@ def train_classification(X_train, X_test, y_train, y_test, preprocessor):
     trained_models["Decision Tree"] = dt
     
     # 5. Support Vector Machine (SVC)
-    svc = Pipeline([("preprocessor", preprocessor), ("classifier", SVC(probability=True, C=1.0, random_state=config.RANDOM_STATE))])
+    svc = Pipeline([("preprocessor", preprocessor), ("classifier", CalibratedClassifierCV(SVC(C=1.0, random_state=config.RANDOM_STATE), ensemble=False))])
     print("Training Support Vector Machine (on 8,000 row subsample for speed)...")
     svc.fit(X_train_sub, y_train_sub)
     trained_models["Support Vector Machine"] = svc
