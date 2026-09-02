@@ -7,7 +7,7 @@ MODEL_DIR = os.path.join(BASE_DIR, "models")
 RESULTS_DIR = os.path.join(BASE_DIR, "results")
 
 # File Paths
-DATA_PATH = os.path.join(DATA_DIR, "insurance_extended.csv")
+DATA_PATH = os.path.join(DATA_DIR, "medical_insurance.csv")
 BEST_REGRESSOR_PATH = os.path.join(MODEL_DIR, "best_regressor.joblib")
 BEST_CLASSIFIER_PATH = os.path.join(MODEL_DIR, "best_classifier.joblib")
 REGRESSION_METRICS_PATH = os.path.join(RESULTS_DIR, "regression_metrics.csv")
