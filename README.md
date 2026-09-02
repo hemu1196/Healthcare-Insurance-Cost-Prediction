@@ -1,20 +1,30 @@
-# Healthcare Cost Prediction and Patient Risk Intelligence Platform
+# 23CSE301 Machine Learning – Capstone Project
 
-## Academic Course Information
-* **Course**: B.Tech. (Computer Science and Engineering) - III Year — 23CSE301 Machine Learning
-* **Task Scope**: **Review 1** Complete (Full Regression Track + Classification Track Part A + Feature Engineering + GUI / Streamlit Implementation)
+**Team No:** 8
 
----
+**Project Title:** Healthcare Cost Prediction and Patient Risk Intelligence Platform
 
-## 📋 Project Overview & Problem Statement
-Predicting patient healthcare costs and clinical risks is critical for insurance underwriting, hospital resource planning, and proactive preventative care. 
+**Dataset:** Medical Insurance Cost Prediction Dataset (`medical_insurance.csv`)
 
-This platform tackles this challenge using three machine learning tracks:
-1. **Track 1: Cost Regression**: Predicts patient annual medical costs (`annual_medical_cost`) using demographic, lifestyle, and clinical predictors. We implement and evaluate 10 regression algorithms.
-2. **Track 2: Risk Classification**: Identifies high-risk patients (`is_high_risk`) who are likely to incur major medical costs. We train and compare 5 classification algorithms for Part A.
-3. **Track 3: Patient Segmentation**: Segments the patient cohort using KMeans clustering based on clinical metrics and resource utilization.
+**Dataset Size:** 100,000 rows × 54 columns
 
----
+**Regression Target Variable:** `annual_medical_cost`
+
+**Classification Target Variable:** `is_high_risk`
+
+## Project Introduction
+
+This project uses machine learning techniques to analyze healthcare and insurance data.
+
+The project focuses on two main tasks. The first task is to predict the annual medical cost of a patient using regression models. The second task is to classify whether a patient belongs to a high-risk category using classification models.
+
+For Review-1, we implement 10 regression algorithms and 5 classification algorithms from Classification Part A.
+
+## Problem Statement
+
+Healthcare data contains information about patient health, medical history, insurance and healthcare usage. Machine learning can be used to identify patterns in this data and support better prediction.
+
+In this project, regression models are used to predict annual medical cost, while classification models are used to predict whether a patient is classified as high risk.
 
 ## 🗃 Dataset Description
 We use the Kaggle Medical Insurance Cost Prediction dataset (downloaded locally at `/Users/hemachandra/Downloads/medical_insurance.csv`) consisting of **100,000 rows** and **54 columns**:

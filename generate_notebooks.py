@@ -6,18 +6,24 @@ from nbformat.v4 import new_notebook, new_markdown_cell, new_code_cell
 def create_regression_notebook():
     nb = new_notebook()
     
-    # 1. Project Introduction & Problem Statement
+    # 1. Project Introduction & Problem Statement (Team 8 Header)
     nb.cells.append(new_markdown_cell(
-        "# Healthcare Cost Prediction - Regression Track\n"
-        "**Course**: 23CSE301 Machine Learning - Capstone Project\n"
-        "**Project Title**: Healthcare Cost Prediction and Patient Risk Intelligence Platform\n"
-        "**Dataset**: Medical Insurance Cost Prediction Dataset (`medical_insurance.csv`)\n"
-        "**Target Variable**: `annual_medical_cost`\n\n"
-        "### Problem Statement\n"
-        "Healthcare expenses can vary significantly among individuals based on age, lifestyle factors, chronic conditions, "
-        "and medical history. Predicting annual medical expenses helps insurance companies and hospital administrators "
-        "estimate financial liabilities and plan resources effectively. In this notebook, we build and evaluate 10 regression "
-        "models to predict annual medical costs."
+        "# 23CSE301 Machine Learning – Capstone Project\n\n"
+        "**Team No:** 8\n\n"
+        "**Project Title:** Healthcare Cost Prediction and Patient Risk Intelligence Platform\n\n"
+        "**Dataset:** Medical Insurance Cost Prediction Dataset (`medical_insurance.csv`)\n\n"
+        "**Dataset Size:** 100,000 rows × 54 columns\n\n"
+        "**Regression Target Variable:** `annual_medical_cost`\n\n"
+        "**Classification Target Variable:** `is_high_risk` \n\n"
+        "## Project Introduction\n\n"
+        "This project uses machine learning techniques to analyze healthcare and insurance data.\n\n"
+        "The project focuses on two main tasks. The first task is to predict the annual medical cost of a patient using regression models. "
+        "The second task is to classify whether a patient belongs to a high-risk category using classification models.\n\n"
+        "For Review-1, we implement 10 regression algorithms and 5 classification algorithms from Classification Part A.\n\n"
+        "## Problem Statement\n\n"
+        "Healthcare data contains information about patient health, medical history, insurance and healthcare usage. "
+        "Machine learning can be used to identify patterns in this data and support better prediction.\n\n"
+        "In this project, regression models are used to predict annual medical cost, while classification models are used to predict whether a patient is classified as high risk."
     ))
     
     # 2. Import Libraries & Setup
@@ -329,22 +335,29 @@ def create_regression_notebook():
     os.makedirs("/Users/hemachandra/Documents/ML_capstone/notebooks", exist_ok=True)
     with open("/Users/hemachandra/Documents/ML_capstone/notebooks/regression.ipynb", "w") as f:
         nbformat.write(nb, f)
-    print("Created student-style regression.ipynb successfully.")
+    print("Created Team 8 regression.ipynb successfully.")
 
 def create_classification_notebook():
     nb = new_notebook()
     
-    # 1. Project Introduction & Problem Statement
+    # 1. Project Introduction & Problem Statement (Team 8 Header)
     nb.cells.append(new_markdown_cell(
-        "# Patient Risk Classification - Classification Track Part A\n"
-        "**Course**: 23CSE301 Machine Learning - Capstone Project\n"
-        "**Project Title**: Healthcare Cost Prediction and Patient Risk Intelligence Platform\n"
-        "**Dataset**: Medical Insurance Cost Prediction Dataset (`medical_insurance.csv`)\n"
-        "**Target Variable**: `is_high_risk`\n\n"
-        "### Problem Statement\n"
-        "Early identification of high-risk patients allows healthcare providers to implement preventive care plans "
-        "and reduce emergency hospitalizations. In this notebook, we implement Classification Part A using 5 machine learning "
-        "classifiers to predict patient risk status."
+        "# 23CSE301 Machine Learning – Capstone Project\n\n"
+        "**Team No:** 8\n\n"
+        "**Project Title:** Healthcare Cost Prediction and Patient Risk Intelligence Platform\n\n"
+        "**Dataset:** Medical Insurance Cost Prediction Dataset (`medical_insurance.csv`)\n\n"
+        "**Dataset Size:** 100,000 rows × 54 columns\n\n"
+        "**Regression Target Variable:** `annual_medical_cost`\n\n"
+        "**Classification Target Variable:** `is_high_risk` \n\n"
+        "## Project Introduction\n\n"
+        "This project uses machine learning techniques to analyze healthcare and insurance data.\n\n"
+        "The project focuses on two main tasks. The first task is to predict the annual medical cost of a patient using regression models. "
+        "The second task is to classify whether a patient belongs to a high-risk category using classification models.\n\n"
+        "For Review-1, we implement 10 regression algorithms and 5 classification algorithms from Classification Part A.\n\n"
+        "## Problem Statement\n\n"
+        "Healthcare data contains information about patient health, medical history, insurance and healthcare usage. "
+        "Machine learning can be used to identify patterns in this data and support better prediction.\n\n"
+        "In this project, regression models are used to predict annual medical cost, while classification models are used to predict whether a patient is classified as high risk."
     ))
     
     # 2. Import Libraries & Setup
@@ -493,16 +506,16 @@ def create_classification_notebook():
     os.makedirs("/Users/hemachandra/Documents/ML_capstone/notebooks", exist_ok=True)
     with open("/Users/hemachandra/Documents/ML_capstone/notebooks/classification.ipynb", "w") as f:
         nbformat.write(nb, f)
-    print("Created student-style classification.ipynb successfully.")
+    print("Created Team 8 classification.ipynb successfully.")
 
 def create_clustering_notebook():
     nb = new_notebook()
     
     nb.cells.append(new_markdown_cell(
-        "# Patient Segmentation - Clustering Track Preview\n"
-        "**Course**: 23CSE301 Machine Learning - Capstone Project\n"
-        "**Project Title**: Healthcare Cost Prediction and Patient Risk Intelligence Platform\n"
-        "**Dataset**: Medical Insurance Cost Prediction Dataset (`medical_insurance.csv`)\n"
+        "# 23CSE301 Machine Learning – Capstone Project\n\n"
+        "**Team No:** 8\n\n"
+        "**Project Title:** Healthcare Cost Prediction and Patient Risk Intelligence Platform\n\n"
+        "**Dataset:** Medical Insurance Cost Prediction Dataset (`medical_insurance.csv`)\n"
     ))
     
     nb.cells.append(new_code_cell(
@@ -535,7 +548,7 @@ def create_clustering_notebook():
     os.makedirs("/Users/hemachandra/Documents/ML_capstone/notebooks", exist_ok=True)
     with open("/Users/hemachandra/Documents/ML_capstone/notebooks/clustering.ipynb", "w") as f:
         nbformat.write(nb, f)
-    print("Created student-style clustering.ipynb successfully.")
+    print("Created Team 8 clustering.ipynb successfully.")
 
 if __name__ == "__main__":
     create_regression_notebook()
