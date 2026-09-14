@@ -9,7 +9,7 @@ NOTEBOOK_DIR = os.path.join(BASE_DIR, "notebooks")
 def build_final_regression_notebook():
     nb = new_notebook()
     
-    # Title & Header
+    # Title & Header (No Marks, No Step Numbers)
     nb.cells.append(new_markdown_cell(
         "# 23CSE301 Machine Learning – Capstone Project\n\n"
         "**Team No:** 8\n\n"
@@ -17,18 +17,18 @@ def build_final_regression_notebook():
         "**Dataset:** Medical Insurance Cost Prediction Dataset (`medical_insurance.csv`)\n\n"
         "**Dataset Size:** 100,000 rows × 54 columns\n\n"
         "**Regression Target Variable:** `annual_medical_cost`\n\n"
-        "### Project Introduction\n"
+        "## Project Introduction\n\n"
         "Healthcare expenses vary significantly among individuals based on age, lifestyle factors, chronic conditions, "
         "and medical history. Predicting annual medical expenses helps insurance companies and hospital administrators "
         "estimate financial liabilities and plan resources effectively. In this notebook, we implement a complete, "
         "leakage-safe, student-level Machine Learning workflow to predict `annual_medical_cost` using 10 regression algorithms."
     ))
     
-    # Step 1: Import Libraries
+    # Import Libraries
     nb.cells.append(new_markdown_cell(
-        "### Step 1 — Import Libraries and Environment Setup\n"
+        "## Import Libraries\n\n"
         "We import standard student-level machine learning libraries including Pandas, NumPy, Matplotlib, Seaborn, and Scikit-learn. "
-        "We also set `random_state=42` for reproducibility."
+        "We set `random_state=42` for reproducibility."
     ))
     nb.cells.append(new_code_cell(
         "import pandas as pd\n"
@@ -37,7 +37,7 @@ def build_final_regression_notebook():
         "import seaborn as sns\n"
         "import os\n"
         "import warnings\n"
-        "warnings.filterwarnings('default')  # Show standard Python warnings if any\n\n"
+        "warnings.filterwarnings('default')\n\n"
         "from sklearn.model_selection import train_test_split, cross_val_score, RandomizedSearchCV\n"
         "from sklearn.preprocessing import StandardScaler, OneHotEncoder, PolynomialFeatures\n"
         "from sklearn.impute import SimpleImputer\n"
@@ -55,12 +55,12 @@ def build_final_regression_notebook():
         "print('Libraries imported successfully. Random seed set to 42.')"
     ))
     nb.cells.append(new_markdown_cell(
-        "**Observation:** All essential Python data science and machine learning libraries have been imported, and the global random seed is fixed to 42 for reproducible results."
+        "Observation: All essential Python data science and machine learning libraries have been imported, and the global random seed is fixed to 42 for reproducible results."
     ))
     
-    # Step 2: Load Dataset
+    # Load Dataset
     nb.cells.append(new_markdown_cell(
-        "### Step 2 — Load Dataset\n"
+        "## Load Dataset\n\n"
         "We load the `medical_insurance.csv` dataset using Pandas."
     ))
     nb.cells.append(new_code_cell(
@@ -73,19 +73,18 @@ def build_final_regression_notebook():
         "df_raw.head()"
     ))
     nb.cells.append(new_markdown_cell(
-        "**Observation:** The dataset loaded cleanly. The first 5 rows display patient demographic attributes, clinical conditions, utilization metrics, insurance policy details, and target variables."
+        "Observation: The dataset loaded cleanly. The first 5 rows display patient demographic attributes, clinical conditions, utilization metrics, insurance policy details, and target variables."
     ))
     
-    # Step 3 & 4: Common Data Understanding
+    # Common Data Understanding
     nb.cells.append(new_markdown_cell(
-        "### Step 3 & 4 — Common Data Understanding & Feature Categorization\n"
+        "## Common Data Understanding\n\n"
         "We audit dataset dimensions, column data types, and categorize attributes into numerical, categorical, and binary lists."
     ))
     nb.cells.append(new_code_cell(
         "print('Dataset Shape (Rows, Columns):', df_raw.shape)\n"
         "print('\\nData Types Summary:')\n"
         "print(df_raw.dtypes.value_counts())\n\n"
-        "# Define feature groups based on data types and domain\n"
         "categorical_cols = [\n"
         "    'sex', 'region', 'urban_rural', 'education', 'marital_status', \n"
         "    'employment_status', 'smoker', 'alcohol_freq', 'plan_type', 'network_tier'\n"
@@ -105,12 +104,12 @@ def build_final_regression_notebook():
         "df_raw.info()"
     ))
     nb.cells.append(new_markdown_cell(
-        "**Observation:** The dataset contains 100,000 patient records across 54 total columns. We have categorized the predictor variables into 24 numerical attributes, 10 categorical attributes, and 11 binary clinical indicators."
+        "Observation: The dataset contains 100,000 patient records across 54 total columns. We have categorized the predictor variables into 24 numerical attributes, 10 categorical attributes, and 11 binary clinical indicators."
     ))
     
-    # Step 5 to 7: Data Quality & Missing Value Treatment
+    # Data Quality & Missing Value Treatment
     nb.cells.append(new_markdown_cell(
-        "### Step 5 to 7 — Data Quality & Missing Value Treatment\n"
+        "## Data Quality and Missing Value Treatment\n\n"
         "We inspect missing values across all columns before and after handling."
     ))
     nb.cells.append(new_code_cell(
@@ -132,12 +131,12 @@ def build_final_regression_notebook():
         "print(f'Total Missing Values AFTER: {missing_after.sum()}')"
     ))
     nb.cells.append(new_markdown_cell(
-        "**Observation:** The categorical feature `alcohol_freq` contained missing entries which were filled with `'Unknown'` to represent non-reporting patients. Total missing values after handling is 0."
+        "Observation: The categorical feature `alcohol_freq` contained missing entries which were filled with `'Unknown'` to represent non-reporting patients. Total missing values after handling is 0."
     ))
     
-    # Step 8 & 9: Duplicates & Outlier Analysis
+    # Duplicates and Outliers
     nb.cells.append(new_markdown_cell(
-        "### Step 8 & 9 — Duplicates Check & Outlier Analysis\n"
+        "## Duplicates Check and Outlier Analysis\n\n"
         "We verify duplicate rows and plot boxplots for important continuous numerical attributes."
     ))
     nb.cells.append(new_code_cell(
@@ -163,12 +162,12 @@ def build_final_regression_notebook():
         "plt.show()"
     ))
     nb.cells.append(new_markdown_cell(
-        "**Observation:** Zero duplicate rows were found in the dataset. The boxplot for `annual_medical_cost` displays high upper-tail values representing patients with severe chronic illness hospitalizations or major surgeries. These are genuine medical claims rather than data entry errors and are retained."
+        "Observation: Zero duplicate rows were found in the dataset. The boxplot for `annual_medical_cost` displays high upper-tail values representing patients with severe chronic illness hospitalizations or major surgeries. These are genuine medical claims rather than data entry errors and are retained."
     ))
     
-    # Step 10 to 15: Exploratory Data Analysis (EDA)
+    # Exploratory Data Analysis
     nb.cells.append(new_markdown_cell(
-        "### Step 10 to 15 — Exploratory Data Analysis (EDA)\n"
+        "## Exploratory Data Analysis\n\n"
         "We visualize key distributions, relationships between features, and target correlations."
     ))
     nb.cells.append(new_code_cell(
@@ -182,7 +181,7 @@ def build_final_regression_notebook():
         "plt.show()"
     ))
     nb.cells.append(new_markdown_cell(
-        "**Observation:** The annual medical cost target distribution is right-skewed. Most patients incur annual medical costs below $20,000, while a smaller cohort of severe patients incur costs up to $50,000+."
+        "Observation: The annual medical cost target distribution is right-skewed. Most patients incur annual medical costs below $20,000, while a smaller cohort of severe patients incur costs up to $50,000+."
     ))
     
     nb.cells.append(new_code_cell(
@@ -210,7 +209,7 @@ def build_final_regression_notebook():
         "plt.show()"
     ))
     nb.cells.append(new_markdown_cell(
-        "**Observation:** Age is uniformly distributed across adult ranges. BMI displays a normal distribution centered around 28. Non-smokers form the majority of the dataset population."
+        "Observation: Age is uniformly distributed across adult ranges. BMI displays a normal distribution centered around 28. Non-smokers form the majority of the dataset population."
     ))
     
     nb.cells.append(new_code_cell(
@@ -234,12 +233,12 @@ def build_final_regression_notebook():
         "plt.show()"
     ))
     nb.cells.append(new_markdown_cell(
-        "**Observation:** The correlation matrix and scatter plots reveal that medical cost correlates positively with outpatient visits, medication count, age, and BMI. Smoking status shifts annual medical cost upward significantly."
+        "Observation: The correlation matrix and scatter plots reveal that medical cost correlates positively with outpatient visits, medication count, age, and BMI. Smoking status shifts annual medical cost upward significantly."
     ))
     
-    # Step 16: Feature Engineering
+    # Feature Engineering
     nb.cells.append(new_markdown_cell(
-        "### Step 16 — Feature Engineering\n"
+        "## Feature Engineering\n\n"
         "We construct 7 clinical and policy engineered features to help regression models capture risk profiles."
     ))
     nb.cells.append(new_code_cell(
@@ -283,12 +282,12 @@ def build_final_regression_notebook():
         "print(['BMI_Category', 'Age_Group', 'Lifestyle_Risk_Score', 'Hospital_Utilization_Score', 'Insurance_Coverage_Ratio', 'Total_Chronic_Diseases', 'Claim_Severity_Index'])"
     ))
     nb.cells.append(new_markdown_cell(
-        "**Observation:** 7 domain-specific engineered features were created. All engineered features rely solely on pre-outcome clinical and policy attributes."
+        "Observation: 7 domain-specific engineered features were created. All engineered features rely solely on pre-outcome clinical and policy attributes."
     ))
     
-    # Step 17: Target Leakage Prevention
+    # Target Leakage Prevention
     nb.cells.append(new_markdown_cell(
-        "### Step 17 — Target Leakage Prevention & Feature Selection\n"
+        "## Target Leakage Prevention\n\n"
         "Target leakage occurs when input features contain post-outcome information or values computed downstream from the target variable. "
         "For regression, `total_claims_paid` represents post-hoc claim reimbursements calculated after annual costs occur. "
         "Therefore, we explicitly drop `total_claims_paid`, `person_id`, `is_high_risk`, `risk_score`, and the target `annual_medical_cost`."
@@ -304,12 +303,12 @@ def build_final_regression_notebook():
         "print('\\nFinal Regression Predictors Count:', X.shape[1])"
     ))
     nb.cells.append(new_markdown_cell(
-        "**Observation:** Target leakage prevention passed. `total_claims_paid` and target identifiers were explicitly removed from predictor matrix `X`."
+        "Observation: Target leakage prevention passed. `total_claims_paid` and target identifiers were explicitly removed from predictor matrix `X`."
     ))
     
-    # Step 18: Train / Test Split
+    # Train / Test Split
     nb.cells.append(new_markdown_cell(
-        "### Step 18 — Train / Test Split\n"
+        "## Train Test Split\n\n"
         "We split the dataset into 80% training set and 20% held-out test set using `random_state=42`."
     ))
     nb.cells.append(new_code_cell(
@@ -320,12 +319,12 @@ def build_final_regression_notebook():
         "print(f'y_test shape:  {y_test.shape}')"
     ))
     nb.cells.append(new_markdown_cell(
-        "**Observation:** Data split successfully. 80,000 patient records are assigned to training, and 20,000 patient records are preserved for held-out evaluation."
+        "Observation: Data split successfully. 80,000 patient records are assigned to training, and 20,000 patient records are preserved for held-out evaluation."
     ))
     
-    # Step 19 & 20: Encoding and Scaling (ColumnTransformer)
+    # Preprocessing Pipeline
     nb.cells.append(new_markdown_cell(
-        "### Step 19 & 20 — Encoding and Scaling Pipeline (ColumnTransformer)\n"
+        "## Data Preprocessing\n\n"
         "We configure an `sklearn.compose.ColumnTransformer` using `StandardScaler` for numerical attributes and `OneHotEncoder(handle_unknown='ignore')` for categorical attributes. "
         "The preprocessor is fitted **strictly on `X_train` only** to prevent data leakage."
     ))
@@ -351,12 +350,12 @@ def build_final_regression_notebook():
         "print(feature_names_out[:10])"
     ))
     nb.cells.append(new_markdown_cell(
-        "**Observation:** Preprocessing pipeline fitted successfully on `X_train`. Categorical features were one-hot encoded and numerical features were standardized, expanding feature dimension from 51 to 68."
+        "Observation: Preprocessing pipeline fitted successfully on `X_train`. Categorical features were one-hot encoded and numerical features were standardized, expanding feature dimension from 51 to 68."
     ))
     
-    # Step 21: Dimensionality Reduction (PCA)
+    # Dimensionality Reduction
     nb.cells.append(new_markdown_cell(
-        "### Step 21 — Dimensionality Reduction using PCA\n"
+        "## Dimensionality Reduction\n\n"
         "We apply Principal Component Analysis (PCA) **strictly on scaled training data** to demonstrate variance retention and dimensionality reduction."
     ))
     nb.cells.append(new_code_cell(
@@ -392,13 +391,13 @@ def build_final_regression_notebook():
         "plt.show()"
     ))
     nb.cells.append(new_markdown_cell(
-        "**Observation:** PCA analysis shows that 36 components capture over 95% of total dataset variance. The 2D PCA scatter plot illustrates patient variance along the main orthogonal axes."
+        "Observation: PCA analysis shows that 36 components capture over 95% of total dataset variance. The 2D PCA scatter plot illustrates patient variance along the main orthogonal axes."
     ))
     
-    # Step 22 to 33: Train & Compare 10 Regression Algorithms
+    # Regression Models
     nb.cells.append(new_markdown_cell(
-        "### Step 22 to 33 — Train & Evaluate All 10 Required Regression Algorithms\n"
-        "We train each of the 10 required regression algorithms on the held-out test split and calculate $R^2$, $RMSE$, and $MAE$."
+        "## Regression Models\n\n"
+        "We train and evaluate each of the 10 required regression algorithms on the held-out test split and calculate $R^2$, $RMSE$, and $MAE$."
     ))
     
     reg_models_code = (
@@ -463,12 +462,15 @@ def build_final_regression_notebook():
     )
     nb.cells.append(new_code_cell(reg_models_code))
     nb.cells.append(new_markdown_cell(
-        "**Observation:** All 10 regression algorithms were evaluated cleanly. Random Forest and Gradient Boosting regressors achieve top predictive performance with $R^2 > 0.99$ and minimal RMSE."
+        "Observation: All 10 regression algorithms were evaluated cleanly. Random Forest and Gradient Boosting regressors achieve top predictive performance with $R^2 > 0.99$ and minimal RMSE."
     ))
     
-    # Visual Comparison Bar Charts
+    # Model Comparison Graphs
+    nb.cells.append(new_markdown_cell(
+        "## Model Comparison\n\n"
+        "Visual comparison bar charts for $R^2$, $RMSE$, and $MAE$."
+    ))
     nb.cells.append(new_code_cell(
-        "# Visual Comparison Bar Charts\n"
         "fig, axes = plt.subplots(1, 3, figsize=(18, 5))\n"
         "sns.barplot(data=df_reg_summary, y='Model', x='R2', palette='Blues_r', ax=axes[0])\n"
         "axes[0].set_title('Model Comparison: R² Score (Higher is Better)')\n"
@@ -483,9 +485,9 @@ def build_final_regression_notebook():
         "plt.show()"
     ))
     
-    # Step 34 to 36: Best Model Validation & Tuning
+    # Hyperparameter Tuning and Cross Validation
     nb.cells.append(new_markdown_cell(
-        "### Step 34 to 36 — 5-Fold Cross-Validation & Hyperparameter Tuning\n"
+        "## Hyperparameter Tuning and Cross Validation\n\n"
         "We perform 5-fold cross-validation on Random Forest Regressor and tune hyperparameters using `RandomizedSearchCV`."
     ))
     nb.cells.append(new_code_cell(
@@ -513,12 +515,12 @@ def build_final_regression_notebook():
         "print(f'FINAL TUNED TEST MAE:     ${mae_tuned:.2f}')"
     ))
     nb.cells.append(new_markdown_cell(
-        "**Observation:** Cross-validation confirms model stability with low variance ($R^2 = 0.9825 \\pm 0.002$). Hyperparameter tuning achieved an optimal final test $R^2$ of 0.9978."
+        "Observation: Cross-validation confirms model stability with low variance ($R^2 = 0.9825 \\pm 0.002$). Hyperparameter tuning achieved an optimal final test $R^2$ of 0.9978."
     ))
     
-    # Step 37 to 39: Diagnostic Plots
+    # Regression Visualizations
     nb.cells.append(new_markdown_cell(
-        "### Step 37 to 39 — Regression Diagnostic Plots & Feature Importance\n"
+        "## Regression Visualizations\n\n"
         "We plot Actual vs Predicted values, Residuals vs Predicted, Residual Distribution, and Tree Feature Importance."
     ))
     nb.cells.append(new_code_cell(
@@ -555,12 +557,12 @@ def build_final_regression_notebook():
         "    plt.show()"
     ))
     nb.cells.append(new_markdown_cell(
-        "**Observation:** Predicted values align tightly along the 45-degree diagonal reference line. Residual errors are centered symmetrically around $0$. Hospital utilization, age, BMI, and chronic conditions are top predictive drivers."
+        "Observation: Predicted values align tightly along the 45-degree diagonal reference line. Residual errors are centered symmetrically around $0$. Hospital utilization, age, BMI, and chronic conditions are top predictive drivers."
     ))
     
-    # Step 40: PCA Comparison (Without PCA vs With PCA)
+    # PCA Model Comparison
     nb.cells.append(new_markdown_cell(
-        "### Step 40 — Dimensionality Reduction Comparison (Without PCA vs With PCA)\n"
+        "## PCA Model Comparison\n\n"
         "We evaluate model performance without PCA vs with 36 PCA components."
     ))
     nb.cells.append(new_code_cell(
@@ -574,12 +576,12 @@ def build_final_regression_notebook():
         "df_pca_comp"
     ))
     nb.cells.append(new_markdown_cell(
-        "**Conclusion on PCA:** PCA successfully reduced feature dimensionality from 68 features down to 36 components while retaining 95% variance. Without PCA yields higher tree interpretability and predictive accuracy, so the final deployed model uses the non-PCA feature pipeline."
+        "Conclusion on PCA: PCA successfully reduced feature dimensionality from 68 features down to 36 components while retaining 95% variance. Without PCA yields higher tree interpretability and predictive accuracy, so the final deployed model uses the non-PCA feature pipeline."
     ))
     
-    # Step 41: Final Results Summary
+    # Final Results Summary
     nb.cells.append(new_markdown_cell(
-        "### Step 41 — Final Regression Results Summary\n"
+        "## Final Results Summary\n\n"
         "Summary table verifying overall project execution:"
     ))
     nb.cells.append(new_code_cell(
@@ -606,7 +608,7 @@ def build_final_regression_notebook():
 def build_final_classification_notebook():
     nb = new_notebook()
     
-    # Title & Header
+    # Title & Header (No Marks, No Step Numbers)
     nb.cells.append(new_markdown_cell(
         "# 23CSE301 Machine Learning – Capstone Project\n\n"
         "**Team No:** 8\n\n"
@@ -614,14 +616,14 @@ def build_final_classification_notebook():
         "**Dataset:** Medical Insurance Cost Prediction Dataset (`medical_insurance.csv`)\n\n"
         "**Dataset Size:** 100,000 rows × 54 columns\n\n"
         "**Classification Target Variable:** `is_high_risk`\n\n"
-        "### Project Introduction\n"
+        "## Project Introduction\n\n"
         "Early identification of high-risk patients enables healthcare organizations to deploy targeted preventative care and manage hospital utilization. "
         "In this notebook, we implement a complete, leakage-safe, student-level Machine Learning workflow to classify `is_high_risk` using 5 classification algorithms."
     ))
     
-    # Step 1: Import Libraries
+    # Import Libraries
     nb.cells.append(new_markdown_cell(
-        "### Step 1 — Import Libraries and Environment Setup\n"
+        "## Import Libraries\n\n"
         "We import standard classification libraries and set `random_state=42`."
     ))
     nb.cells.append(new_code_cell(
@@ -658,12 +660,12 @@ def build_final_classification_notebook():
         "print('Classification libraries imported successfully. Random seed set to 42.')"
     ))
     nb.cells.append(new_markdown_cell(
-        "**Observation:** All classification modules, metrics functions, and calibration wrappers imported cleanly."
+        "Observation: All classification modules, metrics functions, and calibration wrappers imported cleanly."
     ))
     
-    # Step 2: Load Dataset
+    # Load Dataset
     nb.cells.append(new_markdown_cell(
-        "### Step 2 — Load Dataset\n"
+        "## Load Dataset\n\n"
         "We load the `medical_insurance.csv` dataset."
     ))
     nb.cells.append(new_code_cell(
@@ -675,9 +677,9 @@ def build_final_classification_notebook():
         "df_raw.head()"
     ))
     
-    # Step 3 & 4: Data Understanding & Feature Categorization
+    # Common Data Understanding
     nb.cells.append(new_markdown_cell(
-        "### Step 3 & 4 — Common Data Understanding & Feature Categorization\n"
+        "## Common Data Understanding\n\n"
         "We audit dataset dimensions, data types, and classify numerical, categorical, and binary attributes."
     ))
     nb.cells.append(new_code_cell(
@@ -701,12 +703,12 @@ def build_final_classification_notebook():
         "print(f'Total Features Count:         {len(numerical_cols) + len(categorical_cols) + len(binary_cols)}')"
     ))
     nb.cells.append(new_markdown_cell(
-        "**Observation:** The dataset contains 100,000 records. Predictor attributes are partitioned into 24 numerical, 10 categorical, and 11 binary clinical indicators."
+        "Observation: The dataset contains 100,000 records. Predictor attributes are partitioned into 24 numerical, 10 categorical, and 11 binary clinical indicators."
     ))
     
-    # Step 5 to 7: Data Quality & Missing Value Treatment
+    # Data Quality & Missing Value Treatment
     nb.cells.append(new_markdown_cell(
-        "### Step 5 to 7 — Data Quality & Missing Value Treatment\n"
+        "## Data Quality and Missing Value Treatment\n\n"
         "We audit and handle missing values."
     ))
     nb.cells.append(new_code_cell(
@@ -725,12 +727,12 @@ def build_final_classification_notebook():
         "print(f'Total Missing Values AFTER: {missing_after.sum()}')"
     ))
     nb.cells.append(new_markdown_cell(
-        "**Observation:** Missing values in `alcohol_freq` were filled with `'Unknown'`. Post-imputation missing count is 0."
+        "Observation: Missing values in `alcohol_freq` were filled with `'Unknown'`. Post-imputation missing count is 0."
     ))
     
-    # Step 8 & 9: Duplicates & Outlier Analysis
+    # Duplicates and Outliers
     nb.cells.append(new_markdown_cell(
-        "### Step 8 & 9 — Duplicates Check & Outlier Analysis\n"
+        "## Duplicates Check and Outlier Analysis\n\n"
         "We check duplicate records and inspect numerical boxplots."
     ))
     nb.cells.append(new_code_cell(
@@ -749,12 +751,12 @@ def build_final_classification_notebook():
         "plt.show()"
     ))
     nb.cells.append(new_markdown_cell(
-        "**Observation:** No duplicates found. Outlier analysis shows genuine high medical costs corresponding to complex patient health cases."
+        "Observation: No duplicates found. Outlier analysis shows genuine high medical costs corresponding to complex patient health cases."
     ))
     
-    # Step 10 to 15: EDA
+    # Exploratory Data Analysis
     nb.cells.append(new_markdown_cell(
-        "### Step 10 to 15 — Exploratory Data Analysis & Target Class Distribution\n"
+        "## Exploratory Data Analysis\n\n"
         "We visualize target class distribution (`is_high_risk`) and key clinical predictors."
     ))
     nb.cells.append(new_code_cell(
@@ -771,12 +773,12 @@ def build_final_classification_notebook():
         "print(df_clean['is_high_risk'].value_counts(normalize=True))"
     ))
     nb.cells.append(new_markdown_cell(
-        "**Observation:** Target class distribution is balanced across low/moderate risk and high risk cohorts."
+        "Observation: Target class distribution is balanced across low/moderate risk and high risk cohorts."
     ))
     
-    # Step 16: Feature Engineering
+    # Feature Engineering
     nb.cells.append(new_markdown_cell(
-        "### Step 16 — Feature Engineering\n"
+        "## Feature Engineering\n\n"
         "We engineer 7 features: `BMI_Category`, `Age_Group`, `Lifestyle_Risk_Score`, `Hospital_Utilization_Score`, `Insurance_Coverage_Ratio`, `Total_Chronic_Diseases`, and `Claim_Severity_Index`."
     ))
     nb.cells.append(new_code_cell(
@@ -794,9 +796,9 @@ def build_final_classification_notebook():
         "print('Feature Engineering complete.')"
     ))
     
-    # Step 17: Target Leakage Prevention (CRITICAL FOR CLASSIFICATION)
+    # Target Leakage Prevention
     nb.cells.append(new_markdown_cell(
-        "### Step 17 — Target Leakage Prevention & Feature Selection\n"
+        "## Target Leakage Prevention\n\n"
         "In `medical_insurance.csv`, `risk_score` is a synthetic variable used to derive `is_high_risk`. "
         "Including `risk_score` causes 100% artificial target leakage. "
         "Therefore, we explicitly drop `risk_score`, `person_id`, `annual_medical_cost`, and target `is_high_risk`."
@@ -812,12 +814,12 @@ def build_final_classification_notebook():
         "print('\\nFinal Classification Predictors Count:', X.shape[1])"
     ))
     nb.cells.append(new_markdown_cell(
-        "**Observation:** Target leakage prevention passed. `risk_score` and cost targets were completely dropped from feature matrix `X`."
+        "Observation: Target leakage prevention passed. `risk_score` and cost targets were completely dropped from feature matrix `X`."
     ))
     
-    # Step 18: Stratified Train / Test Split
+    # Train / Test Split
     nb.cells.append(new_markdown_cell(
-        "### Step 18 — Stratified Train / Test Split\n"
+        "## Train Test Split\n\n"
         "We split the data into 80% train and 20% test using `stratify=y` and `random_state=42`."
     ))
     nb.cells.append(new_code_cell(
@@ -830,12 +832,12 @@ def build_final_classification_notebook():
         "print(f'Test Set:     {y_test.value_counts(normalize=True).to_dict()}')"
     ))
     nb.cells.append(new_markdown_cell(
-        "**Observation:** Stratified splitting preserves exact 50/50 target ratio across training and testing splits."
+        "Observation: Stratified splitting preserves exact 50/50 target ratio across training and testing splits."
     ))
     
-    # Step 19 & 20: Encoding & Scaling (ColumnTransformer)
+    # Preprocessing Pipeline
     nb.cells.append(new_markdown_cell(
-        "### Step 19 & 20 — Encoding and Scaling Pipeline (ColumnTransformer)\n"
+        "## Data Preprocessing\n\n"
         "We construct `ColumnTransformer` and fit **strictly on `X_train`**."
     ))
     nb.cells.append(new_code_cell(
@@ -859,12 +861,12 @@ def build_final_classification_notebook():
         "print(feature_names_out[:10])"
     ))
     nb.cells.append(new_markdown_cell(
-        "**Observation:** Preprocessing pipeline expanded raw features to 68 transformed features. Scaling and one-hot encoding executed cleanly."
+        "Observation: Preprocessing pipeline expanded raw features to 68 transformed features. Scaling and one-hot encoding executed cleanly."
     ))
     
-    # Step 21: PCA
+    # Dimensionality Reduction
     nb.cells.append(new_markdown_cell(
-        "### Step 21 — Dimensionality Reduction using PCA\n"
+        "## Dimensionality Reduction\n\n"
         "We fit PCA **strictly on scaled training data** (`X_train_proc`)."
     ))
     nb.cells.append(new_code_cell(
@@ -895,12 +897,12 @@ def build_final_classification_notebook():
         "plt.show()"
     ))
     nb.cells.append(new_markdown_cell(
-        "**Observation:** 36 PCA components retain over 95% total variance. The 2D PCA projection visualizes class separation along principal component axes."
+        "Observation: 36 PCA components retain over 95% total variance. The 2D PCA projection visualizes class separation along principal component axes."
     ))
     
-    # Step 22 to 28: Train & Compare 5 Classification Algorithms
+    # Classification Models
     nb.cells.append(new_markdown_cell(
-        "### Step 22 to 28 — Train & Evaluate All 5 Required Classification Algorithms\n"
+        "## Classification Models\n\n"
         "We train and compare Logistic Regression, KNN Classifier, Gaussian Naive Bayes, Decision Tree Classifier, and Support Vector Machine (`CalibratedClassifierCV`)."
     ))
     
@@ -945,12 +947,12 @@ def build_final_classification_notebook():
     )
     nb.cells.append(new_code_cell(cls_models_code))
     nb.cells.append(new_markdown_cell(
-        "**Observation:** All 5 classification algorithms were evaluated. Decision Tree and Logistic Regression achieve high precision, recall, and Weighted F1-scores."
+        "Observation: All 5 classification algorithms were evaluated. Decision Tree and Logistic Regression achieve high precision, recall, and Weighted F1-scores."
     ))
     
-    # Step 29 to 30: Confusion Matrices & ROC Curves
+    # Visual Comparison and Confusion Matrices
     nb.cells.append(new_markdown_cell(
-        "### Step 29 & 30 — Confusion Matrices & ROC Curves Comparison\n"
+        "## Confusion Matrices and ROC Curve\n\n"
         "We plot confusion matrix heatmaps for all 5 classifiers and render comparative ROC curves."
     ))
     nb.cells.append(new_code_cell(
@@ -982,12 +984,12 @@ def build_final_classification_notebook():
         "plt.show()"
     ))
     nb.cells.append(new_markdown_cell(
-        "**Observation on False Negatives in Healthcare:** In patient risk stratification, **False Negatives (FN)** represent high-risk patients incorrectly flagged as low risk. Minimizing FN is critical because missing a high-risk patient leads to delayed preventative care and preventable emergency hospitalizations."
+        "Observation on False Negatives in Healthcare: In patient risk stratification, **False Negatives (FN)** represent high-risk patients incorrectly flagged as low risk. Minimizing FN is critical because missing a high-risk patient leads to delayed preventative care and preventable emergency hospitalizations."
     ))
     
-    # Step 31 to 33: Cross-Validation & Tuning
+    # Cross Validation and Hyperparameter Tuning
     nb.cells.append(new_markdown_cell(
-        "### Step 31 to 33 — Stratified Cross-Validation & Hyperparameter Tuning\n"
+        "## Hyperparameter Tuning and Cross Validation\n\n"
         "We perform 5-fold Stratified Cross Validation on Decision Tree Classifier and tune parameters using `RandomizedSearchCV`."
     ))
     nb.cells.append(new_code_cell(
@@ -1014,12 +1016,12 @@ def build_final_classification_notebook():
         "print(classification_report(y_test, p_dt_tuned, target_names=['Low/Med Risk', 'High Risk']))"
     ))
     nb.cells.append(new_markdown_cell(
-        "**Observation:** Stratified 5-fold cross-validation verifies high model stability ($F1 = 0.9981 \\pm 0.0003$). Tuned Decision Tree achieves robust performance on the held-out test set."
+        "Observation: Stratified 5-fold cross-validation verifies high model stability ($F1 = 0.9981 \\pm 0.0003$). Tuned Decision Tree achieves robust performance on the held-out test set."
     ))
     
-    # Step 35: PCA Comparison
+    # PCA Model Comparison
     nb.cells.append(new_markdown_cell(
-        "### Step 35 — PCA Dimensionality Reduction Comparison (Without PCA vs With PCA)\n"
+        "## PCA Model Comparison\n\n"
         "We compare classification performance with vs without PCA."
     ))
     nb.cells.append(new_code_cell(
@@ -1034,12 +1036,12 @@ def build_final_classification_notebook():
         "df_pca_cls"
     ))
     nb.cells.append(new_markdown_cell(
-        "**Conclusion on PCA:** Without PCA preserves full feature tree split interpretability. Both pipelines achieve strong classification results, and non-PCA is retained for clinical decision support."
+        "Conclusion on PCA: Without PCA preserves full feature tree split interpretability. Both pipelines achieve strong classification results, and non-PCA is retained for clinical decision support."
     ))
     
-    # Step 36: Final Summary
+    # Final Results Summary
     nb.cells.append(new_markdown_cell(
-        "### Step 36 — Final Classification Results Summary\n"
+        "## Final Results Summary\n\n"
         "Summary table verifying classification workflow completion:"
     ))
     nb.cells.append(new_code_cell(
