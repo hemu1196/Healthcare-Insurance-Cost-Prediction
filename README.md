@@ -127,7 +127,6 @@ Make sure Python 3.10+ is installed on your machine.
 
 ### 1. Set Up Virtual Environment & Install Dependencies
 ```bash
-cd /Users/hemachandra/Documents/ML_capstone
 python3 -m venv venv
 source venv/bin/activate
 pip install -r requirements.txt
