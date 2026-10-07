@@ -1,13 +1,17 @@
 import os
+import json
 import joblib
 import pandas as pd
 import numpy as np
+from pathlib import Path
+
 import app.config as config
 import app.preprocessing as preprocessing
 
 _regressor = None
 _classifier = None
 _clustering = None
+_metadata = None
 
 DEFAULT_PATIENT_VALUES = {
     "age": 40, "sex": "Female", "region": "Northeast", "urban_rural": "Urban", "income": 50000.0,
@@ -26,26 +30,50 @@ DEFAULT_PATIENT_VALUES = {
 
 def load_models():
     """
-    Load regression, classification, and clustering models into memory.
+    Robust Pathlib-based model loader for regression, classification, and clustering pipelines.
     """
-    global _regressor, _classifier, _clustering
+    global _regressor, _classifier, _clustering, _metadata
+    
     if _regressor is None:
-        if os.path.exists(config.BEST_REGRESSOR_PATH):
+        if config.BEST_REGRESSOR_PATH.exists():
             _regressor = joblib.load(config.BEST_REGRESSOR_PATH)
         else:
-            raise FileNotFoundError(f"Regressor model file not found at {config.BEST_REGRESSOR_PATH}. Run training first.")
-    
+            raise FileNotFoundError(
+                f"Saved Regressor Model not found at expected path: '{config.BEST_REGRESSOR_PATH}'. "
+                f"Project root: '{config.PROJECT_ROOT}'. Models dir contents: {list(config.MODEL_DIR.glob('*')) if config.MODEL_DIR.exists() else 'Dir missing'}"
+            )
+            
     if _classifier is None:
-        if os.path.exists(config.BEST_CLASSIFIER_PATH):
+        if config.BEST_CLASSIFIER_PATH.exists():
             _classifier = joblib.load(config.BEST_CLASSIFIER_PATH)
         else:
-            raise FileNotFoundError(f"Classifier model file not found at {config.BEST_CLASSIFIER_PATH}. Run training first.")
+            raise FileNotFoundError(
+                f"Saved Classifier Model not found at expected path: '{config.BEST_CLASSIFIER_PATH}'."
+            )
 
     if _clustering is None:
-        if os.path.exists(config.BEST_CLUSTERING_PATH):
+        if config.BEST_CLUSTERING_PATH.exists():
             _clustering = joblib.load(config.BEST_CLUSTERING_PATH)
-            
+
+    if _metadata is None:
+        if config.METADATA_PATH.exists():
+            with open(config.METADATA_PATH, "r") as f:
+                _metadata = json.load(f)
+                
     return _regressor, _classifier, _clustering
+
+def get_model_metadata():
+    if _metadata is None:
+        if config.METADATA_PATH.exists():
+            with open(config.METADATA_PATH, "r") as f:
+                return json.load(f)
+        return {
+            "regression_model": "Random Forest Regressor Pipeline",
+            "classification_model": "Decision Tree Classifier Pipeline",
+            "clustering_model": "K-Means Clustering Pipeline",
+            "random_state": config.RANDOM_STATE
+        }
+    return _metadata
 
 def prepare_patient_dataframe(patient_data_dict):
     """

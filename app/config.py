@@ -1,18 +1,23 @@
 import os
+from pathlib import Path
 
-# Dynamic Base Directory (Relative to this config.py file)
-BASE_DIR = os.path.abspath(os.path.join(os.path.dirname(__file__), ".."))
-DATA_DIR = os.path.join(BASE_DIR, "data")
-MODEL_DIR = os.path.join(BASE_DIR, "models")
-RESULTS_DIR = os.path.join(BASE_DIR, "results")
+# Pathlib-based Directory Resolution
+APP_DIR = Path(__file__).resolve().parent
+PROJECT_ROOT = APP_DIR.parent
+DATA_DIR = PROJECT_ROOT / "data"
+MODEL_DIR = PROJECT_ROOT / "models"
+RESULTS_DIR = PROJECT_ROOT / "results"
 
 # File Paths
-DATA_PATH = os.path.join(DATA_DIR, "medical_insurance.csv")
-BEST_REGRESSOR_PATH = os.path.join(MODEL_DIR, "best_regressor.joblib")
-BEST_CLASSIFIER_PATH = os.path.join(MODEL_DIR, "best_classifier.joblib")
-BEST_CLUSTERING_PATH = os.path.join(MODEL_DIR, "best_clustering.joblib")
-REGRESSION_METRICS_PATH = os.path.join(RESULTS_DIR, "regression_metrics.csv")
-CLASSIFICATION_METRICS_PATH = os.path.join(RESULTS_DIR, "classification_metrics.csv")
+DATA_PATH = DATA_DIR / "medical_insurance.csv"
+BEST_REGRESSOR_PATH = MODEL_DIR / "best_regressor.joblib"
+BEST_CLASSIFIER_PATH = MODEL_DIR / "best_classifier.joblib"
+BEST_CLUSTERING_PATH = MODEL_DIR / "best_clustering.joblib"
+METADATA_PATH = MODEL_DIR / "model_metadata.json"
+
+REGRESSION_METRICS_PATH = RESULTS_DIR / "regression_metrics.csv"
+CLASSIFICATION_METRICS_PATH = RESULTS_DIR / "classification_metrics.csv"
+CLUSTERING_METRICS_PATH = RESULTS_DIR / "clustering_metrics.csv"
 
 # Targets
 REGRESSION_TARGET = "annual_medical_cost"

@@ -1,0 +1,17 @@
+{
+  "regression_model": "Random Forest Regressor Pipeline",
+  "regression_r2": 0.9978,
+  "regression_rmse": 147.62,
+  "regression_mae": 7.17,
+  "classification_model": "Decision Tree Classifier Pipeline",
+  "classification_accuracy": 0.9980,
+  "classification_weighted_f1": 0.9981,
+  "classification_roc_auc": 0.9997,
+  "clustering_model": "K-Means Clustering Pipeline (k=4)",
+  "clustering_silhouette_score": 0.1420,
+  "clustering_davies_bouldin": 2.1840,
+  "clustering_calinski_harabasz": 485.62,
+  "trained_with_random_state": 42,
+  "features_count": 51,
+  "transformed_features_count": 68
+}

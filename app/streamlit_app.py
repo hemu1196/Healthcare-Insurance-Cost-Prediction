@@ -34,24 +34,22 @@ if os.path.exists(css_path):
 @st.cache_resource
 def load_models_cached():
     try:
-        reg, cls = prediction.load_models()
-        cluster_model_path = os.path.join(config.MODEL_DIR, "best_clustering.joblib")
-        clus = joblib.load(cluster_model_path) if os.path.exists(cluster_model_path) else None
+        reg, cls, clus = prediction.load_models()
         return reg, cls, clus
-    except Exception:
+    except Exception as e:
         return None, None, None
 
 @st.cache_data
 def load_data_cached():
-    if os.path.exists(config.DATA_PATH):
+    if config.DATA_PATH.exists():
         return pd.read_csv(config.DATA_PATH)
     return None
 
 @st.cache_data
 def load_metrics_cached():
-    reg_metrics = pd.read_csv(config.REGRESSION_METRICS_PATH) if os.path.exists(config.REGRESSION_METRICS_PATH) else None
-    cls_metrics = pd.read_csv(config.CLASSIFICATION_METRICS_PATH) if os.path.exists(config.CLASSIFICATION_METRICS_PATH) else None
-    clus_metrics = pd.read_csv(os.path.join(config.RESULTS_DIR, "clustering_metrics.csv")) if os.path.exists(os.path.join(config.RESULTS_DIR, "clustering_metrics.csv")) else None
+    reg_metrics = pd.read_csv(config.REGRESSION_METRICS_PATH) if config.REGRESSION_METRICS_PATH.exists() else None
+    cls_metrics = pd.read_csv(config.CLASSIFICATION_METRICS_PATH) if config.CLASSIFICATION_METRICS_PATH.exists() else None
+    clus_metrics = pd.read_csv(config.CLUSTERING_METRICS_PATH) if config.CLUSTERING_METRICS_PATH.exists() else None
     return reg_metrics, cls_metrics, clus_metrics
 
 df_raw = load_data_cached()
@@ -76,6 +74,18 @@ with st.sidebar:
         }
     )
     
+    with st.expander("🛠️ Model Debug Information"):
+        st.write("**Project Root:**", str(config.PROJECT_ROOT))
+        st.write("**Regressor Path:**", str(config.BEST_REGRESSOR_PATH))
+        st.write("**Regressor Exists:**", config.BEST_REGRESSOR_PATH.exists())
+        if config.BEST_REGRESSOR_PATH.exists():
+            st.write("**Regressor Size:**", f"{config.BEST_REGRESSOR_PATH.stat().st_size / (1024*1024):.2f} MB")
+        st.write("**Classifier Path:**", str(config.BEST_CLASSIFIER_PATH))
+        st.write("**Classifier Exists:**", config.BEST_CLASSIFIER_PATH.exists())
+        if config.BEST_CLASSIFIER_PATH.exists():
+            st.write("**Classifier Size:**", f"{config.BEST_CLASSIFIER_PATH.stat().st_size / 1024:.2f} KB")
+        st.write("**Clustering Exists:**", config.BEST_CLUSTERING_PATH.exists())
+
     st.markdown("---")
     st.markdown("<div style='text-align:center;padding:0.5rem;'><span class='badge-standard badge-success-fill' style='font-size:0.7rem;'>SYSTEM ONLINE</span><p style='font-size:0.72rem;color:#64748B;margin-top:0.5rem;'>HIPAA Secured Engine v1.2.0<br>© 2026 MedPredict Labs</p></div>", unsafe_allow_html=True)
 
