@@ -514,19 +514,28 @@ def render_segmentation(clusterer, df_raw):
             lifestyle_score = smoker_weight + (total_chronic * 0.5)
             
             feat_df = pd.DataFrame([{
-                "Age": age,
-                "BMI": bmi,
-                "Income": income,
+                "age": age,
+                "bmi": bmi,
+                "income": income,
                 "Hospital_Utilization_Score": util_score,
                 "Total_Chronic_Diseases": total_chronic,
                 "Lifestyle_Risk_Score": lifestyle_score
             }])
             
-            scaler = clusterer["scaler"]
-            model = clusterer["model"]
+            if isinstance(clusterer, dict):
+                scaler = clusterer["scaler"]
+                model = clusterer["model"]
+                features = clusterer.get("features", ["age", "bmi", "income", "Hospital_Utilization_Score", "Total_Chronic_Diseases", "Lifestyle_Risk_Score"])
+            else:
+                scaler = None
+                model = clusterer
+                features = ["age", "bmi", "income", "Hospital_Utilization_Score", "Total_Chronic_Diseases", "Lifestyle_Risk_Score"]
             
-            feat_scaled = scaler.transform(feat_df)
-            cluster_id = model.predict(feat_scaled)[0]
+            if scaler is not None:
+                feat_scaled = scaler.transform(feat_df[features])
+                cluster_id = model.predict(feat_scaled)[0]
+            else:
+                cluster_id = model.predict(feat_df)[0]
             
             cohorts = {
                 0: {"name": "High Lifestyle Risk Cohort", "lifestyle": "Elevated. Heavy tobacco usage combined with high BMI.", "disease": "Borderline blood pressure and glucose markers.", "cost": "Moderate-High yearly claims.", "insight": "Prioritize smoking cessation and dietary coordination.", "color": "#D97706"},
