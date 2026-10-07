@@ -1,7 +1,7 @@
 import os
 
-# Base Directories
-BASE_DIR = "/Users/hemachandra/Documents/ML_capstone"
+# Dynamic Base Directory (Relative to this config.py file)
+BASE_DIR = os.path.abspath(os.path.join(os.path.dirname(__file__), ".."))
 DATA_DIR = os.path.join(BASE_DIR, "data")
 MODEL_DIR = os.path.join(BASE_DIR, "models")
 RESULTS_DIR = os.path.join(BASE_DIR, "results")
@@ -10,6 +10,7 @@ RESULTS_DIR = os.path.join(BASE_DIR, "results")
 DATA_PATH = os.path.join(DATA_DIR, "medical_insurance.csv")
 BEST_REGRESSOR_PATH = os.path.join(MODEL_DIR, "best_regressor.joblib")
 BEST_CLASSIFIER_PATH = os.path.join(MODEL_DIR, "best_classifier.joblib")
+BEST_CLUSTERING_PATH = os.path.join(MODEL_DIR, "best_clustering.joblib")
 REGRESSION_METRICS_PATH = os.path.join(RESULTS_DIR, "regression_metrics.csv")
 CLASSIFICATION_METRICS_PATH = os.path.join(RESULTS_DIR, "classification_metrics.csv")
 
@@ -29,7 +30,7 @@ NUMERICAL_FEATURES = [
     "systolic_bp", "diastolic_bp", "ldl", "hba1c", "deductible", "copay", 
     "policy_term_years", "policy_changes_last_2yrs", "provider_quality", 
     "annual_premium", "monthly_premium", "claims_count", "avg_claim_amount", 
-    "total_claims_paid", "chronic_count", "proc_imaging_count", 
+    "chronic_count", "proc_imaging_count", 
     "proc_surgery_count", "proc_physio_count", "proc_consult_count", "proc_lab_count"
 ]
 
@@ -75,4 +76,3 @@ CLS_TUNING_GRIDS = {
         "classifier__min_samples_split": [2, 5, 10]
     }
 }
-

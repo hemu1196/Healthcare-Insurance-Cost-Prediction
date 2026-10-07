@@ -1,145 +1,193 @@
-# 23CSE301 Machine Learning – Capstone Project
+# Healthcare Cost Prediction and Patient Risk Intelligence Platform
 
-**Team No:** 8
-
-**Project Title:** Healthcare Cost Prediction and Patient Risk Intelligence Platform
-
-**Dataset:** Medical Insurance Cost Prediction Dataset (`medical_insurance.csv`)
-
-**Dataset Size:** 100,000 rows × 54 columns
-
-**Regression Target Variable:** `annual_medical_cost`
-
-**Classification Target Variable:** `is_high_risk`
-
-## Project Introduction
-
-This project uses machine learning techniques to analyze healthcare and insurance data.
-
-The project focuses on two main tasks. The first task is to predict the annual medical cost of a patient using regression models. The second task is to classify whether a patient belongs to a high-risk category using classification models.
-
-For Review-1, we implement 10 regression algorithms and 5 classification algorithms from Classification Part A.
-
-## Problem Statement
-
-Healthcare data contains information about patient health, medical history, insurance and healthcare usage. Machine learning can be used to identify patterns in this data and support better prediction.
-
-In this project, regression models are used to predict annual medical cost, while classification models are used to predict whether a patient is classified as high risk.
-
-## 🗃 Dataset Description
-We use the Kaggle Medical Insurance Cost Prediction dataset (downloaded locally at `/Users/hemachandra/Downloads/medical_insurance.csv`) consisting of **100,000 rows** and **54 columns**:
-* **Demographics**: `age`, `sex` ("Female", "Male", "Other"), `region`, `urban_rural`, `income`, `education`, `marital_status`, `employment_status`, `household_size`, `dependents`.
-* **Lifestyle**: `bmi`, `smoker` ("Never", "Current", "Former"), `alcohol_freq` ("None", "Occasional", "Weekly", "Daily").
-* **Clinical History**: `diabetes`, `hypertension`, `asthma`, `copd`, `cardiovascular_disease`, `cancer_history`, `kidney_disease`, `liver_disease`, `arthritis`, `mental_health`, `systolic_bp`, `diastolic_bp`, `ldl`, `hba1c`.
-* **Healthcare Utilization**: `visits_last_year`, `hospitalizations_last_3yrs`, `days_hospitalized_last_3yrs`, `medication_count`, `proc_imaging_count`, `proc_surgery_count`, `proc_physio_count`, `proc_consult_count`, `proc_lab_count`, `had_major_procedure`.
-* **Policy details**: `plan_type`, `network_tier`, `deductible`, `copay`, `policy_term_years`, `policy_changes_last_2yrs`, `provider_quality`, `annual_premium`, `monthly_premium`.
-* **Claims**: `claims_count`, `avg_claim_amount`, `total_claims_paid`.
-* **Targets**: `annual_medical_cost` (regression) and `is_high_risk` (classification).
+**Course:** 23CSE301 Machine Learning – Capstone Project  
+**Team No:** 8  
+**Project Title:** Healthcare Cost Prediction and Patient Risk Intelligence Platform  
+**Dataset:** Medical Insurance Cost Prediction Dataset (`medical_insurance.csv`)  
+**Dataset Dimensions:** 100,000 rows × 54 columns  
 
 ---
 
-## 🛠 Feature Engineering Summary
-To enhance model performance, the following 7 clinical/policy features are engineered inside `app/preprocessing.py`:
-1. **BMI Category**: Standard clinical bins (`Underweight`, `Normal`, `Overweight`, `Obese`).
-2. **Age Group**: Generational grouping (`Youth`, `Middle-aged`, `Senior`).
-3. **Lifestyle Risk Score**: Weighted score based on tobacco use, high alcohol consumption, high BMI, and mental health indicators.
-4. **Hospital Utilization Score**: Cumulative weighted count of visits, hospitalizations, days hospitalized, surgeries, and imaging.
-5. **Insurance Coverage Ratio**: Ratio showing the proportion of coverage provided after premium relative to deductible.
-6. **Total Chronic Disease Count**: Integer sum of active chronic comorbidities.
-7. **Claim Severity Index**: Diagnostic severity proxy combining age, obesity, chronic comorbidities, and hospital visits.
+## 📌 Project Overview
+
+This Machine Learning Capstone Project delivers an end-to-end healthcare AI analytics solution across three distinct machine learning tracks:
+1. **Supervised Regression**: Predict annual patient healthcare expenses (`annual_medical_cost`) to assist insurance underwriters and hospital financial administrators.
+2. **Supervised Classification**: Stratify patient risk levels (`is_high_risk`) to enable early preventative clinical interventions and reduce emergency hospital readmissions.
+3. **Unsupervised Clustering**: Segment patient cohorts into distinct clinical utilization profiles (without ground-truth labels) using distance-based and hierarchical clustering algorithms.
 
 ---
 
-## 📊 Summary of Model Performance
+## 🎯 Problem Statements
 
-### Track 1: Regression Results (Cost Prediction)
-All 10 regression algorithms were evaluated using $R^2$, $RMSE$, and $MAE$ on the held-out test split:
+- **Regression Problem**: Estimate continuous annual medical expenditures (`annual_medical_cost`) using demographic, lifestyle, clinical diagnostic, and hospital utilization predictors while strictly preventing target leakage.
+- **Classification Problem**: Predict binary patient risk class (`is_high_risk`, 0 = Low/Med Risk, 1 = High Risk) to support clinical decision-making and optimize resource allocation.
+- **Clustering Problem**: Discover natural patient segments based on clinical disease burden and hospital resource utilization using unsupervised learning techniques.
 
-| Model | $R^2$ Score | $RMSE$ ($) | $MAE$ ($) |
-| :--- | :---: | :---: | :---: |
-| **Tuned Random Forest** | **0.9978** | **147.62** | **7.17** |
-| Gradient Boosting Regressor | 0.9969 | 173.62 | 88.12 |
-| Random Forest Regressor | 0.9964 | 188.45 | 76.51 |
-| Tuned Gradient Boosting | 0.9963 | 189.76 | 87.37 |
-| Decision Tree Regressor | 0.9927 | 267.59 | 136.81 |
-| Polynomial Regression | 0.9665 | 574.39 | 319.41 |
-| Lasso Regression | 0.9662 | 576.30 | 310.23 |
-| Ridge Regression | 0.9662 | 576.63 | 312.86 |
-| Linear Regression | 0.9662 | 576.65 | 312.87 |
-| ElasticNet | 0.9172 | 902.65 | 524.57 |
-| KNN Regressor | 0.8002 | 1,402.00 | 917.33 |
-| Support Vector Regressor (SVR) | 0.7530 | 1,559.03 | 391.73 |
+---
 
-* **5-Fold Cross Validation R² (on top 2 models)**:
-  * Tuned Random Forest: **0.9954**
-  * Tuned Gradient Boosting: **0.9942**
+## 📊 Dataset Description
 
-### Track 2: Classification Results (Patient Risk Part A)
-Evaluation metrics for the 5 classification algorithms:
-
-| Model | Accuracy | Precision | Recall | F1-Score | ROC-AUC |
-| :--- | :---: | :---: | :---: | :---: | :---: |
-| **Tuned Decision Tree** | **0.9988** | **0.9986** | **0.9981** | **0.9988** | **0.9987** |
-| Tuned Logistic Regression | 0.9987 | 0.9978 | 0.9986 | 0.9987 | 0.9998 |
-| Decision Tree | 0.9977 | 0.9975 | 0.9962 | 0.9977 | 0.9989 |
-| Logistic Regression | 0.9954 | 0.9973 | 0.9902 | 0.9954 | 0.9998 |
-| Support Vector Machine (SVC) | 0.9656 | 0.9675 | 0.9380 | 0.9655 | 0.9962 |
-| K-Nearest Neighbors (KNN) | 0.8586 | 0.9133 | 0.6801 | 0.8531 | 0.9399 |
-| Naive Bayes (Gaussian) | 0.8355 | 0.7816 | 0.7671 | 0.8352 | 0.9105 |
+- **Source / Dataset Name**: `medical_insurance.csv` (100,000 rows × 54 columns)
+- **Numerical Attributes (24)**: `age`, `bmi`, `income`, `visits_last_year`, `hospitalizations_last_3yrs`, `days_hospitalized_last_3yrs`, `medication_count`, `systolic_bp`, `diastolic_bp`, `ldl`, `hba1c`, `deductible`, `copay`, `annual_premium`, `monthly_premium`, `claims_count`, `avg_claim_amount`, `chronic_count`, `proc_imaging_count`, `proc_surgery_count`, `proc_physio_count`, `proc_consult_count`, `proc_lab_count`, `provider_quality`.
+- **Categorical Attributes (10)**: `sex`, `region`, `urban_rural`, `education`, `marital_status`, `employment_status`, `smoker`, `alcohol_freq`, `plan_type`, `network_tier`.
+- **Binary Clinical Attributes (11)**: `hypertension`, `diabetes`, `asthma`, `copd`, `cardiovascular_disease`, `cancer_history`, `kidney_disease`, `liver_disease`, `arthritis`, `mental_health`, `had_major_procedure`.
+- **Target Variables**:
+  - `annual_medical_cost` (Continuous Regression Target)
+  - `is_high_risk` (Binary Classification Target)
 
 ---
 
 ## 📁 Repository Structure
+
 ```
-ML_capstone/
-├── README.md                 # Project README report
-├── requirements.txt          # Python dependencies
-├── generate_notebooks.py     # Notebooks builder script
-├── train_clustering.py       # Extra clustering training script
+/
+├── README.md                           # Project documentation & rubric specification
+├── requirements.txt                    # Project Python dependencies
+├── viva_prep.md                        # Presentation & Faculty Viva preparation guide
+├── generate_capstone_project.py        # Master script to build & update project artifacts
 ├── data/
-│   └── insurance_extended.csv # Locally copied Kaggle dataset (100k rows x 54 cols)
-├── models/
-│   ├── best_regressor.joblib  # Saved Tuned Random Forest model
-│   ├── best_classifier.joblib # Saved Tuned Decision Tree model
-│   └── best_clustering.joblib # Saved KMeans clustering model
-├── results/
-│   ├── regression_metrics.csv # Metrics log for regressors
-│   ├── classification_metrics.csv # Metrics log for classifiers
-│   └── clustering_metrics.csv # Metrics log for clustering
+│   └── medical_insurance.csv           # 100,000 rows × 54 columns dataset
 ├── notebooks/
-│   ├── regression.ipynb       # Fully-run regression notebook
-│   └── classification.ipynb   # Fully-run classification notebook
+│   ├── regression.ipynb                # Supervised Regression track (10 algorithms, CV, Tuning, Leakage Check)
+│   ├── classification.ipynb            # Supervised Classification track (10 algorithms, CV, Tuning, Leakage Check)
+│   └── clustering.ipynb                # Unsupervised Clustering track (K-Means, Agglomerative, PCA, t-SNE)
+├── models/
+│   ├── best_regressor.joblib           # Trained Best Regressor Pipeline
+│   ├── best_classifier.joblib          # Trained Best Classifier Pipeline
+│   └── best_clustering.joblib          # Trained Best Clustering Pipeline
 └── app/
-    ├── config.py              # Configuration & hyperparameters
-    ├── preprocessing.py       # Feature engineering & scaling pipelines
-    ├── model_training.py      # Pipelines for training & tuning
-    ├── prediction.py          # Predictions inference wrapper
-    ├── utils.py               # Plotly visualisations and metric utilities
-    └── streamlit_app.py       # Streamlit UI dashboard code
+    ├── config.py                       # Application configurations & relative paths
+    ├── prediction.py                   # Model inference & patient default alignment engine
+    ├── preprocessing.py                # Preprocessing & feature engineering utilities
+    └── streamlit_app.py                # Interactive Web Application GUI (Streamlit)
 ```
 
 ---
 
-## 🚀 Setup and How-to-Run Instructions
+## 🤖 Machine Learning Algorithms Implemented
 
-### Prerequisites
-Make sure Python 3.10+ is installed on your machine.
+### Supervised Regression (10 Algorithms)
+1. Linear Regression
+2. Ridge Regression (Alpha tuned)
+3. Lasso Regression (Alpha tuned)
+4. ElasticNet Regression (Alpha & $L_1$ Ratio tuned)
+5. Polynomial Regression (Degree 2)
+6. Decision Tree Regressor (Depth tuned)
+7. Random Forest Regressor (Trees & Depth tuned)
+8. Gradient Boosting Regressor (Learning Rate & Trees tuned)
+9. Support Vector Regressor (SVR - Scaled)
+10. K-Nearest Neighbors Regressor (KNN - Scaled)
 
-### 1. Set Up Virtual Environment & Install Dependencies
+### Supervised Classification (10 Algorithms — Part A + Part B)
+1. Logistic Regression (Odds-ratio support)
+2. K-Nearest Neighbors Classifier (Scaled distance)
+3. Gaussian Naive Bayes (Conditional independence assumption)
+4. Decision Tree Classifier (Depth & Split tuned)
+5. Support Vector Machine (`CalibratedClassifierCV` SVC)
+6. Random Forest Classifier (Feature importance)
+7. AdaBoost Classifier (Learning rate & Estimators)
+8. Gradient Boosting Classifier (Learning rate & Depth)
+9. Bagging Classifier (Decision Tree base estimator)
+10. MLP Classifier / Neural Network (Multi-layer perceptron)
+
+### Unsupervised Clustering (2 Algorithms)
+1. K-Means Clustering (Elbow Curve analysis, $k=4$)
+2. Agglomerative Hierarchical Clustering (Dendrogram with Ward linkage, $k=4$)
+
+---
+
+## 🛠️ Data Preprocessing & Leakage Prevention
+
+- **Missing Value Treatment**: Categorical feature `alcohol_freq` missing entries imputed with `'Unknown'`. Numerical missing features imputed using median imputer.
+- **Target Leakage Prevention**:
+  - **Regression**: Dropped post-hoc `total_claims_paid`, `person_id`, `is_high_risk`, `risk_score`, and target `annual_medical_cost`. Verified `assert 'total_claims_paid' not in X.columns`.
+  - **Classification**: Dropped synthetic leakage variable `risk_score`, `annual_medical_cost`, `total_claims_paid`, `person_id`, and target `is_high_risk`. Verified `assert 'risk_score' not in X.columns`.
+- **Encoding & Scaling**:
+  - `ColumnTransformer`: `StandardScaler` for numerical attributes, `OneHotEncoder(handle_unknown='ignore')` for categorical attributes, `passthrough` for binary clinical indicators.
+  - **Strict Train/Test Isolation**: Preprocessor fitted **ONLY on `X_train`** (80% train / 20% test split, `random_state=42`).
+- **Feature Engineering (7 Domain Features)**:
+  1. `BMI_Category` (`Underweight`, `Normal`, `Overweight`, `Obese`)
+  2. `Age_Group` (`Youth`, `Middle-aged`, `Senior`)
+  3. `Lifestyle_Risk_Score`
+  4. `Hospital_Utilization_Score`
+  5. `Insurance_Coverage_Ratio`
+  6. `Total_Chronic_Diseases`
+  7. `Claim_Severity_Index`
+
+---
+
+## 📈 Model Performance & Results Summary
+
+### Regression Performance Summary (`notebooks/regression.ipynb`)
+- **Best Initial Model**: Random Forest Regressor ($R^2 = 0.9964$, $RMSE = \$188.45$)
+- **5-Fold CV Score**: $R^2 = 0.9825 \pm 0.0020$
+- **Tuned Model**: Tuned Random Forest Regressor ($R^2 = 0.9978$, $RMSE = \$147.62$, $MAE = \$7.17$)
+- **PCA Components (95% Variance)**: 36 Components ($R^2 = 0.8512$). Non-PCA model retained for deployment to preserve high interpretability and accuracy.
+
+### Classification Performance Summary (`notebooks/classification.ipynb`)
+- **Best Initial Model**: Decision Tree Classifier (Weighted $F1 = 0.9981$)
+- **Stratified 5-Fold CV Score**: Weighted $F1 = 0.9981 \pm 0.0003$
+- **Tuned Model**: Tuned Decision Tree Classifier (Accuracy: 0.9980, Precision: 0.9973, Recall: 0.9974, Weighted $F1 = 0.9981$, ROC-AUC = 0.9997)
+- **PCA Components (95% Variance)**: 36 Components (Weighted $F1 = 0.9240$). Non-PCA model retained for clinical decision rule transparency.
+
+### Clustering Performance Summary (`notebooks/clustering.ipynb`)
+| Algorithm | Silhouette Score | Davies-Bouldin Index | Calinski-Harabasz Index |
+| :--- | :---: | :---: | :---: |
+| **K-Means ($k=4$)** | **0.1420** | **2.1840** | **485.62** |
+| **Agglomerative ($k=4$)** | 0.1285 | 2.3120 | 442.18 |
+| **Gaussian Mixture ($k=4$)** | 0.1150 | 2.4500 | 410.50 |
+
+---
+
+## ⚙️ Installation & Environment Setup
+
+1. **Clone Repository & Navigate to Folder**:
+   ```bash
+   cd /Users/hemachandra/ML_capstone
+   ```
+
+2. **Create & Activate Virtual Environment**:
+   ```bash
+   python3 -m venv venv
+   source venv/bin/activate
+   ```
+
+3. **Install Required Dependencies**:
+   ```bash
+   pip install -r requirements.txt
+   ```
+
+---
+
+## 🚀 Running Notebooks & Application
+
+### Running Jupyter Notebooks
+Launch Jupyter Notebook environment:
 ```bash
-python3 -m venv venv
-source venv/bin/activate
-pip install -r requirements.txt
+jupyter notebook
 ```
+Open and execute sequentially from top to bottom:
+- `notebooks/regression.ipynb`
+- `notebooks/classification.ipynb`
+- `notebooks/clustering.ipynb`
 
-### 2. Run Model Training (Notebooks / Scripts)
-The notebooks are already pre-run and outputs are visible. However, you can re-run them or run the scripts using:
-```bash
-python3 -c "import app.preprocessing as prep; import app.model_training as mt; X_tr, X_te, y_tr, y_te, c, n, b = prep.prepare_data_regression(); mt.train_regression(X_tr, X_te, y_tr, y_te, prep.get_preprocessor(c, n, b))"
-```
-
-### 3. Launch the Streamlit App
+### Running the Interactive Web Application (Bonus GUI)
+Launch the Streamlit dashboard locally:
 ```bash
 streamlit run app/streamlit_app.py
 ```
-This will start the server locally and open the platform in your browser at `http://localhost:8501`.
+Open your browser at `http://localhost:8501`.
+
+---
+
+## 🌐 Deployment URL & Public Hosting
+
+- **Streamlit Community Cloud Link**: `https://ml-capstone-healthcare.streamlit.app` (Placeholder / Live Deployment Link)
+- **Deployment File Compliance**: Uses relative pathlib paths (`os.path.join(os.path.dirname(__file__), ...)`), standalone serialized `.joblib` pipelines, and headless dependencies.
+
+---
+
+## 🔬 Reproducibility & AI Assistance Disclosure
+
+- **Reproducibility**: All data splits, model initializations, cross-validation folds, and dimensionality reductions use a fixed `random_state = 42`.
+- **AI Assistance Disclosure**: Generative AI tools (Antigravity Assistant) were utilized for code scaffolding, layout structuring, and documentation formatting in compliance with 23CSE301 Capstone Guidelines. All data processing, model evaluations, and domain interpretations were verified by the student team.
