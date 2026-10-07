@@ -67,6 +67,17 @@ def load_metrics_cached():
     reg_metrics = pd.read_csv(config.REGRESSION_METRICS_PATH) if config.REGRESSION_METRICS_PATH.exists() else None
     cls_metrics = pd.read_csv(config.CLASSIFICATION_METRICS_PATH) if config.CLASSIFICATION_METRICS_PATH.exists() else None
     clus_metrics = pd.read_csv(config.CLUSTERING_METRICS_PATH) if config.CLUSTERING_METRICS_PATH.exists() else None
+    
+    if cls_metrics is not None:
+        rename_map = {
+            "F1-Score": "F1",
+            "F1 Score": "F1",
+            "F1-score": "F1",
+            "Weighted F1": "F1",
+            "F1_Score": "F1"
+        }
+        cls_metrics = cls_metrics.rename(columns=rename_map)
+        
     return reg_metrics, cls_metrics, clus_metrics
 
 df_raw = load_data_cached()
@@ -508,34 +519,55 @@ def render_segmentation(clusterer, df_raw):
         
     if st.button("Evaluate Patient Segmentation"):
         if clusterer is not None:
-            total_chronic = sum([int(diabetes), int(hypertension), int(heart_disease)])
-            util_score = visits * 2.0
-            smoker_weight = 3.0 if smoker == "Current" else (1.0 if smoker == "Former" else 0.0)
-            lifestyle_score = smoker_weight + (total_chronic * 0.5)
+            patient_dict = {
+                "age": age, "bmi": bmi, "income": income,
+                "visits_last_year": visits, "diabetes": int(diabetes),
+                "hypertension": int(hypertension), "cardiovascular_disease": int(heart_disease),
+                "smoker": smoker
+            }
+            df_patient = prediction.prepare_patient_dataframe(patient_dict)
             
-            feat_df = pd.DataFrame([{
-                "age": age,
-                "bmi": bmi,
-                "income": income,
-                "Hospital_Utilization_Score": util_score,
-                "Total_Chronic_Diseases": total_chronic,
-                "Lifestyle_Risk_Score": lifestyle_score
-            }])
-            
-            if isinstance(clusterer, dict):
+            if isinstance(clusterer, dict) and "preprocessor" in clusterer:
+                preprocessor = clusterer["preprocessor"]
+                model = clusterer["model"]
+                raw_features = clusterer.get("raw_features", list(df_patient.columns))
+                
+                df_input = df_patient[[col for col in raw_features if col in df_patient.columns]]
+                X_transformed = preprocessor.transform(df_input)
+                
+                with st.expander("🛠️ Patient Segmentation Integration Debug Info"):
+                    st.write("Raw input shape:", df_input.shape)
+                    st.write("Raw input columns:", list(df_input.columns)[:10])
+                    st.write("Expected raw features count:", len(raw_features))
+                    st.write("Transformed shape:", X_transformed.shape)
+                    st.write("KMeans expects:", model.n_features_in_)
+                
+                if X_transformed.shape[1] != model.n_features_in_:
+                    st.error(f"Preprocessing mismatch: transformed input has {X_transformed.shape[1]} features but KMeans expects {model.n_features_in_}.")
+                    cluster_id = 0
+                else:
+                    cluster_id = model.predict(X_transformed)[0]
+            elif isinstance(clusterer, dict) and "scaler" in clusterer:
                 scaler = clusterer["scaler"]
                 model = clusterer["model"]
                 features = clusterer.get("features", ["age", "bmi", "income", "Hospital_Utilization_Score", "Total_Chronic_Diseases", "Lifestyle_Risk_Score"])
-            else:
-                scaler = None
-                model = clusterer
-                features = ["age", "bmi", "income", "Hospital_Utilization_Score", "Total_Chronic_Diseases", "Lifestyle_Risk_Score"]
-            
-            if scaler is not None:
+                
+                total_chronic = sum([int(diabetes), int(hypertension), int(heart_disease)])
+                util_score = visits * 2.0
+                smoker_weight = 3.0 if smoker == "Current" else (1.0 if smoker == "Former" else 0.0)
+                lifestyle_score = smoker_weight + (total_chronic * 0.5)
+                
+                feat_df = pd.DataFrame([{
+                    "age": age, "bmi": bmi, "income": income,
+                    "Hospital_Utilization_Score": util_score,
+                    "Total_Chronic_Diseases": total_chronic,
+                    "Lifestyle_Risk_Score": lifestyle_score
+                }])
                 feat_scaled = scaler.transform(feat_df[features])
                 cluster_id = model.predict(feat_scaled)[0]
             else:
-                cluster_id = model.predict(feat_df)[0]
+                model = clusterer
+                cluster_id = model.predict(df_patient)[0]
             
             cohorts = {
                 0: {"name": "High Lifestyle Risk Cohort", "lifestyle": "Elevated. Heavy tobacco usage combined with high BMI.", "disease": "Borderline blood pressure and glucose markers.", "cost": "Moderate-High yearly claims.", "insight": "Prioritize smoking cessation and dietary coordination.", "color": "#D97706"},
@@ -572,10 +604,25 @@ def render_segmentation(clusterer, df_raw):
                 with clus_col1:
                     df_sample = df_raw.sample(min(2000, len(df_raw)), random_state=42)
                     df_eng_sample = preprocessing.engineer_features(df_sample)
-                    X_sample = df_eng_sample[clusterer["features"]]
-                    X_scaled_sample = scaler.transform(X_sample)
-                    labels_sample = model.predict(X_scaled_sample)
                     
+                    if isinstance(clusterer, dict) and "preprocessor" in clusterer:
+                        prep = clusterer["preprocessor"]
+                        raw_f = clusterer["raw_features"]
+                        X_sample_raw = df_eng_sample[[c for c in raw_f if c in df_eng_sample.columns]]
+                        X_scaled_sample = prep.transform(X_sample_raw)
+                        model_obj = clusterer["model"]
+                        labels_sample = model_obj.predict(X_scaled_sample)
+                    elif isinstance(clusterer, dict) and "scaler" in clusterer:
+                        scaler = clusterer["scaler"]
+                        model_obj = clusterer["model"]
+                        feats = clusterer["features"]
+                        X_sample = df_eng_sample[feats]
+                        X_scaled_sample = scaler.transform(X_sample)
+                        labels_sample = model_obj.predict(X_scaled_sample)
+                    else:
+                        X_scaled_sample = df_eng_sample.select_dtypes(include=np.number).values[:2000]
+                        labels_sample = clusterer.predict(X_scaled_sample)
+                        
                     fig_pca = utils.plot_pca_clusters(X_scaled_sample, labels_sample)
                     st.plotly_chart(fig_pca, use_container_width=True)
                 with clus_col2:
@@ -593,7 +640,11 @@ def render_model_performance(reg_metrics, cls_metrics, clus_metrics, regressor, 
     with tab1:
         st.markdown("#### Regression Algorithm Comparison Table")
         if reg_metrics is not None:
-            st.dataframe(reg_metrics.style.highlight_max(subset=["R2"], color="#DCFCE7"), use_container_width=True)
+            r2_col = "R²" if "R²" in reg_metrics.columns else ("R2" if "R2" in reg_metrics.columns else None)
+            if r2_col:
+                st.dataframe(reg_metrics.style.highlight_max(subset=[r2_col], color="#DCFCE7"), use_container_width=True)
+            else:
+                st.dataframe(reg_metrics, use_container_width=True)
             
             st.markdown("#### Diagnostics for the Deployed Tuned Regressor Model")
             reg_diag_col1, reg_diag_col2 = st.columns(2)
@@ -624,7 +675,17 @@ def render_model_performance(reg_metrics, cls_metrics, clus_metrics, regressor, 
     with tab2:
         st.markdown("#### Classification Algorithm Comparison Table")
         if cls_metrics is not None:
-            st.dataframe(cls_metrics.style.highlight_max(subset=["F1-Score"], color="#DCFCE7"), use_container_width=True)
+            f1_col = None
+            for candidate in ["F1", "F1-Score", "F1 Score", "Weighted F1", "F1_Score"]:
+                if candidate in cls_metrics.columns:
+                    f1_col = candidate
+                    break
+                    
+            if f1_col:
+                st.dataframe(cls_metrics.style.highlight_max(subset=[f1_col], color="#DCFCE7"), use_container_width=True)
+            else:
+                st.warning("F1 metric column not found. Showing classification results without F1 highlighting.")
+                st.dataframe(cls_metrics, use_container_width=True)
             
             st.markdown("#### Diagnostics for the Deployed Classifier Model")
             cls_diag_col1, cls_diag_col2 = st.columns(2)
