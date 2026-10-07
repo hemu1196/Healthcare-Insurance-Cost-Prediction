@@ -4,7 +4,10 @@ from sklearn.model_selection import train_test_split
 from sklearn.preprocessing import StandardScaler, OneHotEncoder
 from sklearn.compose import ColumnTransformer
 from sklearn.pipeline import Pipeline
-import app.config as config
+try:
+    import app.config as config
+except (ModuleNotFoundError, ImportError):
+    import config as config
 
 def engineer_features(df_input):
     """

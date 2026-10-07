@@ -5,8 +5,12 @@ import pandas as pd
 import numpy as np
 from pathlib import Path
 
-import app.config as config
-import app.preprocessing as preprocessing
+try:
+    import app.config as config
+    import app.preprocessing as preprocessing
+except (ModuleNotFoundError, ImportError):
+    import config as config
+    import preprocessing as preprocessing
 
 _regressor = None
 _classifier = None

@@ -9,12 +9,25 @@ from streamlit_option_menu import option_menu
 
 # Fix imports when running app directly
 import sys
-sys.path.append(os.path.abspath(os.path.join(os.path.dirname(__file__), "..")))
+from pathlib import Path
 
-import app.config as config
-import app.preprocessing as preprocessing
-import app.prediction as prediction
-import app.utils as utils
+APP_DIR = Path(__file__).resolve().parent
+PROJECT_ROOT = APP_DIR.parent
+
+for p in [str(PROJECT_ROOT), str(APP_DIR)]:
+    if p not in sys.path:
+        sys.path.insert(0, p)
+
+try:
+    import app.config as config
+    import app.preprocessing as preprocessing
+    import app.prediction as prediction
+    import app.utils as utils
+except (ModuleNotFoundError, ImportError):
+    import config as config
+    import preprocessing as preprocessing
+    import prediction as prediction
+    import utils as utils
 
 # 1. Page Configuration
 st.set_page_config(
