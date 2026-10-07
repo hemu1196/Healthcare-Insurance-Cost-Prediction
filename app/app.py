@@ -601,7 +601,8 @@ def render_segmentation(clusterer, df_raw):
             st.markdown("### Unsupervised Clustering Visualizations (Dimensionality Reduction)")
             if df_raw is not None:
                 clus_col1, clus_col2 = st.columns(2)
-                with clus_col1:
+                X_scaled_sample, labels_sample = None, None
+                try:
                     df_sample = df_raw.sample(min(2000, len(df_raw)), random_state=42)
                     df_eng_sample = preprocessing.engineer_features(df_sample)
                     
@@ -622,12 +623,28 @@ def render_segmentation(clusterer, df_raw):
                     else:
                         X_scaled_sample = df_eng_sample.select_dtypes(include=np.number).values[:2000]
                         labels_sample = clusterer.predict(X_scaled_sample)
+                except Exception as e:
+                    st.caption(f"Note: Could not prepare visualization sample dataset: {e}")
+                
+                with clus_col1:
+                    try:
+                        if X_scaled_sample is not None and labels_sample is not None:
+                            fig_pca = utils.plot_pca_clusters(X_scaled_sample, labels_sample)
+                            if fig_pca is not None:
+                                st.plotly_chart(fig_pca, use_container_width=True)
+                    except Exception as e:
+                        st.warning("PCA visualization could not be generated.")
+                        st.caption(str(e))
                         
-                    fig_pca = utils.plot_pca_clusters(X_scaled_sample, labels_sample)
-                    st.plotly_chart(fig_pca, use_container_width=True)
                 with clus_col2:
-                    fig_tsne = utils.plot_tsne_clusters(X_scaled_sample, labels_sample)
-                    st.plotly_chart(fig_tsne, use_container_width=True)
+                    try:
+                        if X_scaled_sample is not None and labels_sample is not None:
+                            fig_tsne = utils.plot_tsne_clusters(X_scaled_sample, labels_sample)
+                            if fig_tsne is not None:
+                                st.plotly_chart(fig_tsne, use_container_width=True)
+                    except Exception as e:
+                        st.warning("t-SNE visualization could not be generated.")
+                        st.caption(str(e))
         else:
             st.error("Cluster model not found at models/best_clustering.joblib. Run model training notebook first.")
 

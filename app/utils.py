@@ -368,11 +368,25 @@ def plot_pca_clusters(X_scaled, labels):
     Generate PCA cluster scatter plot.
     """
     from sklearn.decomposition import PCA
+    
+    if X_scaled is None or len(X_scaled) < 2:
+        return None
+        
+    if hasattr(X_scaled, "toarray"):
+        X_scaled = X_scaled.toarray()
+        
+    n_samples = len(X_scaled)
+    subsample_size = min(2000, n_samples)
+    subsample_idx = np.random.choice(n_samples, size=subsample_size, replace=False)
+    
+    X_sub = X_scaled[subsample_idx]
+    labels_sub = labels[subsample_idx] if len(labels) == n_samples else labels[:subsample_size]
+    
     pca = PCA(n_components=2, random_state=42)
-    X_pca = pca.fit_transform(X_scaled)
+    X_pca = pca.fit_transform(X_sub)
     
     df_pca = pd.DataFrame(X_pca, columns=["PC1", "PC2"])
-    df_pca["Cohort ID"] = labels.astype(str)
+    df_pca["Cohort ID"] = labels_sub.astype(str)
     
     fig = px.scatter(
         df_pca,
@@ -395,15 +409,43 @@ def plot_pca_clusters(X_scaled, labels):
 def plot_tsne_clusters(X_scaled, labels):
     """
     Generate t-SNE cluster scatter plot.
-    To save computation speed, we run t-SNE on a subsample of 1000 points.
+    Uses max_iter=300 for scikit-learn 1.4+ compatibility.
     """
     from sklearn.manifold import TSNE
-    subsample_idx = np.random.choice(len(X_scaled), size=min(1000, len(X_scaled)), replace=False)
-    X_sub = X_scaled[subsample_idx]
-    labels_sub = labels[subsample_idx]
     
-    tsne = TSNE(n_components=2, perplexity=30, random_state=42, n_iter=300)
-    X_tsne = tsne.fit_transform(X_sub)
+    if X_scaled is None or len(X_scaled) < 3:
+        return None
+        
+    if hasattr(X_scaled, "toarray"):
+        X_scaled = X_scaled.toarray()
+        
+    n_samples = len(X_scaled)
+    subsample_size = min(1000, n_samples)
+    subsample_idx = np.random.choice(n_samples, size=subsample_size, replace=False)
+    
+    X_sub = X_scaled[subsample_idx]
+    labels_sub = labels[subsample_idx] if len(labels) == n_samples else labels[:subsample_size]
+    
+    perplexity = min(30, max(2, subsample_size - 1))
+    
+    try:
+        tsne = TSNE(
+            n_components=2,
+            perplexity=perplexity,
+            random_state=42,
+            max_iter=300,
+            init="pca",
+            learning_rate="auto"
+        )
+        X_tsne = tsne.fit_transform(X_sub)
+    except Exception:
+        tsne = TSNE(
+            n_components=2,
+            perplexity=perplexity,
+            random_state=42,
+            max_iter=300
+        )
+        X_tsne = tsne.fit_transform(X_sub)
     
     df_tsne = pd.DataFrame(X_tsne, columns=["t-SNE 1", "t-SNE 2"])
     df_tsne["Cohort ID"] = labels_sub.astype(str)
