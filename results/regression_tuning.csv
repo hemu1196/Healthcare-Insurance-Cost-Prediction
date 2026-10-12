@@ -1,0 +1,3 @@
+Model,Baseline CV R2,Tuned CV R2,CV improvement,Best params
+Ridge Regression,0.14280107167633493,0.14990623864505637,0.0071051669687214325,{'model__alpha': 100}
+Random Forest Regressor,0.1322301285142626,0.14835407652914975,0.016123948014887146,"{'model__max_depth': 7, 'model__min_samples_leaf': 5}"
