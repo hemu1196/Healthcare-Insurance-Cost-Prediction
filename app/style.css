@@ -1,334 +1,308 @@
-/* Poppins & Inter Google Font Imports */
-@import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=Poppins:wght@300;400;500;600;700;800&display=swap');
+/* ============================================================
+   MedPredict Clinical Analytics Theme
+   Palette: Navy (#0F2C59, #0F4C81), Light Blue (#0284C7, #E0F2FE), 
+            Background (#F8FAFC, #FFFFFF), Border (#E2E8F0)
+   ============================================================ */
 
-/* General Document Styles */
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=Poppins:wght@500;600;700&display=swap');
+
 html, body, [class*="css"] {
-    font-family: 'Inter', 'Poppins', sans-serif;
-    background-color: #F5F9FC;
+    font-family: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
+    background-color: #F8FAFC;
     color: #1E293B;
 }
 
-/* Custom Containers */
+/* Container Spacing */
 .block-container {
     padding-top: 1.5rem !important;
-    padding-bottom: 2rem !important;
+    padding-bottom: 2.5rem !important;
+    max-width: 1280px;
 }
 
-/* Premium Gradient Hero Section */
-.hero-container {
-    background: linear-gradient(135deg, #0F4C81 0%, #0D3B66 50%, #00A8E8 100%);
-    background-image: 
-        linear-gradient(135deg, rgba(15, 76, 129, 0.9) 0%, rgba(13, 59, 102, 0.95) 50%, rgba(0, 168, 232, 0.9) 100%),
-        url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='200' height='200' viewBox='0 0 200 200'%3E%3Cpath d='M 10,100 L 40,100 L 50,70 L 60,130 L 70,100 L 90,100 L 100,80 L 110,120 L 120,100 L 190,100' fill='none' stroke='rgba(255,255,255,0.04)' stroke-width='3'/%3E%3Cpath d='M 20,40 Q 50,10 80,40 T 140,40' fill='none' stroke='rgba(255,255,255,0.03)' stroke-width='2'/%3E%3Ccircle cx='40' cy='100' r='2' fill='rgba(255,255,255,0.1)'/%3E%3Ccircle cx='90' cy='100' r='2' fill='rgba(255,255,255,0.1)'/%3E%3C/svg%3E");
-    border-radius: 20px;
-    padding: 3.5rem 4rem;
-    color: #FFFFFF;
-    box-shadow: 0 10px 30px rgba(15, 76, 129, 0.15);
-    margin-bottom: 2.5rem;
-    position: relative;
-    overflow: hidden;
+/* Compact Brand Header */
+.dashboard-header {
+    background: #FFFFFF;
+    border: 1px solid #E2E8F0;
+    border-left: 4px solid #0F4C81;
+    border-radius: 12px;
+    padding: 1.25rem 1.75rem;
+    margin-bottom: 1.5rem;
+    box-shadow: 0 1px 3px rgba(15, 23, 42, 0.05);
 }
 
-.hero-container::after {
-    content: "";
-    position: absolute;
-    top: -50%;
-    right: -10%;
-    width: 300px;
-    height: 300px;
-    background: rgba(0, 168, 232, 0.15);
-    border-radius: 50%;
-    filter: blur(50px);
+.dashboard-badge {
+    display: inline-block;
+    background-color: #E0F2FE;
+    color: #0369A1;
+    font-size: 0.72rem;
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: 0.06em;
+    padding: 0.2rem 0.6rem;
+    border-radius: 4px;
+    margin-bottom: 0.4rem;
 }
 
-.hero-title {
+.dashboard-title {
     font-family: 'Poppins', sans-serif;
-    font-weight: 800;
-    font-size: 2.6rem;
-    margin-bottom: 0.75rem;
+    color: #0F2C59;
+    font-size: 1.6rem;
+    font-weight: 700;
     letter-spacing: -0.02em;
+    margin: 0;
     line-height: 1.25;
 }
 
-.hero-subtitle {
-    font-size: 1.1rem;
-    font-weight: 300;
-    color: #E2E8F0;
-    margin-bottom: 1.5rem;
-    letter-spacing: 0.02em;
-    line-height: 1.6;
-}
-
-.hero-badge {
-    background: rgba(255, 255, 255, 0.1);
-    border: 1px solid rgba(255, 255, 255, 0.2);
-    padding: 0.4rem 1rem;
-    border-radius: 50px;
-    font-size: 0.85rem;
-    text-transform: uppercase;
-    letter-spacing: 0.05em;
-    display: inline-block;
-    font-weight: 500;
-    margin-bottom: 1rem;
-}
-
-/* Grid & Cards (Power BI / Tableau Style with 20px corners) */
-.analytics-card {
-    background-color: #FFFFFF;
-    border-radius: 20px;
-    padding: 1.5rem;
-    border: 1px solid #E2E8F0;
-    box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.02), 0 2px 4px -1px rgba(0, 0, 0, 0.02);
-    transition: transform 0.2s cubic-bezier(0.4, 0, 0.2, 1), box-shadow 0.2s cubic-bezier(0.4, 0, 0.2, 1);
-    margin-bottom: 1rem;
-}
-
-.analytics-card:hover {
-    transform: translateY(-4px);
-    box-shadow: 0 10px 15px -3px rgba(15, 76, 129, 0.08), 0 4px 6px -4px rgba(15, 76, 129, 0.08);
-    border-color: #CBD5E1;
-}
-
-.card-title {
-    font-family: 'Poppins', sans-serif;
+.dashboard-subtitle {
     color: #64748B;
-    font-size: 0.8rem;
+    font-size: 0.88rem;
+    margin-top: 0.35rem;
+    margin-bottom: 0;
+    line-height: 1.45;
+}
+
+/* Metric KPI Cards */
+.kpi-card {
+    background: #FFFFFF;
+    border: 1px solid #E2E8F0;
+    border-radius: 10px;
+    padding: 1rem 1.25rem;
+    box-shadow: 0 1px 3px rgba(15, 23, 42, 0.04);
+    height: 100%;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+}
+
+.kpi-label {
+    font-size: 0.72rem;
     font-weight: 600;
     text-transform: uppercase;
     letter-spacing: 0.05em;
-    margin-bottom: 0.5rem;
+    color: #64748B;
+    margin-bottom: 0.35rem;
 }
 
-.card-value {
-    color: #0F4C81;
-    font-size: 1.8rem;
+.kpi-value {
+    font-family: 'Poppins', sans-serif;
+    font-size: 1.5rem;
     font-weight: 700;
+    color: #0F2C59;
+    letter-spacing: -0.01em;
+    margin: 0;
+    line-height: 1.2;
+}
+
+.kpi-subtext {
+    font-size: 0.75rem;
+    color: #94A3B8;
+    margin-top: 0.35rem;
+}
+
+/* Analytics Panels & Content Boxes */
+.content-card {
+    background: #FFFFFF;
+    border: 1px solid #E2E8F0;
+    border-radius: 10px;
+    padding: 1.25rem 1.5rem;
+    margin-bottom: 1.25rem;
+    box-shadow: 0 1px 3px rgba(15, 23, 42, 0.04);
+}
+
+.content-card-header {
+    font-family: 'Poppins', sans-serif;
+    color: #0F2C59;
+    font-size: 1.05rem;
+    font-weight: 600;
+    margin-bottom: 0.85rem;
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+}
+
+.section-title {
+    font-family: 'Poppins', sans-serif;
+    color: #0F2C59;
+    font-size: 1.25rem;
+    font-weight: 700;
+    margin-top: 1.5rem;
+    margin-bottom: 0.75rem;
     letter-spacing: -0.01em;
 }
 
-.card-desc {
-    color: #94A3B8;
-    font-size: 0.8rem;
-    margin-top: 0.25rem;
-}
-
-.card-trend {
-    font-size: 0.8rem;
-    margin-top: 0.5rem;
-    font-weight: 500;
-    display: flex;
-    align-items: center;
-}
-
-.trend-up {
-    color: #2ECC71;
-}
-
-.trend-down {
-    color: #E74C3C;
-}
-
-/* Responsive Custom Grid Container */
-.grid-container {
-    display: grid;
-    grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
-    gap: 1.5rem;
-    margin-bottom: 2rem;
-}
-
-/* Feature Capability Cards */
-.feature-card {
-    background-color: #FFFFFF;
-    border-radius: 20px;
-    padding: 1.75rem;
-    border: 1px solid #E2E8F0;
-    box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.02);
-    transition: transform 0.2s, box-shadow 0.2s;
-    min-height: 180px;
-}
-
-.feature-card:hover {
-    transform: translateY(-4px);
-    box-shadow: 0 12px 20px rgba(15, 76, 129, 0.06);
-    border-color: #00A8E8;
-}
-
-.feature-title {
-    font-family: 'Poppins', sans-serif;
+/* Status Badges */
+.badge-clean {
+    display: inline-block;
+    padding: 0.25rem 0.55rem;
+    border-radius: 4px;
+    font-size: 0.75rem;
     font-weight: 600;
-    font-size: 1.1rem;
-    color: #0F4C81;
-    margin-top: 0.5rem;
-    margin-bottom: 0.5rem;
 }
 
-.feature-desc {
-    color: #64748B;
-    font-size: 0.88rem;
-    line-height: 1.5;
+.badge-blue {
+    background-color: #E0F2FE;
+    color: #0284C7;
+    border: 1px solid #BAE6FD;
 }
 
-/* Horizontal Interactive Timeline */
-.timeline-horizontal {
+.badge-green {
+    background-color: #DCFCE7;
+    color: #166534;
+    border: 1px solid #BBF7D0;
+}
+
+.badge-amber {
+    background-color: #FEF3C7;
+    color: #92400E;
+    border: 1px solid #FDE68A;
+}
+
+.badge-red {
+    background-color: #FEE2E2;
+    color: #991B1B;
+    border: 1px solid #FECACA;
+}
+
+/* Compact Workflow Timeline */
+.workflow-row {
     display: flex;
     flex-wrap: wrap;
-    align-items: stretch;
-    gap: 1rem;
-    padding: 1.5rem 0;
+    gap: 0.75rem;
+    margin: 1rem 0;
 }
 
-.timeline-horizontal-card {
-    background-color: #FFFFFF;
-    border: 1px solid #E2E8F0;
-    border-radius: 20px;
-    padding: 1.5rem;
+.workflow-step {
     flex: 1;
-    min-width: 200px;
-    box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.02);
-    transition: transform 0.2s, box-shadow 0.2s;
-    text-align: center;
-    position: relative;
-}
-
-.timeline-horizontal-card:hover {
-    transform: translateY(-4px);
-    box-shadow: 0 10px 15px rgba(15, 76, 129, 0.05);
-    border-color: #00A8E8;
-}
-
-.timeline-step-badge {
-    background-color: #0F4C81;
-    color: #FFFFFF;
-    font-size: 0.72rem;
-    font-weight: 700;
-    padding: 0.25rem 0.6rem;
-    border-radius: 50px;
-    display: inline-block;
-    margin-bottom: 0.5rem;
-}
-
-.timeline-arrow {
-    color: #00A8E8;
-    font-size: 1.5rem;
-    font-weight: 700;
-    align-self: center;
-    text-align: center;
-}
-
-/* Horizontal Project Workflow Nodes */
-.flowchart-horizontal {
-    display: flex;
-    flex-wrap: wrap;
-    justify-content: center;
-    align-items: center;
-    gap: 0.5rem;
-    padding: 1.5rem 0;
-}
-
-.flowchart-node {
-    background-color: #FFFFFF;
-    border: 1.5px solid #E2E8F0;
-    border-radius: 20px;
-    padding: 0.85rem 1.25rem;
-    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.01);
-    transition: all 0.2s;
-    text-align: center;
-    font-weight: 500;
-    font-size: 0.88rem;
-    min-width: 140px;
-}
-
-.flowchart-node:hover {
-    transform: translateY(-3px);
-    border-color: #00A8E8;
-    box-shadow: 0 8px 16px rgba(0, 168, 232, 0.08);
-}
-
-.flowchart-arrow {
-    color: #00A8E8;
-    font-size: 1.3rem;
-    font-weight: bold;
-    align-self: center;
-}
-
-/* Section Header Panels */
-.section-panel-header {
-    font-family: 'Poppins', sans-serif;
-    color: #0F4C81;
-    font-size: 1.3rem;
-    font-weight: 700;
-    margin-top: 2.5rem;
-    margin-bottom: 1.2rem;
-    border-bottom: 2px solid #E2E8F0;
-    padding-bottom: 0.5rem;
-    letter-spacing: -0.015em;
-}
-
-/* Input Form Containers (with 20px corners) */
-.form-container {
-    background-color: #FFFFFF;
+    min-width: 170px;
+    background: #FFFFFF;
     border: 1px solid #E2E8F0;
-    border-radius: 20px;
-    padding: 2rem;
-    box-shadow: 0 1px 3px rgba(0, 0, 0, 0.05);
-    margin-bottom: 2rem;
+    border-top: 3px solid #0F4C81;
+    border-radius: 8px;
+    padding: 0.85rem 1rem;
+    box-shadow: 0 1px 2px rgba(15, 23, 42, 0.04);
 }
 
-/* Badges */
-.badge-standard {
-    padding: 0.35rem 0.7rem;
-    border-radius: 6px;
-    font-size: 0.85rem;
+.workflow-num {
+    font-size: 0.7rem;
+    font-weight: 700;
+    color: #0284C7;
+    text-transform: uppercase;
+    letter-spacing: 0.05em;
+}
+
+.workflow-name {
+    font-size: 0.88rem;
     font-weight: 600;
-    display: inline-block;
+    color: #0F2C59;
+    margin-top: 0.2rem;
 }
 
-.badge-danger-fill {
-    background-color: #FDEDED;
-    color: #E74C3C;
-    border: 1px solid #FADBD8;
+.workflow-desc {
+    font-size: 0.76rem;
+    color: #64748B;
+    margin-top: 0.35rem;
+    line-height: 1.35;
 }
 
-.badge-success-fill {
-    background-color: #EAF9EE;
-    color: #2ECC71;
-    border: 1px solid #D4EFDF;
+/* Form Section Styling */
+.form-panel {
+    background: #FFFFFF;
+    border: 1px solid #E2E8F0;
+    border-radius: 10px;
+    padding: 1.5rem;
+    margin-bottom: 1.5rem;
+    box-shadow: 0 1px 3px rgba(15, 23, 42, 0.04);
 }
 
-.badge-warning-fill {
-    background-color: #FEF5E7;
-    color: #F39C12;
-    border: 1px solid #FDEBD0;
+.form-panel-title {
+    font-family: 'Poppins', sans-serif;
+    color: #0F2C59;
+    font-size: 1rem;
+    font-weight: 600;
+    margin-bottom: 1rem;
+    padding-bottom: 0.5rem;
+    border-bottom: 1px solid #F1F5F9;
+}
+
+/* Results Highlights */
+.result-box {
+    background: #FFFFFF;
+    border: 1px solid #E2E8F0;
+    border-radius: 10px;
+    padding: 1.5rem;
+    margin-top: 1rem;
+    box-shadow: 0 2px 4px rgba(15, 23, 42, 0.04);
+}
+
+.result-box-primary {
+    border-left: 5px solid #0F4C81;
+}
+
+.result-box-success {
+    border-left: 5px solid #059669;
+}
+
+.result-box-warning {
+    border-left: 5px solid #D97706;
+}
+
+.result-box-danger {
+    border-left: 5px solid #DC2626;
+}
+
+.result-val {
+    font-family: 'Poppins', sans-serif;
+    font-size: 2.2rem;
+    font-weight: 700;
+    color: #0F2C59;
+    margin: 0.25rem 0;
+}
+
+/* Medical Disclaimer Box */
+.disclaimer-box {
+    background-color: #F8FAFC;
+    border: 1px solid #E2E8F0;
+    border-radius: 8px;
+    padding: 0.75rem 1rem;
+    font-size: 0.78rem;
+    color: #64748B;
+    margin-top: 1.5rem;
+    line-height: 1.45;
 }
 
 /* Table Enhancements */
-.dataframe {
-    border-collapse: collapse;
-    width: 100%;
-    font-size: 0.9rem;
+div[data-testid="stDataFrame"] {
+    border: 1px solid #E2E8F0;
+    border-radius: 8px;
+    overflow: hidden;
 }
 
-.dataframe th {
-    background-color: #F8FAFC !important;
-    color: #64748B !important;
-    font-weight: 600;
-    text-transform: uppercase;
-    font-size: 0.75rem;
-    padding: 0.75rem 1rem !important;
-    border-bottom: 2px solid #E2E8F0 !important;
+/* Sidebar Styling */
+section[data-testid="stSidebar"] {
+    background-color: #FFFFFF;
+    border-right: 1px solid #E2E8F0;
 }
 
-.dataframe td {
-    padding: 0.75rem 1rem !important;
-    border-bottom: 1px solid #E2E8F0 !important;
+.sidebar-brand {
+    padding: 0.75rem 0.5rem 1.25rem 0.5rem;
+    border-bottom: 1px solid #F1F5F9;
+    margin-bottom: 1rem;
 }
 
-/* Footers */
-.app-footer {
-    border-top: 1px solid #E2E8F0;
-    padding-top: 1.5rem;
-    margin-top: 3rem;
-    color: #94A3B8;
-    font-size: 0.8rem;
-    text-align: center;
+.sidebar-title {
+    font-family: 'Poppins', sans-serif;
+    font-size: 1.15rem;
+    font-weight: 700;
+    color: #0F2C59;
+    margin: 0;
+    display: flex;
+    align-items: center;
+    gap: 0.4rem;
+}
+
+.sidebar-subtitle {
+    font-size: 0.74rem;
+    color: #64748B;
+    margin-top: 0.2rem;
+    margin-bottom: 0;
 }

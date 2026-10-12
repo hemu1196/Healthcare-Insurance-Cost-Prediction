@@ -271,14 +271,14 @@ streamlit run app/app.py
 ```
 Open your browser at `http://localhost:8501`.
 
-**Platform Capabilities:**
-- **Home**: Platform overview, analytical timeline, project workflow flowchart.
-- **Dashboard**: Population distributions, claim trends, correlation diagnostics.
-- **Cost Prediction**: Input patient vitals and demographics to forecast insurance claims with confidence indicators and waterfall contributions.
-- **Risk Prediction**: Assess high-risk probability, display gauge meters, and provide targeted clinical directives.
-- **Patient Segmentation**: Classify patient profiles into 4 lifestyle and chronic care cohorts with interactive PCA/t-SNE dimensionality reduction plots.
-- **Model Performance**: Compare metrics tables, confusion matrices, ROC curves, and actual vs. predicted diagnostics.
-- **About Project**: Capstone details, system architecture, and viva notes.
+**Platform Capabilities (7-Page Clinical Suite):**
+- **Home Dashboard**: Dynamic analytics overview with actual population counts, feature dimensions, top validated estimators, cost and risk distributions, model comparison charts, dataset quality audit, and project pipeline workflow.
+- **Dataset & EDA**: Deep-dive data exploration featuring head/tail previews, descriptive statistics, interactive numerical histograms, categorical frequency counts, custom correlation heatmaps, outlier boxplots, and student viva findings.
+- **Healthcare Cost Prediction**: Score patient demographics and clinical history through the trained regression pipeline to forecast medical expenses with population benchmark comparisons and risk factor waterfall attributions.
+- **Patient Risk Prediction**: Evaluate patient clinical risk tier (Low/Medium vs. High Risk) with calibrated confidence percentages, gauge indicators, and actionable preventative care guidance.
+- **Patient Segmentation**: Unsupervised cohort assignment mapping patient profiles to clinical utilization segments with empirical feature means and 2D PCA/t-SNE dimensionality reduction plots.
+- **Model Performance**: Comprehensive benchmarking hub showing consolidated comparison tables for all 10 regressors, 11 classifiers, and 3 clustering algorithms alongside 5-fold cross-validation, tuning, confusion matrices, and ROC curves.
+- **About Project**: Capstone academic metadata, architecture specifications, strict zero data leakage safeguards, and compliance disclosures.
 
 ---
 

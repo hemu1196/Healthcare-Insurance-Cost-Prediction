@@ -467,3 +467,54 @@ def plot_tsne_clusters(X_scaled, labels):
         title_font_color="#0F4C81"
     )
     return fig
+
+def plot_model_comparison(df, model_col="Model", metric_col="Test R2", title="Model Performance Comparison"):
+    """
+    Generate an interactive horizontal bar chart comparing all evaluated models on a specific metric.
+    """
+    if df is None or df.empty or metric_col not in df.columns:
+        return None
+    df_sorted = df.sort_values(by=metric_col, ascending=True).copy()
+    fig = px.bar(
+        df_sorted,
+        x=metric_col,
+        y=model_col,
+        orientation="h",
+        color=metric_col,
+        color_continuous_scale="Blues",
+        title=title,
+        template="plotly_white",
+        text_auto=".3f"
+    )
+    fig.update_layout(
+        font_family="Inter",
+        title_font_family="Poppins",
+        title_font_size=16,
+        title_font_color="#0F2C59",
+        xaxis_title=metric_col,
+        yaxis_title="",
+        coloraxis_showscale=False,
+        margin=dict(l=10, r=10, t=40, b=10)
+    )
+    return fig
+
+def plot_outliers(df, cols=None):
+    """
+    Generate boxplots for continuous variables to inspect distributions and outliers.
+    """
+    if cols is None:
+        cols = ["age", "bmi", "income", "annual_medical_cost"]
+    valid_cols = [c for c in cols if c in df.columns]
+    fig = go.Figure()
+    for col in valid_cols:
+        fig.add_trace(go.Box(y=df[col].dropna(), name=col, boxpoints="outliers", marker_color="#0284C7"))
+    fig.update_layout(
+        title="Continuous Features Outlier Inspection",
+        template="plotly_white",
+        font_family="Inter",
+        title_font_family="Poppins",
+        title_font_size=16,
+        title_font_color="#0F2C59",
+        margin=dict(l=10, r=10, t=40, b=10)
+    )
+    return fig

@@ -16,8 +16,22 @@ BEST_CLUSTERING_PATH = MODEL_DIR / "best_clustering.joblib"
 METADATA_PATH = MODEL_DIR / "model_metadata.json"
 
 REGRESSION_METRICS_PATH = RESULTS_DIR / "regression_metrics.csv"
+REGRESSION_COMPARISON_PATH = RESULTS_DIR / "regression_comparison.csv"
+REGRESSION_CV_PATH = RESULTS_DIR / "regression_cv.csv"
+REGRESSION_TUNING_PATH = RESULTS_DIR / "regression_tuning.csv"
+
 CLASSIFICATION_METRICS_PATH = RESULTS_DIR / "classification_metrics.csv"
+CLASSIFICATION_COMPARISON_PATH = RESULTS_DIR / "classification_comparison.csv"
+CLASSIFICATION_CV_PATH = RESULTS_DIR / "classification_cv.csv"
+CLASSIFICATION_TUNING_PATH = RESULTS_DIR / "classification_tuning.csv"
+
 CLUSTERING_METRICS_PATH = RESULTS_DIR / "clustering_metrics.csv"
+CLUSTERING_COMPARISON_PATH = RESULTS_DIR / "clustering_comparison.csv"
+CLUSTERING_PROFILES_PATH = RESULTS_DIR / "clustering_profiles.csv"
+CLUSTERING_STABILITY_PATH = RESULTS_DIR / "clustering_stability.csv"
+KMEANS_PROFILES_PATH = RESULTS_DIR / "k-means_profiles.csv"
+AGGLOMERATIVE_PROFILES_PATH = RESULTS_DIR / "agglomerative_profiles.csv"
+DIVISIVE_PROFILES_PATH = RESULTS_DIR / "divisive_profiles.csv"
 
 # Targets
 REGRESSION_TARGET = "annual_medical_cost"
