@@ -44,6 +44,252 @@ if css_path.exists():
     with open(css_path) as f:
         st.markdown(f"<style>{f.read()}</style>", unsafe_allow_html=True)
 
+# Additional UI Styling for Polished Healthcare Analytics Experience
+st.markdown("""
+<style>
+    /* Typography & Hierarchy */
+    h1, h2, h3, h4 {
+        color: #0F2C59 !important;
+        font-family: 'Poppins', sans-serif !important;
+        letter-spacing: -0.015em !important;
+    }
+
+    /* Enhanced Dashboard Header Banner */
+    .dashboard-header {
+        background: linear-gradient(135deg, #FFFFFF 0%, #F0F9FF 65%, #E0F2FE 100%) !important;
+        border: 1px solid #BAE6FD !important;
+        border-left: 5px solid #0F4C81 !important;
+        border-radius: 14px !important;
+        padding: 1.35rem 1.85rem !important;
+        margin-bottom: 1.5rem !important;
+        box-shadow: 0 4px 14px -2px rgba(15, 76, 129, 0.07) !important;
+    }
+
+    .dashboard-badge {
+        display: inline-block !important;
+        background: linear-gradient(135deg, #E0F2FE 0%, #CCFBF1 100%) !important;
+        color: #0F4C81 !important;
+        border: 1px solid #7DD3FC !important;
+        font-size: 0.72rem !important;
+        font-weight: 700 !important;
+        text-transform: uppercase !important;
+        letter-spacing: 0.07em !important;
+        padding: 0.22rem 0.65rem !important;
+        border-radius: 6px !important;
+        margin-bottom: 0.45rem !important;
+    }
+
+    .dashboard-title {
+        color: #0F2C59 !important;
+        font-size: 1.65rem !important;
+        font-weight: 700 !important;
+        margin: 0 !important;
+        line-height: 1.25 !important;
+    }
+
+    .dashboard-subtitle {
+        color: #475569 !important;
+        font-size: 0.88rem !important;
+        margin-top: 0.4rem !important;
+        line-height: 1.5 !important;
+    }
+
+    /* Responsive Rounded KPI Cards */
+    .kpi-card {
+        background: #FFFFFF !important;
+        border: 1px solid #E2E8F0 !important;
+        border-radius: 12px !important;
+        padding: 1.05rem 1.15rem !important;
+        box-shadow: 0 2px 8px -2px rgba(15, 44, 89, 0.06), 0 1px 3px rgba(15, 23, 42, 0.04) !important;
+        height: 100% !important;
+        min-height: 132px !important;
+        display: flex !important;
+        flex-direction: column !important;
+        justify-content: space-between !important;
+        transition: transform 0.2s cubic-bezier(0.16, 1, 0.3, 1), box-shadow 0.2s cubic-bezier(0.16, 1, 0.3, 1) !important;
+        overflow: hidden !important;
+    }
+
+    .kpi-card:hover {
+        transform: translateY(-2px) !important;
+        box-shadow: 0 8px 18px -3px rgba(15, 76, 129, 0.12) !important;
+    }
+
+    /* Distinct Clinical Palette Card Accents */
+    .kpi-card-1 { border-top: 3.5px solid #0F4C81 !important; } /* Navy */
+    .kpi-card-2 { border-top: 3.5px solid #0284C7 !important; } /* Sky Blue */
+    .kpi-card-3 { border-top: 3.5px solid #0D9488 !important; } /* Teal */
+    .kpi-card-4 { border-top: 3.5px solid #2563EB !important; } /* Royal Blue */
+    .kpi-card-5 { border-top: 3.5px solid #059669 !important; } /* Emerald */
+    .kpi-card-6 { border-top: 3.5px solid #0284C7 !important; } /* Cyan / Teal */
+
+    .kpi-label {
+        font-size: 0.72rem !important;
+        font-weight: 700 !important;
+        text-transform: uppercase !important;
+        letter-spacing: 0.055em !important;
+        color: #475569 !important;
+        margin-bottom: 0.25rem !important;
+    }
+
+    .kpi-value {
+        font-family: 'Poppins', sans-serif !important;
+        font-size: 1.45rem !important;
+        font-weight: 700 !important;
+        color: #0F2C59 !important;
+        margin: 0.15rem 0 !important;
+        line-height: 1.25 !important;
+        letter-spacing: -0.01em !important;
+    }
+
+    .kpi-value-model {
+        font-size: 1.05rem !important;
+        font-weight: 700 !important;
+        line-height: 1.25 !important;
+        word-break: break-word !important;
+        overflow-wrap: break-word !important;
+        color: #0F2C59 !important;
+    }
+
+    .kpi-subtext {
+        font-size: 0.74rem !important;
+        color: #64748B !important;
+        font-weight: 500 !important;
+        margin-top: 0.35rem !important;
+        line-height: 1.35 !important;
+    }
+
+    .kpi-pill {
+        display: inline-block;
+        padding: 0.15rem 0.5rem;
+        border-radius: 6px;
+        font-size: 0.72rem;
+        font-weight: 600;
+        letter-spacing: 0.02em;
+    }
+
+    /* Content Cards & Section Headers */
+    .content-card {
+        background: #FFFFFF !important;
+        border: 1px solid #E2E8F0 !important;
+        border-radius: 12px !important;
+        padding: 1.35rem 1.6rem !important;
+        margin-bottom: 1.35rem !important;
+        box-shadow: 0 2px 6px -1px rgba(15, 23, 42, 0.04) !important;
+    }
+
+    .content-card-header {
+        font-family: 'Poppins', sans-serif !important;
+        color: #0F2C59 !important;
+        font-size: 1.05rem !important;
+        font-weight: 600 !important;
+        margin-bottom: 0.85rem !important;
+        padding-bottom: 0.45rem !important;
+        border-bottom: 1.5px solid #F1F5F9 !important;
+        display: flex !important;
+        align-items: center !important;
+        gap: 0.5rem !important;
+    }
+
+    /* Sidebar Brand & Badges */
+    .sidebar-brand {
+        padding: 0.75rem 0.5rem 1.15rem 0.5rem !important;
+        border-bottom: 1px solid #F1F5F9 !important;
+        margin-bottom: 1rem !important;
+    }
+
+    .sidebar-title {
+        font-family: 'Poppins', sans-serif !important;
+        font-size: 1.18rem !important;
+        font-weight: 700 !important;
+        color: #0F2C59 !important;
+        margin: 0 !important;
+        display: flex !important;
+        align-items: center !important;
+        gap: 0.45rem !important;
+    }
+
+    .sidebar-subtitle {
+        font-size: 0.75rem !important;
+        color: #64748B !important;
+        margin-top: 0.25rem !important;
+        margin-bottom: 0.45rem !important;
+    }
+
+    .sidebar-badge-row {
+        display: flex;
+        gap: 0.35rem;
+        margin-top: 0.35rem;
+    }
+
+    .sidebar-pill {
+        display: inline-block;
+        padding: 0.15rem 0.5rem;
+        background: #F1F5F9;
+        color: #475569;
+        border-radius: 4px;
+        font-size: 0.68rem;
+        font-weight: 600;
+        text-transform: uppercase;
+        letter-spacing: 0.04em;
+    }
+
+    /* System Status Indicator Badges */
+    .status-list {
+        display: flex;
+        flex-direction: column;
+        gap: 0.45rem;
+        padding: 0.25rem 0;
+    }
+
+    .status-item {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        font-size: 0.78rem;
+        color: #334155;
+    }
+
+    .status-badge {
+        font-weight: 600;
+        font-size: 0.72rem;
+        padding: 0.15rem 0.5rem;
+        border-radius: 4px;
+    }
+
+    .status-ok {
+        background-color: #ECFDF5;
+        color: #059669;
+        border: 1px solid #A7F3D0;
+    }
+
+    .status-warn {
+        background-color: #FEF2F2;
+        color: #DC2626;
+        border: 1px solid #FECACA;
+    }
+
+    /* Consistent Clinical Risk Tiers */
+    .result-box-danger {
+        background: #FEF2F2 !important;
+        border: 1px solid #FECACA !important;
+        border-left: 5px solid #DC2626 !important;
+    }
+
+    .result-box-warning {
+        background: #FFFBEB !important;
+        border: 1px solid #FDE68A !important;
+        border-left: 5px solid #D97706 !important;
+    }
+
+    .result-box-success {
+        background: #ECFDF5 !important;
+        border: 1px solid #A7F3D0 !important;
+        border-left: 5px solid #059669 !important;
+    }
+</style>
+""", unsafe_allow_html=True)
+
 # 3. Cached Resource Loaders
 @st.cache_resource
 def load_models_cached():
@@ -102,8 +348,14 @@ results_data = load_results_cached()
 with st.sidebar:
     st.markdown("""
         <div class='sidebar-brand'>
-            <div class='sidebar-title'>MedPredict Analytics</div>
+            <div class='sidebar-title'>
+                <span>🏥</span> MedPredict
+            </div>
             <p class='sidebar-subtitle'>Healthcare ML Clinical Platform</p>
+            <div class='sidebar-badge-row'>
+                <span class='sidebar-pill'>Clinical AI</span>
+                <span class='sidebar-pill' style='background:#E0F2FE;color:#0369A1;'>v2.4</span>
+            </div>
         </div>
     """, unsafe_allow_html=True)
 
@@ -134,21 +386,23 @@ with st.sidebar:
             default_index=0,
             key="main_nav_menu",
             styles={
-                "container": {"padding": "0", "background-color": "#FFFFFF"},
-                "icon": {"color": "#64748B", "font-size": "14px"},
+                "container": {"padding": "0.2rem 0", "background-color": "transparent"},
+                "icon": {"color": "#0284C7", "font-size": "15px"},
                 "nav-link": {
                     "font-size": "13px",
-                    "font-family": "Inter",
+                    "font-family": "Inter, sans-serif",
                     "text-align": "left",
                     "margin": "3px 0",
-                    "padding": "8px 12px",
-                    "border-radius": "6px",
-                    "--hover-color": "#F1F5F9"
+                    "padding": "9px 12px",
+                    "border-radius": "8px",
+                    "color": "#334155",
+                    "--hover-color": "#F0F9FF"
                 },
                 "nav-link-selected": {
-                    "background-color": "#0F4C81",
+                    "background": "linear-gradient(90deg, #0F4C81 0%, #0284C7 100%)",
                     "color": "#FFFFFF",
-                    "font-weight": "600"
+                    "font-weight": "600",
+                    "box-shadow": "0 2px 6px rgba(15, 76, 129, 0.22)"
                 },
             }
         )
@@ -157,13 +411,37 @@ with st.sidebar:
 
     st.markdown("---")
     with st.expander("System & Pipeline Status", expanded=False):
-        st.write("**Dataset Loaded:**", "Yes" if df_raw is not None else "Unavailable")
-        st.write("**Regressor Status:**", "Ready" if regressor is not None else "Missing")
-        st.write("**Classifier Status:**", "Ready" if classifier is not None else "Missing")
-        st.write("**Clustering Status:**", "Ready" if clusterer is not None else "Missing")
+        st.markdown(f"""
+            <div class='status-list'>
+                <div class='status-item'>
+                    <span>Verified Dataset:</span>
+                    <span class='status-badge {"status-ok" if df_raw is not None else "status-warn"}'>
+                        {"● Ready" if df_raw is not None else "● Missing"}
+                    </span>
+                </div>
+                <div class='status-item'>
+                    <span>Cost Regressor:</span>
+                    <span class='status-badge {"status-ok" if regressor is not None else "status-warn"}'>
+                        {"● Ready" if regressor is not None else "● Missing"}
+                    </span>
+                </div>
+                <div class='status-item'>
+                    <span>Risk Classifier:</span>
+                    <span class='status-badge {"status-ok" if classifier is not None else "status-warn"}'>
+                        {"● Ready" if classifier is not None else "● Missing"}
+                    </span>
+                </div>
+                <div class='status-item'>
+                    <span>Cohort Clusterer:</span>
+                    <span class='status-badge {"status-ok" if clusterer is not None else "status-warn"}'>
+                        {"● Ready" if clusterer is not None else "● Missing"}
+                    </span>
+                </div>
+            </div>
+        """, unsafe_allow_html=True)
         st.caption("Course: 23CSE301 Capstone Review 1 & 2")
 
-    st.markdown("<div style='text-align:center;color:#94A3B8;font-size:0.7rem;padding-top:1rem;'>MedPredict v2.1.0 • Academic Edition</div>", unsafe_allow_html=True)
+    st.markdown("<div style='text-align:center;color:#94A3B8;font-size:0.7rem;padding-top:1rem;'>MedPredict v2.4 • Clinical Decision Support</div>", unsafe_allow_html=True)
 
 
 # ============================================================
@@ -272,92 +550,111 @@ def render_home_dashboard():
     reg_count_str = f"{len(reg_comp)} Models" if reg_comp is not None else ("10 Models" if reg_metrics is not None else "Unavailable")
     cls_count_str = f"{len(cls_comp)} Models" if cls_comp is not None else ("10 Models" if cls_metrics is not None else "Unavailable")
 
-    # Best validated regressor identification
-    if reg_metrics is not None and not reg_metrics.empty:
-        best_reg_row = reg_metrics.sort_values(by="R2", ascending=False).iloc[0]
-        best_reg_name = best_reg_row["Model"]
-        best_reg_score = f"R² = {best_reg_row['R2']:.4f}"
-    elif reg_comp is not None and not reg_comp.empty:
-        best_reg_row = reg_comp.sort_values(by="Test R2", ascending=False).iloc[0]
-        best_reg_name = best_reg_row["Model"]
-        best_reg_score = f"Test R² = {best_reg_row['Test R2']:.4f}"
+    # -------------------------------------------------------------
+    # Shared Data Source & Metric Selection for Benchmarks & KPIs
+    # -------------------------------------------------------------
+    # Regression: unify data source & metric between KPI card and chart
+    source_reg = reg_metrics if reg_metrics is not None and not reg_metrics.empty else reg_comp
+    metric_reg = None
+    metric_reg_label = "R²"
+    if source_reg is not None and not source_reg.empty:
+        for col_cand in ["R2", "Test R2", "R2 Score", "Test R^2"]:
+            if col_cand in source_reg.columns:
+                metric_reg = col_cand
+                metric_reg_label = "R²"
+                break
+        if metric_reg is None and "Train R2" in source_reg.columns:
+            metric_reg = "Train R2"
+            metric_reg_label = "Train R²"
+
+        best_reg_row = source_reg.sort_values(by=metric_reg, ascending=False).iloc[0]
+        best_reg_name = str(best_reg_row["Model"])
+        best_reg_score = f"{metric_reg_label} = {best_reg_row[metric_reg]:.4f}"
     else:
         best_reg_name = "Unavailable"
         best_reg_score = "N/A"
 
-    # Best validated classifier identification
-     # Best validated classifier identification
-    if cls_comp is not None and not cls_comp.empty:
-        metric_col = "Weighted F1" if "Weighted F1" in cls_comp.columns else "Accuracy"
-    
-        best_cls_row = cls_comp.sort_values(
-            by=metric_col, ascending=False
-        ).iloc[0]
-    
-        best_cls_name = best_cls_row["Model"]
-        best_cls_score = f"{metric_col} = {best_cls_row[metric_col]:.4f}"
-    
-    elif cls_metrics is not None and not cls_metrics.empty:
-        metric_col = "Weighted F1" if "Weighted F1" in cls_metrics.columns else "Accuracy"
-    
-        best_cls_row = cls_metrics.sort_values(
-            by=metric_col, ascending=False
-        ).iloc[0]
-    
-        best_cls_name = best_cls_row["Model"]
-        best_cls_score = f"{metric_col} = {best_cls_row[metric_col]:.4f}"
-    
+    # Classification: strictly unify data source & metric between Top Classifier KPI and comparison chart
+    # Both use source_cls (preferring cls_comp then cls_metrics) and metric_cls (preferring Weighted F1 then Accuracy)
+    source_cls = cls_comp if cls_comp is not None and not cls_comp.empty else cls_metrics
+    metric_cls = None
+    metric_cls_label = "Weighted F1"
+    if source_cls is not None and not source_cls.empty:
+        # Prefer Weighted F1 across column conventions (e.g. 'F1 (weighted)', 'Weighted F1')
+        for col_cand in ["Weighted F1", "F1 (weighted)", "weighted_f1", "F1", "f1_score"]:
+            if col_cand in source_cls.columns:
+                metric_cls = col_cand
+                metric_cls_label = "Weighted F1"
+                break
+        # Otherwise fall back to Accuracy
+        if metric_cls is None:
+            if "Accuracy" in source_cls.columns:
+                metric_cls = "Accuracy"
+                metric_cls_label = "Accuracy"
+            else:
+                num_cols = source_cls.select_dtypes(include=[np.number]).columns
+                if len(num_cols) > 0:
+                    metric_cls = num_cols[0]
+                    metric_cls_label = metric_cls
+
+        best_cls_row = source_cls.sort_values(by=metric_cls, ascending=False).iloc[0]
+        best_cls_name = str(best_cls_row["Model"])
+        best_cls_score = f"{metric_cls_label} = {best_cls_row[metric_cls]:.4f}"
     else:
         best_cls_name = "Unavailable"
         best_cls_score = "N/A"
 
+    # Clean model display names to prevent card overflow
+    clean_reg_name = best_reg_name.replace(" Regressor", "").replace(" Pipeline", "").replace(" Classifier", "").strip()
+    clean_cls_name = best_cls_name.replace(" Classifier", "").replace(" Pipeline", "").replace(" Regressor", "").strip()
+
     k1, k2, k3, k4, k5, k6 = st.columns(6)
     with k1:
         st.markdown(f"""
-            <div class='kpi-card'>
+            <div class='kpi-card kpi-card-1'>
                 <div class='kpi-label'>Dataset Population</div>
                 <div class='kpi-value'>{row_count_str}</div>
-                <div class='kpi-subtext'>Total verified patient records</div>
+                <div class='kpi-subtext'>Verified patient records</div>
             </div>
         """, unsafe_allow_html=True)
     with k2:
         st.markdown(f"""
-            <div class='kpi-card'>
+            <div class='kpi-card kpi-card-2'>
                 <div class='kpi-label'>Input Features</div>
                 <div class='kpi-value'>{feature_count_str}</div>
-                <div class='kpi-subtext'>Demographic & clinical variables</div>
+                <div class='kpi-subtext'>Clinical & demographics</div>
             </div>
         """, unsafe_allow_html=True)
     with k3:
         st.markdown(f"""
-            <div class='kpi-card'>
+            <div class='kpi-card kpi-card-3'>
                 <div class='kpi-label'>Regression Track</div>
                 <div class='kpi-value'>{reg_count_str}</div>
-                <div class='kpi-subtext'>Implemented algorithms</div>
+                <div class='kpi-subtext'>Continuous cost models</div>
             </div>
         """, unsafe_allow_html=True)
     with k4:
         st.markdown(f"""
-            <div class='kpi-card'>
+            <div class='kpi-card kpi-card-4'>
                 <div class='kpi-label'>Classification Track</div>
                 <div class='kpi-value'>{cls_count_str}</div>
-                <div class='kpi-subtext'>Compulsory & ensemble models</div>
+                <div class='kpi-subtext'>Clinical risk classifiers</div>
             </div>
         """, unsafe_allow_html=True)
     with k5:
         st.markdown(f"""
-            <div class='kpi-card'>
+            <div class='kpi-card kpi-card-5'>
                 <div class='kpi-label'>Top Regressor</div>
-                <div class='kpi-value' style='font-size:1.15rem;'>{best_reg_name.replace(' Regressor', '')}</div>
-                <div class='kpi-subtext'>{best_reg_score}</div>
+                <div class='kpi-value kpi-value-model'>{clean_reg_name}</div>
+                <div class='kpi-subtext'><span class='kpi-pill' style='background:#DCFCE7;color:#166534;'>{best_reg_score}</span></div>
             </div>
         """, unsafe_allow_html=True)
     with k6:
         st.markdown(f"""
-            <div class='kpi-card'>
+            <div class='kpi-card kpi-card-6'>
                 <div class='kpi-label'>Top Classifier</div>
-                <div class='kpi-value' style='font-size:1.15rem;'>{best_cls_name.replace(' Classifier', '')}</div>
-                <div class='kpi-subtext'>{best_cls_score}</div>
+                <div class='kpi-value kpi-value-model'>{clean_cls_name}</div>
+                <div class='kpi-subtext'><span class='kpi-pill' style='background:#E0F2FE;color:#0369A1;'>{best_cls_score}</span></div>
             </div>
         """, unsafe_allow_html=True)
 
@@ -383,20 +680,16 @@ def render_home_dashboard():
     # 3. Visual Analytics Row 2: Model Comparison Charts
     c_reg_comp, c_cls_comp = st.columns(2)
     with c_reg_comp:
-        st.markdown("<div class='content-card-header'>Regression Models Comparison (Validation R²)</div>", unsafe_allow_html=True)
-        source_reg = reg_metrics if reg_metrics is not None else reg_comp
-        metric_key = "R2" if (source_reg is not None and "R2" in source_reg.columns) else "Test R2"
-        if source_reg is not None and metric_key in source_reg.columns:
-            fig_reg_bar = utils.plot_model_comparison(source_reg, "Model", metric_key, "Regression Algorithms Comparison")
+        st.markdown(f"<div class='content-card-header'>Regression Models Comparison ({metric_reg_label})</div>", unsafe_allow_html=True)
+        if source_reg is not None and metric_reg is not None and metric_reg in source_reg.columns:
+            fig_reg_bar = utils.plot_model_comparison(source_reg, "Model", metric_reg, f"Regression Algorithms Comparison ({metric_reg_label})")
             st.plotly_chart(fig_reg_bar, use_container_width=True)
         else:
             st.info("Regression benchmarking metrics table unavailable.")
     with c_cls_comp:
-        st.markdown("<div class='content-card-header'>Classification Models Comparison (Weighted F1)</div>", unsafe_allow_html=True)
-        source_cls = cls_comp if cls_comp is not None else cls_metrics
-        metric_cls = "Weighted F1" if (source_cls is not None and "Weighted F1" in source_cls.columns) else "Accuracy"
-        if source_cls is not None and metric_cls in source_cls.columns:
-            fig_cls_bar = utils.plot_model_comparison(source_cls, "Model", metric_cls, "Classification Algorithms Comparison")
+        st.markdown(f"<div class='content-card-header'>Classification Models Comparison ({metric_cls_label})</div>", unsafe_allow_html=True)
+        if source_cls is not None and metric_cls is not None and metric_cls in source_cls.columns:
+            fig_cls_bar = utils.plot_model_comparison(source_cls, "Model", metric_cls, f"Classification Algorithms Comparison ({metric_cls_label})")
             st.plotly_chart(fig_cls_bar, use_container_width=True)
         else:
             st.info("Classification benchmarking metrics table unavailable.")
