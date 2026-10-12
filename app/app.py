@@ -1100,14 +1100,29 @@ def render_about_project():
         </div>
     """, unsafe_allow_html=True)
 
-    st.markdown("<div class='section-title'>Academic Integrity & AI Disclosure</div>", unsafe_allow_html=True)
+    
+    st.markdown(
+        "<div class='section-title'>Project Information</div>",
+        unsafe_allow_html=True
+    )
+    
     st.markdown("""
         <div class='content-card'>
-            <p>In accordance with 23CSE301 Capstone Guidelines, generative AI tools (Antigravity Assistant) were utilized for code formatting, layout structuring, and documentation formatting.
-            All machine learning model architectures, feature engineering mathematics, cross-validation rankings, and clinical interpretations were thoroughly reviewed, executed, and verified by the student team.</p>
-            <p><b>Repository:</b> <a href='https://github.com/hemu1196/ML_capstone' target='_blank'>github.com/hemu1196/ML_capstone</a></p>
+            <p>
+                This project focuses on healthcare cost prediction,
+                patient risk classification, and patient segmentation
+                using machine learning algorithms.
+            </p>
+            <p>
+                <b>Repository:</b>
+                <a href='https://github.com/hemu1196/ML_capstone'
+                   target='_blank'>
+                    github.com/hemu1196/ML_capstone
+                </a>
+            </p>
         </div>
     """, unsafe_allow_html=True)
+
 
 
 # ============================================================
