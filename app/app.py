@@ -132,6 +132,7 @@ with st.sidebar:
             options=options,
             icons=icons,
             default_index=0,
+            key="main_nav_menu",
             styles={
                 "container": {"padding": "0", "background-color": "#FFFFFF"},
                 "icon": {"color": "#64748B", "font-size": "14px"},
@@ -456,7 +457,7 @@ def render_home_dashboard():
             <div class='workflow-step'>
                 <div class='workflow-num'>Step 04</div>
                 <div class='workflow-name'>Model Training & CV</div>
-                <div class='workflow-desc'>Train 10 regressors, 11 classifiers, and 3 clustering algorithms with 5-fold CV & GridSearch.</div>
+                <div class='workflow-desc'>Train 10 regressors, 10 classifiers, and 3 clustering algorithms with 5-fold CV & GridSearch.</div>
             </div>
             <div class='workflow-step'>
                 <div class='workflow-num'>Step 05</div>
@@ -910,7 +911,7 @@ def render_model_performance(regressor, classifier):
 
     tab_reg, tab_cls, tab_clus = st.tabs([
         "Supervised Regression (10 Algorithms)",
-        "Supervised Classification (11 Algorithms)",
+        "Supervised Classification (10 Algorithms)",
         "Unsupervised Clustering (3 Algorithms)"
     ])
 
@@ -960,7 +961,7 @@ def render_model_performance(regressor, classifier):
                 st.info(f"Diagnostic plot generation: {e}")
 
     with tab_cls:
-        st.markdown("<div class='content-card-header'>All 11 Implemented Classification Algorithms Comparison</div>", unsafe_allow_html=True)
+        st.markdown("<div class='content-card-header'>All 10 Implemented Classification Algorithms Comparison</div>", unsafe_allow_html=True)
         cls_comp = results_data.get("cls_comp")
         cls_metrics = results_data.get("cls_metrics")
         display_cls = cls_comp if cls_comp is not None else cls_metrics

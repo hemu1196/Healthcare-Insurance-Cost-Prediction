@@ -110,7 +110,7 @@ Seven clinically grounded engineered features are retained across all tracks:
 9. **Support Vector Regressor (SVR)** (Kernelized margin regression)
 10. **K-Nearest Neighbors Regressor (KNN)** (Distance-weighted neighbor averaging)
 
-### Track 2: Supervised Classification (11 Algorithms — 10 Compulsory + Extra Trees)
+### Track 2: Supervised Classification (10 Algorithms)
 **Part A (Standard Classifiers):**
 1. **Logistic Regression** (Linear log-odds decision boundary)
 2. **K-Nearest Neighbors Classifier** (Non-parametric neighbor voting)
@@ -124,7 +124,6 @@ Seven clinically grounded engineered features are retained across all tracks:
 8. **Gradient Boosting Classifier** (Stage-wise additive logistic loss optimization)
 9. **Bagging Classifier** (Bootstrap aggregation of decision trees)
 10. **Multi-Layer Perceptron (MLP)** (Feedforward artificial neural network)
-11. **Extra Trees Classifier** (*Bonus Model*: Extremely randomized trees)
 
 ### Track 3: Unsupervised Clustering (3 Algorithms)
 1. **K-Means Clustering** (Centroid-based partitioning, $k=2..4$)
@@ -173,7 +172,6 @@ Evaluated on stratified held-out test data (80:20 split, `stratify=y`):
 | **Random Forest Classifier** | 0.9754 | 0.9863 | 0.9462 | 0.9752 | 0.9989 |
 | **AdaBoost Classifier** | 0.9742 | 0.9880 | 0.9413 | 0.9741 | 0.9971 |
 | **Support Vector Machine** | 0.9698 | 0.9620 | 0.9557 | 0.9698 | 0.9966 |
-| **Extra Trees Classifier** | 0.9390 | 0.9406 | 0.9390 | 0.9382 | 0.9903 |
 | **K-Nearest Neighbors** | 0.8659 | 0.9109 | 0.7045 | 0.8615 | 0.9430 |
 | **Gaussian Naive Bayes** | 0.8388 | 0.7836 | 0.7760 | 0.8386 | 0.9132 |
 
@@ -219,7 +217,7 @@ ML_capstone/
 │   └── model_metadata.json        # Pipeline tracking metadata
 ├── notebooks/
 │   ├── regression.ipynb           # 10 Regressors, 5-Fold CV, GridSearch, EDA
-│   ├── classification.ipynb       # 11 Classifiers, 5-Fold CV, GridSearch, EDA
+│   ├── classification.ipynb       # 10 Classifiers, 5-Fold CV, GridSearch, EDA
 │   └── clustering.ipynb           # K-Means, Agglomerative, Bisecting, PCA, t-SNE
 ├── results/
 │   ├── regression_metrics.csv     # Regression comparison metrics
@@ -277,7 +275,7 @@ Open your browser at `http://localhost:8501`.
 - **Healthcare Cost Prediction**: Score patient demographics and clinical history through the trained regression pipeline to forecast medical expenses with population benchmark comparisons and risk factor waterfall attributions.
 - **Patient Risk Prediction**: Evaluate patient clinical risk tier (Low/Medium vs. High Risk) with calibrated confidence percentages, gauge indicators, and actionable preventative care guidance.
 - **Patient Segmentation**: Unsupervised cohort assignment mapping patient profiles to clinical utilization segments with empirical feature means and 2D PCA/t-SNE dimensionality reduction plots.
-- **Model Performance**: Comprehensive benchmarking hub showing consolidated comparison tables for all 10 regressors, 11 classifiers, and 3 clustering algorithms alongside 5-fold cross-validation, tuning, confusion matrices, and ROC curves.
+- **Model Performance**: Comprehensive benchmarking hub showing consolidated comparison tables for all 10 regressors, 10 classifiers, and 3 clustering algorithms alongside 5-fold cross-validation, tuning, confusion matrices, and ROC curves.
 - **About Project**: Capstone academic metadata, architecture specifications, strict zero data leakage safeguards, and compliance disclosures.
 
 ---
