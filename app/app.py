@@ -286,27 +286,30 @@ def render_home_dashboard():
         best_reg_score = "N/A"
 
     # Best validated classifier identification
-     if cls_metrics is not None and not cls_metrics.empty:
-        metric_col = "Weighted F1" if "Weighted F1" in cls_metrics.columns else "Accuracy"
-        best_cls_row = cls_metrics.sort_values(
-            by=metric_col, ascending=False
-        ).iloc[0]
-        
-        best_cls_name = best_cls_row["Model"]
-        best_cls_score = f"{metric_col} = {best_cls_row[metric_col]:.4f}"
-        
-    elif cls_comp is not None and not cls_comp.empty:
+     # Best validated classifier identification
+    if cls_comp is not None and not cls_comp.empty:
         metric_col = "Weighted F1" if "Weighted F1" in cls_comp.columns else "Accuracy"
+    
         best_cls_row = cls_comp.sort_values(
             by=metric_col, ascending=False
         ).iloc[0]
-        
+    
         best_cls_name = best_cls_row["Model"]
         best_cls_score = f"{metric_col} = {best_cls_row[metric_col]:.4f}"
-        
+    
+    elif cls_metrics is not None and not cls_metrics.empty:
+        metric_col = "Weighted F1" if "Weighted F1" in cls_metrics.columns else "Accuracy"
+    
+        best_cls_row = cls_metrics.sort_values(
+            by=metric_col, ascending=False
+        ).iloc[0]
+    
+        best_cls_name = best_cls_row["Model"]
+        best_cls_score = f"{metric_col} = {best_cls_row[metric_col]:.4f}"
+    
     else:
-            best_cls_name = "Unavailable"
-            best_cls_score = "N/A"
+        best_cls_name = "Unavailable"
+        best_cls_score = "N/A"
 
     k1, k2, k3, k4, k5, k6 = st.columns(6)
     with k1:
