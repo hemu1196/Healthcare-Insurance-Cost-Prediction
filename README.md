@@ -2,285 +2,709 @@
 
 **Course:** 23CSE301 Machine Learning – Capstone Project  
 **Team No:** 8  
+**Section:** CSE-E  
 **Project Title:** Healthcare Cost Prediction and Patient Risk Intelligence Platform  
 **Dataset:** Medical Insurance Cost Prediction Dataset (`medical_insurance.csv`)  
 **Dataset Dimensions:** 100,000 rows × 54 columns  
+**University:** Amrita Vishwa Vidyapeetham  
+**Academic Year:** 2026–2027  
+
+**Live Streamlit Application:** https://healthcare-insurance-cost-prediction-mekvzuvgfimmhccezb5qjp.streamlit.app/
+
+**GitHub Repository:** https://github.com/hemu1196/Healthcare-Insurance-Cost-Prediction
 
 ---
 
-## 📌 Project Overview
+## 1. Project Overview
 
-This Machine Learning Capstone Project delivers an end-to-end, multi-track healthcare predictive intelligence solution adhering strictly to the official **23CSE301 Capstone Project Guidelines (Review 1 & Review 2)**:
+This project focuses on using Machine Learning to analyse healthcare insurance data and predict patient-related outcomes.
 
-1. **Supervised Regression Track**: Predict continuous annual patient medical costs (`annual_medical_cost`) across 10 distinct regression algorithms to support hospital budgeting and insurance underwriting.
-2. **Supervised Classification Track**: Predict binary patient health risk status (`is_high_risk`: 0 = Low/Medium Risk, 1 = High Risk) across 10 compulsory algorithms + 1 optional ensemble model to enable early preventative clinical interventions.
-3. **Unsupervised Clustering Track**: Discover natural patient risk and healthcare utilization cohorts using K-Means, Agglomerative Hierarchical, and Bisecting K-Means clustering, accompanied by Elbow curves, Silhouette analysis, Dendrograms, PCA 2D projections, and t-SNE manifolds.
-4. **Interactive Streamlit GUI**: A production-grade healthcare analytics dashboard supporting interactive cost forecasting, clinical risk assessment, patient cohort segmentation, and algorithm diagnostics.
+We implemented three main Machine Learning tracks:
 
----
+1. **Regression:** Predict the annual medical cost of a patient.
+2. **Classification:** Predict whether a patient belongs to the Low/Medium Risk or High Risk category.
+3. **Clustering:** Group patients with similar characteristics without using predefined target labels.
 
-## 🎯 Problem Statements
+We implemented **10 Regression algorithms, 10 Classification algorithms, and 3 Clustering methods**, making a total of **23 machine learning implementations**.
 
-- **Regression Problem**: Formulate a supervised regression task to predict annual medical expenses (`annual_medical_cost`) from demographic, clinical, lifestyle, and policy features while strictly guarding against target leakage.
-- **Classification Problem**: Formulate a supervised classification task to stratify patients into risk categories (`is_high_risk`) to optimize care management programs and minimize preventable hospitalizations.
-- **Clustering Problem**: Formulate an unsupervised learning task to discover distinct patient segments based on clinical disease burden and hospital resource utilization without using outcome target labels.
+Along with the Jupyter Notebooks, we developed a **Streamlit web application** called MedPredict Analytics to demonstrate predictions, visualisations, and model comparisons.
 
----
-
-## 📊 Dataset Description
-
-- **Source File**: `data/medical_insurance.csv` (100,000 rows × 54 columns)
-- **Numerical Features (24)**: `age`, `bmi`, `income`, `visits_last_year`, `hospitalizations_last_3yrs`, `days_hospitalized_last_3yrs`, `medication_count`, `systolic_bp`, `diastolic_bp`, `ldl`, `hba1c`, `deductible`, `copay`, `annual_premium`, `monthly_premium`, `claims_count`, `avg_claim_amount`, `chronic_count`, `proc_imaging_count`, `proc_surgery_count`, `proc_physio_count`, `proc_consult_count`, `proc_lab_count`, `provider_quality`.
-- **Categorical Features (10)**: `sex`, `region`, `urban_rural`, `education`, `marital_status`, `employment_status`, `smoker`, `alcohol_freq`, `plan_type`, `network_tier`.
-- **Binary Clinical Features (11)**: `hypertension`, `diabetes`, `asthma`, `copd`, `cardiovascular_disease`, `cancer_history`, `kidney_disease`, `liver_disease`, `arthritis`, `mental_health`, `had_major_procedure`.
-- **Target & Outcome Columns**:
-  - `annual_medical_cost` (Continuous Regression Target)
-  - `is_high_risk` (Binary Classification Target: 63.2% Class 0, 36.8% Class 1)
-  - `risk_score`, `total_claims_paid`, `avg_claim_amount` (Derived outcome proxies strictly excluded from predictors)
+The project follows the requirements of the **23CSE301 Machine Learning Capstone Project – Review 1 and Review 2**.
 
 ---
 
-## 🔍 Exploratory Data Analysis (EDA) Checklist
+## 2. Team Members
 
-All three notebooks (`regression.ipynb`, `classification.ipynb`, `clustering.ipynb`) implement the complete 15-item exploratory checklist prior to feature engineering:
+| Student Name | Register Number | 
+|---|---|---|
+| P. Hema Chandra | CB.SC.U4CSE24437 |  
+| K. Navadeep | CB.SC.U4CSE24466 |  
+| Rohan C. | CB.SC.U4CSE24441 |  
 
-1. **Head & Tail Displays**: `df.head()` and `df.tail()` to inspect record structure and sample edge cases.
-2. **Dataset Dimensions**: Explicit print of total row count (100,000) and column count (54).
-3. **Column Names & Data Types**: Summary table of all 54 attribute names and pandas dtypes.
-4. **Column-by-Column Missing Values**: Detailed audit confirming `alcohol_freq` contains 30,083 missing values (~30%), representing individuals with no regular alcohol consumption.
-5. **Duplicate Row Audit**: Confirmed 0 duplicate records across the entire dataset.
-6. **Descriptive Statistics**: Five-number summaries (`describe().round(2)`) for continuous features.
-7. **Categorical Value Counts**: Frequency distributions for `smoker`, `region`, `plan_type`, etc.
-8. **Target Distribution**: Explicit breakdown of `annual_medical_cost` (skewness, IQR) and `is_high_risk` (class proportions).
-9. **Numerical Histograms**: Subplots of key numerical distributions (`age`, `bmi`, `income`, `visits_last_year`).
-10. **Categorical Countplots**: Bar charts visualizing distributions across demographic factors.
-11. **Correlation Heatmap**: Pearson correlation matrix analyzing linear relationships among clinical variables.
-12. **Scatter & Relational Plots**: Multiple bivariate relation plots against targets (`age` vs `cost`, `bmi` vs `cost`).
-13. **Outlier Boxplots**: Boxplots inspecting distribution spreads and genuine medical cost outliers.
-14. **Class Imbalance Discussion**: Theoretical analysis of the 63.2% vs 36.8% class split, explaining why accuracy alone is insufficient and why Weighted F1 and Stratified K-Fold CV are essential.
-15. **Student Markdown Observations**: Structured observation templates addressing observed patterns, missing values, outliers, and correlation findings.
+All three team members are involved in understanding, testing, and presenting the complete project.
 
 ---
 
-## ⚙️ Data Cleaning & Feature Engineering
+## 3. Problem Statement
 
-Seven clinically grounded engineered features are retained across all tracks:
+Healthcare insurance datasets contain information about patient demographics, lifestyle habits, medical conditions, hospital visits, and insurance policies.
 
-1. **`BMI_Category`**: WHO standard categorisation:
-   $$\text{Underweight } (<18.5), \text{Normal } [18.5, 25), \text{Overweight } [25, 30), \text{Obese } (\ge 30)$$
-2. **`Age_Group`**: Clinical demographic tiers:
-   $$\text{Youth } (<30), \text{Middle-aged } [30, 55], \text{Senior } (>55)$$
-3. **`Lifestyle_Risk_Score`**: Composite lifestyle penalty:
-   $$\text{Smoker Weight } (\text{Current}=3, \text{Former}=1, \text{Never}=0) + \mathbf{1}_{[\text{BMI} \ge 30]} + 0.5 \times \text{mental\_health}$$
-4. **`Hospital_Utilization_Score`**: Weighted clinical encounter index:
-   $$\text{visits} + 3 \times \text{hospitalizations} + 0.5 \times \text{days\_hospitalized} + 2 \times \text{surgeries} + \text{imaging}$$
-5. **`Insurance_Coverage_Ratio`**: Financial coverage proportion:
-   $$\text{Insurance Coverage Ratio} = \min\left(1, \frac{\text{annual\_premium}}{\text{annual\_premium} + \text{deductible} + 10^{-5}}\right)$$
-6. **`Total_Chronic_Diseases`**: Sum of 9 diagnosed chronic conditions:
-   $$\sum \text{hypertension, diabetes, asthma, copd, CVD, cancer, kidney, liver, arthritis}$$
-7. **`Claim_Severity_Index`**: Overall patient risk severity metric:
-   $$0.05 \times \text{age} + 0.1 \times \text{bmi} + 1.5 \times \text{Total\_Chronic\_Diseases} + 0.5 \times \text{Hospital\_Utilization\_Score} + 1.5 \times \text{had\_major\_procedure}$$
+Analysing this information manually can be difficult because of the large number of records and attributes.
+
+Our objective is to apply Machine Learning techniques to:
+
+- Estimate annual patient medical expenses.
+- Predict patient risk categories.
+- Identify groups of patients with similar characteristics.
+- Compare different Machine Learning algorithms.
+- Display results and predictions through an interactive web application.
 
 ---
 
-## 🛡️ Preprocessing & Data Leakage Prevention
+## 4. Project Objectives
 
-- **Strict Leakage Prevention**:
-  - Regression features exclude: `person_id`, `annual_medical_cost`, `is_high_risk`, `risk_score`, `total_claims_paid`, `avg_claim_amount`.
-  - Classification features exclude: `person_id`, `is_high_risk`, `annual_medical_cost`, `risk_score`, `total_claims_paid`, `avg_claim_amount`.
-  - Assertions: `assert set(X_train.index).isdisjoint(X_test.index)` confirms zero sample overlap.
-- **Pipeline Transformations**:
-  - Numerical Pipeline: `SimpleImputer(strategy="median")` + `StandardScaler()`.
-  - Categorical Pipeline: `SimpleImputer(strategy="most_frequent")` + `OneHotEncoder(handle_unknown="ignore", sparse_output=False)`.
-  - Scalers and encoders are fitted **strictly on training splits only**.
+The main objectives of this project are:
 
----
-
-## 🤖 Machine Learning Algorithms Implemented
-
-### Track 1: Supervised Regression (10 Algorithms)
-1. **Linear Regression** (Ordinary Least Squares baseline)
-2. **Ridge Regression** ($L_2$ regularization, $\alpha=10.0$)
-3. **Lasso Regression** ($L_1$ regularization & feature selection, $\alpha=20.0$)
-4. **ElasticNet Regression** (Convex combination of $L_1$ and $L_2$)
-5. **Polynomial Regression** (Degree 2 feature expansion via PCA projection)
-6. **Decision Tree Regressor** (Non-linear decision thresholds)
-7. **Random Forest Regressor** (Bagged ensemble of randomized regression trees)
-8. **Gradient Boosting Regressor** (Sequential gradient boosting on residuals)
-9. **Support Vector Regressor (SVR)** (Kernelized margin regression)
-10. **K-Nearest Neighbors Regressor (KNN)** (Distance-weighted neighbor averaging)
-
-### Track 2: Supervised Classification (10 Algorithms)
-**Part A (Standard Classifiers):**
-1. **Logistic Regression** (Linear log-odds decision boundary)
-2. **K-Nearest Neighbors Classifier** (Non-parametric neighbor voting)
-3. **Gaussian Naive Bayes** (Probabilistic classifier with Gaussian likelihood)
-4. **Decision Tree Classifier** (GINI criterion recursive splitting)
-5. **Support Vector Machine (SVC)** (Kernelized maximum-margin hyperplanes)
-
-**Part B (Ensemble & Advanced Classifiers):**
-6. **Random Forest Classifier** (Bootstrap aggregated ensemble)
-7. **AdaBoost Classifier** (Adaptive boosting with decision stumps)
-8. **Gradient Boosting Classifier** (Stage-wise additive logistic loss optimization)
-9. **Bagging Classifier** (Bootstrap aggregation of decision trees)
-10. **Multi-Layer Perceptron (MLP)** (Feedforward artificial neural network)
-
-### Track 3: Unsupervised Clustering (3 Algorithms)
-1. **K-Means Clustering** (Centroid-based partitioning, $k=2..4$)
-2. **Agglomerative Hierarchical Clustering** (Ward linkage bottom-up dendrogram)
-3. **Bisecting K-Means** (Divisive top-down hierarchical clustering)
+1. To load and understand the healthcare insurance dataset.
+2. To perform Exploratory Data Analysis (EDA).
+3. To identify and handle missing values and duplicate records.
+4. To perform feature encoding, scaling, and feature engineering.
+5. To implement all 10 required regression algorithms.
+6. To implement all 10 required classification algorithms.
+7. To implement K-Means and Agglomerative Hierarchical Clustering.
+8. To implement Divisive Clustering as an additional comparison.
+9. To evaluate algorithms using suitable performance metrics.
+10. To perform cross-validation and hyperparameter tuning.
+11. To generate model-specific visualisations and comparison graphs.
+12. To build and deploy a Streamlit GUI for project demonstration.
 
 ---
 
-## 📈 Empirical Model Evaluation & Results
+## 5. Dataset Description
 
-### 1. Regression Track Results (`notebooks/regression.ipynb`)
+**Dataset Name:** Medical Insurance Cost Prediction Dataset  
+**Dataset File:** `medical_insurance.csv`
 
-Evaluated on held-out test data (80:20 train/test split, `random_state=42`):
+| Dataset Information | Value |
+|---|---|
+| Total Records | 100,000 |
+| Total Attributes | 54 |
+| Total Missing Values | 30,083 |
+| Duplicate Records | 0 |
+| Regression Target | `annual_medical_cost` |
+| Classification Target | `is_high_risk` |
 
-| Model | $R^2$ Score | RMSE ($) | MAE ($) |
-| :--- | ---: | ---: | ---: |
-| **Tuned Random Forest** | **0.9978** | **147.62** | **7.17** |
-| **Gradient Boosting Regressor** | **0.9969** | **173.62** | **88.12** |
-| Random Forest Regressor | 0.9964 | 188.45 | 76.51 |
-| Tuned Gradient Boosting | 0.9963 | 189.76 | 87.37 |
-| Decision Tree Regressor | 0.9927 | 267.59 | 136.81 |
-| Polynomial Regression | 0.9665 | 574.39 | 319.41 |
-| Lasso Regression | 0.9662 | 576.30 | 310.23 |
-| Ridge Regression | 0.9662 | 576.63 | 312.86 |
-| Linear Regression | 0.9662 | 576.65 | 312.87 |
-| ElasticNet Regression | 0.9172 | 902.65 | 524.57 |
-| KNN Regressor | 0.8002 | 1402.00 | 917.33 |
-| Support Vector Regressor | 0.7530 | 1559.03 | 391.73 |
+### 5.1 Numerical Features
 
-- **Best Regression Model**: Tuned Random Forest ($R^2 = 0.9978$, $RMSE = \$147.62$, $MAE = \$7.17$).
-- **Saved Pipeline**: `models/best_regressor.joblib`
+Examples include:
+
+- `age`
+- `bmi`
+- `income`
+- `annual_premium`
+- `visits_last_year`
+- `hospitalizations_last_3yrs`
+- `medication_count`
+- `systolic_bp`
+- `diastolic_bp`
+
+### 5.2 Categorical Features
+
+Examples include:
+
+- `sex`
+- `region`
+- `urban_rural`
+- `education`
+- `employment_status`
+- `smoker`
+- `alcohol_freq`
+- `plan_type`
+
+### 5.3 Binary Features
+
+Examples include:
+
+- `hypertension`
+- `diabetes`
+- `asthma`
+- `kidney_disease`
+- `liver_disease`
+- `cancer_history`
+
+### 5.4 Target Variables
+
+**Regression Target: `annual_medical_cost`**
+
+Represents the annual medical expenditure of a patient.
+
+**Classification Target: `is_high_risk`**
+
+- `0` – Low/Medium Risk
+- `1` – High Risk
+
+### 5.5 Dataset Sampling
+
+The original dataset contains **100,000 records**.
+
+For faster training and classroom demonstration, we used the following samples:
+
+| Track | Sample Records |
+|---|---:|
+| Regression | 5,000 |
+| Classification | 5,000 |
+| Clustering | 1,200 |
+
+For regression and classification, an 80:20 training and testing split is used within the selected samples.
+
+The results reported below are from these experiments and do not represent training on the complete 100,000-record dataset.
 
 ---
 
-### 2. Classification Track Results (`notebooks/classification.ipynb`)
+## 6. Exploratory Data Analysis (EDA)
 
-Evaluated on stratified held-out test data (80:20 split, `stratify=y`):
+Exploratory Data Analysis helps us understand the dataset before training the Machine Learning models.
 
-| Model | Accuracy | Precision | Recall | Weighted F1 | ROC-AUC |
-| :--- | ---: | ---: | ---: | ---: | ---: |
-| **Bagging Classifier** | **0.9980** | **0.9990** | **0.9955** | **0.9980** | **1.0000** |
-| **Decision Tree** | 0.9979 | 0.9977 | 0.9966 | 0.9979 | 0.9995 |
-| **Logistic Regression** | 0.9969 | 0.9973 | 0.9943 | 0.9969 | 0.9998 |
-| **Gradient Boosting Classifier** | 0.9911 | 0.9976 | 0.9781 | 0.9911 | 0.9999 |
-| **MLP Classifier** | 0.9819 | 0.9804 | 0.9702 | 0.9819 | 0.9987 |
-| **Random Forest Classifier** | 0.9754 | 0.9863 | 0.9462 | 0.9752 | 0.9989 |
-| **AdaBoost Classifier** | 0.9742 | 0.9880 | 0.9413 | 0.9741 | 0.9971 |
-| **Support Vector Machine** | 0.9698 | 0.9620 | 0.9557 | 0.9698 | 0.9966 |
-| **K-Nearest Neighbors** | 0.8659 | 0.9109 | 0.7045 | 0.8615 | 0.9430 |
-| **Gaussian Naive Bayes** | 0.8388 | 0.7836 | 0.7760 | 0.8386 | 0.9132 |
+### 6.1 Dataset Inspection
 
-- **Best Classifier**: Gradient Boosting / Tuned Decision Tree Pipeline (Weighted $F1 = 0.998$, ROC-AUC $> 0.999$).
-- **Saved Pipeline**: `models/best_classifier.joblib`
+We performed:
+
+- Displaying the first and last records.
+- Checking the dataset shape.
+- Checking column names and data types.
+- Identifying missing values.
+- Identifying duplicate records.
+- Viewing descriptive statistics.
+
+### 6.2 Missing Value Analysis
+
+We observed **30,083 missing values** in the `alcohol_freq` column.
+
+Missing categorical values are handled using suitable preprocessing techniques.
+
+We do not assume that missing alcohol-frequency values mean a patient does not consume alcohol.
+
+### 6.3 EDA Visualisations
+
+The notebooks include the following visualisations:
+
+| Visualisation | Purpose |
+|---|---|
+| Histogram | Understand numerical feature distributions |
+| Count Plot | Compare different categories |
+| Boxplot | Identify possible outliers |
+| Correlation Heatmap | Understand relationships between numerical variables |
+| Scatter Plot | Observe relationships between features |
+| Target Distribution | Understand the prediction target |
+
+EDA helps us understand the characteristics and limitations of the dataset.
 
 ---
 
-### 3. Clustering Track Results (`notebooks/clustering.ipynb`)
+## 7. Data Preprocessing and Feature Engineering
 
-Evaluated on 1,200 scaled patients across 55 preprocessed dimensions:
+Before applying Machine Learning algorithms, we preprocess the dataset.
 
-| Algorithm | Silhouette Score | Davies-Bouldin Index | Calinski-Harabasz Index |
-| :--- | :---: | :---: | :---: |
-| **K-Means ($k=2$)** | **0.1245** | **3.2813** | **104.35** |
-| **Divisive (Bisecting K-Means)** | 0.1212 | 3.2947 | 104.43 |
-| **Agglomerative Hierarchical (Ward)** | 0.0515 | 3.6895 | 76.45 |
+### 7.1 Handling Missing Values
 
-- **Linkage Comparison**: Ward linkage produced the most balanced cluster tree compared to Average, Complete, and Single linkage.
-- **Dimensionality Reduction**: PCA captures dominant geometric separation; t-SNE (2 components, perplexity=25, `max_iter=500`) resolves non-linear patient neighborhoods.
-- **Saved Bundle**: `models/best_clustering.joblib` (`{"preprocessor": preprocessor, "model": kmeans, "raw_features": raw_features}`)
+We use:
+
+- Median imputation for numerical attributes.
+- Most frequent category imputation for categorical attributes.
+
+### 7.2 One-Hot Encoding
+
+Categorical features are converted into numerical form using One-Hot Encoding.
+
+### 7.3 Feature Scaling
+
+StandardScaler is used to scale numerical features.
+
+Scaling is particularly important for distance-based and margin-based algorithms such as KNN and SVM.
+
+### 7.4 Feature Engineering
+
+We created seven additional features:
+
+| Feature | Description |
+|---|---|
+| `BMI_Category` | Categorises patients based on BMI |
+| `Age_Group` | Divides patients into age groups |
+| `Lifestyle_Risk_Score` | Combines selected lifestyle-related factors |
+| `Hospital_Utilization_Score` | Combines hospital visits and procedures |
+| `Insurance_Coverage_Ratio` | Calculates a ratio based on premium and deductible |
+| `Total_Chronic_Diseases` | Counts selected chronic disease indicators |
+| `Claim_Severity_Index` | Combines selected patient and hospital-related factors |
+
+These features are created to represent potentially useful patterns in the dataset.
+
+### 7.5 Data Leakage Prevention
+
+We removed target columns, patient identifiers, and selected outcome-related attributes from the predictors.
+
+For supervised learning, preprocessing is fitted using training data and then applied to testing data.
+
+This reduces obvious data leakage, although possible indirect relationships between features and targets still require careful evaluation.
 
 ---
 
-## 📁 Repository Structure
+## 8. Regression Track
+
+**Notebook:** `notebooks/regression.ipynb`
+
+### 8.1 Objective
+
+To predict the estimated annual medical cost using supervised Machine Learning algorithms.
+
+### 8.2 Regression Algorithms Implemented
+
+| No. | Algorithm |
+|---|---|
+| 1 | Linear Regression |
+| 2 | Ridge Regression |
+| 3 | Lasso Regression |
+| 4 | ElasticNet Regression |
+| 5 | Polynomial Regression |
+| 6 | Decision Tree Regressor |
+| 7 | Random Forest Regressor |
+| 8 | Gradient Boosting Regressor |
+| 9 | Support Vector Regressor (SVR) |
+| 10 | K-Nearest Neighbors Regressor |
+
+### 8.3 Regression Evaluation Metrics
+
+**R² Score**
+
+Measures how much variation in the target is explained by the model. Higher values are generally better.
+
+**RMSE – Root Mean Squared Error**
+
+Measures prediction error while giving more importance to larger errors. Lower values are better.
+
+**MAE – Mean Absolute Error**
+
+Measures the average absolute difference between actual and predicted values. Lower values are better.
+
+### 8.4 Regression Results
+
+Based on the recorded results in our regression notebook:
+
+| Selected Model | R² Score | RMSE | MAE |
+|---|---:|---:|---:|
+| Lasso Regression | 0.1998 | 2667.94 | 1692.05 |
+
+**Selected Model:** Lasso Regression
+
+Lasso achieved the highest recorded held-out R² in this experiment.
+
+An R² score of approximately 0.20 indicates that the model explains about 20% of the variation in annual medical costs in the test sample.
+
+### 8.5 Regression Visualisations
+
+Our notebook includes:
+
+- Actual vs Predicted plots.
+- Residual plots.
+- R² comparison graphs.
+- RMSE and MAE comparison graphs.
+- Decision Tree visualisation.
+- Feature importance graphs.
+- Hyperparameter tuning results.
+- Five-fold cross-validation results.
+
+### 8.6 Hyperparameter Tuning
+
+We applied GridSearchCV to selected regression models, including Ridge and Random Forest.
+
+Five-fold cross-validation was also used to examine model performance across different training and validation splits.
+
+---
+
+## 9. Classification Track
+
+**Notebook:** `notebooks/classification.ipynb`
+
+### 9.1 Objective
+
+To classify patients into Low/Medium Risk and High Risk categories.
+
+### 9.2 Classification Algorithms Implemented
+
+**Part A – Review 1**
+
+| No. | Algorithm |
+|---|---|
+| 1 | Logistic Regression |
+| 2 | K-Nearest Neighbors Classifier |
+| 3 | Gaussian Naive Bayes |
+| 4 | Decision Tree Classifier |
+| 5 | Support Vector Machine (SVC) |
+
+**Part B – Review 2**
+
+| No. | Algorithm |
+|---|---|
+| 6 | Random Forest Classifier |
+| 7 | AdaBoost Classifier |
+| 8 | Gradient Boosting Classifier |
+| 9 | Bagging Classifier |
+| 10 | Multi-Layer Perceptron (MLP Classifier) |
+
+### 9.3 Classification Evaluation Metrics
+
+**Accuracy:** Proportion of correctly classified records.
+
+**Precision:** Measures how many predicted cases in a class actually belong to that class.
+
+**Recall:** Measures how many actual cases in a class are identified correctly.
+
+**Weighted F1 Score:** Combines precision and recall while accounting for the number of samples in each class.
+
+**ROC-AUC:** Measures how well the classifier separates the two risk categories across different thresholds.
+
+### 9.4 Classification Results
+
+Based on the recorded results in our classification notebook:
+
+| Selected Model | Accuracy | Weighted F1 | ROC-AUC |
+|---|---:|---:|---:|
+| Gradient Boosting Classifier | 0.9940 | 0.9940 | 0.9999 |
+
+**Selected Model:** Gradient Boosting Classifier
+
+Gradient Boosting achieved the highest recorded weighted F1 in this comparison.
+
+These results show strong performance on the selected dataset sample. However, high classification scores should be checked for possible hidden data leakage and dataset-specific relationships.
+
+### 9.5 Classification Visualisations
+
+Our notebook includes:
+
+- Confusion matrices.
+- ROC curves.
+- Accuracy comparison plots.
+- Precision and Recall comparison plots.
+- Weighted F1 comparison plots.
+- Decision Tree visualisation.
+- Feature importance graphs.
+- MLP training-loss graph.
+- Consolidated comparison of all 10 classifiers.
+
+### 9.6 Hyperparameter Tuning
+
+We performed cross-validation and hyperparameter tuning for selected classifiers.
+
+In the recorded Random Forest tuning experiment, the mean cross-validated weighted F1 improved by approximately 0.004.
+
+This helps demonstrate the importance of selecting suitable model parameters.
+
+---
+
+## 10. Clustering Track
+
+**Notebook:** `notebooks/clustering.ipynb`
+
+### 10.1 Objective
+
+To group patients with similar characteristics without using predefined target labels during model fitting.
+
+### 10.2 Clustering Algorithms Implemented
+
+| No. | Algorithm | Approach |
+|---|---|---|
+| 1 | K-Means Clustering | Centroid-based |
+| 2 | Agglomerative Hierarchical Clustering | Bottom-up |
+| 3 | Divisive Clustering (Bisecting K-Means) | Top-down |
+
+K-Means and Agglomerative Hierarchical Clustering are required by the course guidelines.
+
+Divisive Clustering was implemented as an additional comparison.
+
+### 10.3 K-Means Clustering
+
+K-Means divides patients into clusters based on similarity.
+
+We used the Elbow Method and Silhouette Score to examine different values of K.
+
+### 10.4 Agglomerative Hierarchical Clustering
+
+Agglomerative clustering begins by treating every patient as an individual cluster.
+
+It gradually merges similar clusters.
+
+We used a dendrogram to visualise the hierarchical merging process.
+
+### 10.5 Divisive Clustering
+
+Divisive clustering follows a top-down approach.
+
+It starts with a larger group and divides it into smaller groups.
+
+We implemented Bisecting K-Means as our divisive clustering method.
+
+### 10.6 Clustering Evaluation Metrics
+
+**Silhouette Score:** Measures how well points fit within their assigned clusters. Higher is better.
+
+**Davies-Bouldin Index:** Measures cluster similarity relative to internal dispersion. Lower is better.
+
+**Calinski-Harabasz Index:** Compares between-cluster separation with within-cluster dispersion. Higher is generally better.
+
+### 10.7 Clustering Results
+
+The clustering experiment used 1,200 sampled patients.
+
+| Algorithm | Silhouette | Davies-Bouldin | Calinski-Harabasz |
+|---|---:|---:|---:|
+| K-Means | 0.125 | 3.281 | 104.35 |
+| Agglomerative | 0.052 | 3.690 | 76.45 |
+| Divisive | 0.121 | 3.295 | 104.43 |
+
+**Selected Clustering Method:** K-Means
+
+K-Means achieved the highest Silhouette Score in this experiment.
+
+However, the relatively low Silhouette Scores indicate that the clusters are not strongly separated.
+
+### 10.8 Clustering Visualisations
+
+Our notebook includes:
+
+- Elbow Curve.
+- Silhouette Score vs K.
+- Agglomerative Dendrogram.
+- PCA 2D Scatter Plots.
+- t-SNE Visualisation.
+- Cluster-size Bar Charts.
+- Cluster Profile Heatmap.
+- Comparison of Clustering Evaluation Metrics.
+
+---
+
+## 11. Streamlit Web Application
+
+We developed a Streamlit web application called **MedPredict Analytics** to demonstrate our project.
+
+### Live Streamlit Application
+
+https://healthcare-insurance-cost-prediction-mekvzuvgfimmhccezb5qjp.streamlit.app/
+
+### Main Features
+
+**1. Home Dashboard**
+
+Displays the dataset summary, total algorithms, target distributions, and model comparison graphs.
+
+**2. Dataset & EDA**
+
+Displays dataset information, missing-value analysis, descriptive statistics, and EDA visualisations.
+
+**3. Healthcare Cost Prediction**
+
+Allows users to enter patient information and obtain an estimated annual medical cost.
+
+**4. Patient Risk Prediction**
+
+Allows users to enter patient information and predict a risk category.
+
+**5. Patient Segmentation**
+
+Displays patient groups and clustering results.
+
+**6. Model Performance**
+
+Shows regression, classification, and clustering comparison results.
+
+**7. About Project**
+
+Displays project information, methods, and technologies.
+
+### How the Streamlit Application Works
+
+1. The user enters the required patient information.
+2. Streamlit receives the input.
+3. The saved preprocessing pipeline transforms the input.
+4. The trained Machine Learning model makes a prediction.
+5. The application displays the predicted result.
+
+We used Joblib to save and load trained models so predictions can be generated without retraining the models every time.
+
+**Note:** This application is developed for academic demonstration and should not be used for real clinical decisions.
+
+---
+
+## 12. Technologies Used
+
+| Technology | Purpose |
+|---|---|
+| Python | Programming language |
+| Pandas | Dataset loading and manipulation |
+| NumPy | Numerical operations |
+| Matplotlib | Creating graphs |
+| Seaborn | Statistical visualisations |
+| Scikit-learn | Machine Learning algorithms |
+| SciPy | Hierarchical clustering |
+| PCA | Dimensionality reduction |
+| t-SNE | Cluster visualisation |
+| Jupyter Notebook | Model training and evaluation |
+| Streamlit | Interactive GUI |
+| Joblib | Saving trained models |
+| GitHub | Version control and project hosting |
+
+---
+
+## 13. Project Folder Structure
 
 ```text
-ML_capstone/
+Healthcare-Insurance-Cost-Prediction/
+│
 ├── app/
-│   ├── app.py                     # Master Streamlit healthcare platform
-│   ├── streamlit_app.py           # Synchronized Streamlit application
-│   ├── config.py                  # Project paths & constants
-│   ├── prediction.py              # Inference pipeline loader
-│   ├── preprocessing.py           # Feature engineering & column transformers
-│   ├── style.css                  # Custom professional CSS theme
-│   └── utils.py                   # Plotly interactive charts & metrics
+│   └── app.py
+│
 ├── data/
-│   └── medical_insurance.csv      # 100,000 rows × 54 columns dataset
-├── models/
-│   ├── best_regressor.joblib      # Serialized regression pipeline
-│   ├── best_classifier.joblib     # Serialized classification pipeline
-│   ├── best_clustering.joblib     # Serialized clustering bundle
-│   └── model_metadata.json        # Pipeline tracking metadata
+│   └── medical_insurance.csv
+│
 ├── notebooks/
-│   ├── regression.ipynb           # 10 Regressors, 5-Fold CV, GridSearch, EDA
-│   ├── classification.ipynb       # 10 Classifiers, 5-Fold CV, GridSearch, EDA
-│   └── clustering.ipynb           # K-Means, Agglomerative, Bisecting, PCA, t-SNE
+│   ├── regression.ipynb
+│   ├── classification.ipynb
+│   └── clustering.ipynb
+│
+├── models/
+│   └── Saved Machine Learning Models
+│
 ├── results/
-│   ├── regression_metrics.csv     # Regression comparison metrics
-│   ├── classification_metrics.csv # Classification comparison metrics
-│   └── clustering_metrics.csv     # Clustering comparison metrics
-├── notebooks_backup/              # Original notebook backups
-├── README.md                      # Comprehensive project documentation
-├── requirements.txt               # Verified dependency specification
-└── viva_prep.md                   # Viva & presentation examination guide
+│   └── Model Comparison Tables
+│
+├── requirements.txt
+└── README.md
 ```
 
 ---
 
-## 🚀 Setup & Execution Instructions
+## 14. How to Run the Project
 
-### 1. Environment Setup
+### Step 1: Clone the GitHub Repository
+
 ```bash
-# Clone the repository
-git clone https://github.com/hemu1196/ML_capstone.git
-cd ML_capstone
-
-# Create and activate a Python virtual environment
-python3 -m venv venv
-source venv/bin/activate
-
-# Install dependencies
-pip install -r requirements.txt
+git clone https://github.com/hemu1196/Healthcare-Insurance-Cost-Prediction.git
+cd Healthcare-Insurance-Cost-Prediction
 ```
 
-### 2. Running Jupyter Notebooks
-Launch Jupyter and run any notebook top-to-bottom:
+Alternatively, download the project as a ZIP file from GitHub and extract it.
+
+### Step 2: Install Required Libraries
+
+```bash
+python3 -m pip install -r requirements.txt
+```
+
+### Step 3: Open the Jupyter Notebooks
+
 ```bash
 jupyter notebook
 ```
-- Open `notebooks/regression.ipynb`
-- Open `notebooks/classification.ipynb`
-- Open `notebooks/clustering.ipynb`
 
-All notebooks are designed to execute smoothly and generate visible comparison tables and figures.
+Open and run:
 
-### 3. Launching the Interactive Streamlit GUI
-You can launch either application file:
-```bash
-streamlit run app/streamlit_app.py
+```text
+notebooks/regression.ipynb
+notebooks/classification.ipynb
+notebooks/clustering.ipynb
 ```
-*Or:*
+
+Run the notebook cells from top to bottom to generate the results and visualisations.
+
+### Step 4: Run the Streamlit Application
+
 ```bash
 streamlit run app/app.py
 ```
-Open your browser at `http://localhost:8501`.
 
-**Platform Capabilities (7-Page Clinical Suite):**
-- **Home Dashboard**: Dynamic analytics overview with actual population counts, feature dimensions, top validated estimators, cost and risk distributions, model comparison charts, dataset quality audit, and project pipeline workflow.
-- **Dataset & EDA**: Deep-dive data exploration featuring head/tail previews, descriptive statistics, interactive numerical histograms, categorical frequency counts, custom correlation heatmaps, outlier boxplots, and student viva findings.
-- **Healthcare Cost Prediction**: Score patient demographics and clinical history through the trained regression pipeline to forecast medical expenses with population benchmark comparisons and risk factor waterfall attributions.
-- **Patient Risk Prediction**: Evaluate patient clinical risk tier (Low/Medium vs. High Risk) with calibrated confidence percentages, gauge indicators, and actionable preventative care guidance.
-- **Patient Segmentation**: Unsupervised cohort assignment mapping patient profiles to clinical utilization segments with empirical feature means and 2D PCA/t-SNE dimensionality reduction plots.
-- **Model Performance**: Comprehensive benchmarking hub showing consolidated comparison tables for all 10 regressors, 10 classifiers, and 3 clustering algorithms alongside 5-fold cross-validation, tuning, confusion matrices, and ROC curves.
-- **About Project**: Capstone academic metadata, architecture specifications, strict zero data leakage safeguards, and compliance disclosures.
+The application normally opens at:
+
+http://localhost:8501
+
+You can also use our publicly deployed application:
+
+https://healthcare-insurance-cost-prediction-mekvzuvgfimmhccezb5qjp.streamlit.app/
 
 ---
 
-## 🔬 Reproducibility & AI Assistance Disclosure
+## 15. Review 2 Deliverables
 
-- **Reproducibility**: All experiments use a fixed seed (`random_state=42`).
-- **AI Assistance Disclosure**: Generative AI tools (Google Antigravity Assistant) were utilized for code scaffolding, documentation structuring, and bug fixing in full compliance with the 23CSE301 Capstone Guidelines. All data pipelines, mathematical formulas, and clinical insights were reviewed and validated by the student team.
+Our project follows the official capstone evaluation guidelines.
+
+| Deliverable | Implementation |
+|---|---|
+| D1 – Jupyter Notebooks | Three notebooks for the three tracks |
+| D2 – GitHub Repository | Version control and meaningful commits |
+| D3 – Comparison Tables | Regression, Classification, and Clustering |
+| D4 – Visualisations | Model-specific graphs and EDA |
+| D5 – README | Project description and instructions |
+| D6 – Classification Comparison | All 10 classifiers |
+| D7 – Clustering Visualisations | Elbow, Dendrogram, PCA, t-SNE |
+| D8 – GUI / Deployment | Streamlit Web Application |
+
+The working Streamlit GUI and public deployment are included for the optional bonus component.
+
+---
+
+## 16. Project Limitations
+
+1. We used smaller samples to reduce training and execution time.
+2. Regression performance is limited by the information available in the selected features.
+3. Classification scores require additional validation for possible indirect target leakage.
+4. Clustering results indicate relatively weak separation among groups.
+5. Our application is intended for academic demonstration, not real medical diagnosis.
+
+---
+
+## 17. Future Improvements
+
+We plan to:
+
+1. Train and evaluate models on the complete dataset.
+2. Improve feature selection and handle possible hidden data leakage.
+3. Test models on independent datasets.
+4. Explore additional techniques to improve cost prediction.
+5. Improve cluster interpretation.
+6. Add more features and improvements to the Streamlit interface.
+
+---
+
+## 18. Conclusion
+
+In this Machine Learning Capstone Project, we implemented **10 Regression algorithms, 10 Classification algorithms, and 3 Clustering methods** for healthcare insurance data analysis.
+
+We performed dataset inspection, EDA, data preprocessing, feature engineering, model training, evaluation, hyperparameter tuning, and result visualisation.
+
+Our classification models achieved strong results on the selected sample, while regression and clustering showed areas where further improvements are possible.
+
+We also developed and deployed a Streamlit application to demonstrate the project interactively.
+
+Through this project, we gained practical experience in supervised learning, unsupervised learning, model evaluation, data visualisation, and web application deployment.
+
+---
+
+### References
+
+- 23CSE301 Machine Learning Capstone Project Guidelines
+- Medical Insurance Cost Prediction Dataset
+- Scikit-learn Documentation
+- Pandas Documentation
+- NumPy Documentation
+- Matplotlib Documentation
+- Seaborn Documentation
+- Streamlit Documentation
+
+---
+
+**Developed by Team 08 – CSE-E**
+
+**23CSE301 Machine Learning Capstone Project**  
+**Amrita Vishwa Vidyapeetham**  
+**Academic Year: 2026–2027**
+
+**Project:** Healthcare Cost Prediction and Patient Risk Intelligence Platform
+
+**Live Demo:** https://healthcare-insurance-cost-prediction-mekvzuvgfimmhccezb5qjp.streamlit.app/
